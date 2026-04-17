@@ -16,8 +16,10 @@ MonoBehaviour:
     keys:
     - 115ea17fa09bbf349aa69650362f8a92
     - 1f189890dc5d8df44b2c4ed77e91ba1c
+    - 28c4b1c7a12cb6b4eaa09f57506152f5
+    - 5dd7e97b18d0afc4bb8d6a37a43fd2fd
     values:
-    - iconNameOrGuid: 
+    - iconNameOrGuid: cs Script Icon
       colorIndex: 5
       isIconRecursive: 0
       isColorRecursive: 0
@@ -25,7 +27,16 @@ MonoBehaviour:
       colorIndex: 6
       isIconRecursive: 0
       isColorRecursive: 0
+    - iconNameOrGuid: cs Script Icon
+      colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: Prefab Icon
+      colorIndex: 7
+      isIconRecursive: 0
+      isColorRecursive: 0
   bookmarks:
   - guid: 9c53962885c2c4f449125a979d6ad240
   - guid: 115ea17fa09bbf349aa69650362f8a92
+  - guid: 5dd7e97b18d0afc4bb8d6a37a43fd2fd
   - guid: 1f189890dc5d8df44b2c4ed77e91ba1c

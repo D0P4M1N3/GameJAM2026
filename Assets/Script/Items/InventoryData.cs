@@ -21,6 +21,41 @@ public class InventoryData : MonoBehaviour
         RecalculateSummary();
     }
 
+    public bool AddItem(ItemData item)
+    {
+        if (item == null)
+        {
+            return false;
+        }
+
+        items.Add(new InventoryEntry(item));
+        RecalculateSummary();
+        return true;
+    }
+
+    public bool RemoveItem(ItemData item)
+    {
+        if (item == null || items == null)
+        {
+            return false;
+        }
+
+        for (int i = 0; i < items.Count; i++)
+        {
+            InventoryEntry entry = items[i];
+            if (entry.Item != item)
+            {
+                continue;
+            }
+
+            items.RemoveAt(i);
+            RecalculateSummary();
+            return true;
+        }
+
+        return false;
+    }
+
     public void RecalculateSummary()
     {
         totalItemCount = 0;

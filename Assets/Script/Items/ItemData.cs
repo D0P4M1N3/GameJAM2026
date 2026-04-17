@@ -7,11 +7,13 @@ public class ItemData : ScriptableObject
     [SerializeField] private string displayName;
     [SerializeField] [TextArea] private string description;
     [SerializeField] private Sprite icon;
+    [SerializeField] private GameObject worldPrefab;
     [SerializeField] private ItemStats stats;
 
     public string ItemId => itemId;
     public string DisplayName => string.IsNullOrWhiteSpace(displayName) ? name : displayName;
     public string Description => description;
     public Sprite Icon => icon;
+    public GameObject WorldPrefab => worldPrefab;
     public ItemStats Stats => stats;
 }

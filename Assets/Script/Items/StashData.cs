@@ -21,6 +21,63 @@ public class StashData : MonoBehaviour
         RecalculateSummary();
     }
 
+    public bool RemoveItem(ItemData item)
+    {
+        if (item == null || entries == null)
+        {
+            return false;
+        }
+
+        for (int i = 0; i < entries.Count; i++)
+        {
+            StashEntry entry = entries[i];
+            if (entry.Item != item || entry.Quantity <= 0)
+            {
+                continue;
+            }
+
+            int updatedQuantity = entry.Quantity - 1;
+            if (updatedQuantity > 0)
+            {
+                entries[i] = new StashEntry(item, updatedQuantity);
+            }
+            else
+            {
+                entries.RemoveAt(i);
+            }
+
+            RecalculateSummary();
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool AddItem(ItemData item)
+    {
+        if (item == null)
+        {
+            return false;
+        }
+
+        for (int i = 0; i < entries.Count; i++)
+        {
+            StashEntry entry = entries[i];
+            if (entry.Item != item)
+            {
+                continue;
+            }
+
+            entries[i] = new StashEntry(item, entry.Quantity + 1);
+            RecalculateSummary();
+            return true;
+        }
+
+        entries.Add(new StashEntry(item, 1));
+        RecalculateSummary();
+        return true;
+    }
+
     public void RecalculateSummary()
     {
         totalItemCount = 0;
