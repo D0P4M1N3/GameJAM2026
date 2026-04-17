@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adb9c12a8c6c949f7af83a3d238359d0, type: 3}
+  m_Name: vFolders Data
+  m_EditorClassIdentifier: VFolders::VFolders.VFoldersData
+  folderDatas_byGuid:
+    keys:
+    - 115ea17fa09bbf349aa69650362f8a92
+    - 1f189890dc5d8df44b2c4ed77e91ba1c
+    - 28c4b1c7a12cb6b4eaa09f57506152f5
+    - 5dd7e97b18d0afc4bb8d6a37a43fd2fd
+    values:
+    - iconNameOrGuid: cs Script Icon
+      colorIndex: 5
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: 
+      colorIndex: 6
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: cs Script Icon
+      colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: Prefab Icon
+      colorIndex: 7
+      isIconRecursive: 0
+      isColorRecursive: 0
+  bookmarks:
+  - guid: 9c53962885c2c4f449125a979d6ad240
+  - guid: 115ea17fa09bbf349aa69650362f8a92
+  - guid: 5dd7e97b18d0afc4bb8d6a37a43fd2fd
+  - guid: 1f189890dc5d8df44b2c4ed77e91ba1c
