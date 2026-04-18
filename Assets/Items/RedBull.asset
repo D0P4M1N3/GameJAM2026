@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0c095a5e5154ffb81e82464c5a9ea75, type: 3}
-  m_Name: Ice
+  m_Name: RedBull
   m_EditorClassIdentifier: GameJAM2026.Runtime::ItemData
-  itemId: 6
-  displayName: Ice
+  itemId: 14
+  displayName: Redbull
   description: 
   icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  worldPrefab: {fileID: 8539456021668210493, guid: 83655d38808d11148a13cf939b3baf8d, type: 3}
+  worldPrefab: {fileID: 8539456021668210493, guid: 0fb7e54aacdf12e409d13b53e653d16c, type: 3}
   stats:
-    <Speed>k__BackingField: 0
-    <Health>k__BackingField: 2
+    <Speed>k__BackingField: 5
+    <Health>k__BackingField: 3
     <Attack>k__BackingField: 0
-    <Value>k__BackingField: 2
+    <Value>k__BackingField: 0
   collisionClip: {fileID: 8300000, guid: da2d0bb30d6c9bc44a1d6e2d8b76288e, type: 3}
   collisionVolume: 1
   pickupClip: {fileID: 8300000, guid: 8102627573414084a812048286bff4fb, type: 3}
-  pickupVolume: 1
+  pickupVolume: 0.506
