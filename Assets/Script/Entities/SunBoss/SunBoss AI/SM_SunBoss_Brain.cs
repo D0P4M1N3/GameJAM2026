@@ -34,6 +34,36 @@ namespace SunBoss
 
 
 
+    public class STATE_PATROL : B_STATE
+    {
+        // Randomly pick a path to the player position within min and max radius
+        // Overtime, The min and max Patrol Radius gets smaller to the Actual player position 
+        // SeePlayer -> STATE_CHASE
+        // SeeNothing -> STATE_PATROL
+    }
+
+    public class STATE_CHASE : B_STATE
+    {
+        // Chase the player while keep tracking last seen position
+        // SeePlayer -> STATE_CHASE
+        // SeeNothing -> STATE_SEEK
+    }
+
+    public class STATE_SEEK : B_STATE
+    {
+        // Go to the last seen player location
+        // SeePlayer -> STATE_CHASE
+        // SeeNothing -> STATE_SCAN
+    }
+
+    public class STATE_SCAN : B_STATE
+    {
+        // Go to the last seen player location
+        // SeePlayer -> STATE_CHASE
+        // SeeNothing -> STATE_PATROL
+    }
+
+
 
 
 
