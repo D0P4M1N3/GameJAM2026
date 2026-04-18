@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BB_SunbossCTX_Master : MonoBehaviour
 {
@@ -14,6 +15,11 @@ public class BB_SunbossCTX_Master : MonoBehaviour
 
     [Header("\n---- Move")]
     public BB_SunbossCTX_Move BB_SunbossCTX_Move;
+
+
+
+    [Header("\n\n---- Debug")]
+    public BB_SunbossCTX_Debug BB_SunbossCTX_Debug;
 }
 
 
@@ -48,5 +54,14 @@ public class BB_SunbossCTX_Move
 {
     public ACT_SunBoss_Navagent ACT_SunBoss_Navagent;
 }
+
+[Serializable]
+public class BB_SunbossCTX_Debug
+{
+    public TextMesh TextUI_State;
+    public TextMesh TextUI_Sight;
+}
+
+
 
 
