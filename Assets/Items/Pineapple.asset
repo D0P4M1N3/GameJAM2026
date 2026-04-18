@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0c095a5e5154ffb81e82464c5a9ea75, type: 3}
+  m_Name: Pineapple
+  m_EditorClassIdentifier: GameJAM2026.Runtime::ItemData
+  itemId: 28
+  displayName: Pineapple
+  description: 
+  icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  worldPrefab: {fileID: 8539456021668210493, guid: 10f6819963becc34fa36d784aae271a3, type: 3}
+  stats:
+    <Speed>k__BackingField: 5
+    <Health>k__BackingField: 3
+    <Attack>k__BackingField: 0
+    <Value>k__BackingField: 0
+  collisionClip: {fileID: 8300000, guid: da2d0bb30d6c9bc44a1d6e2d8b76288e, type: 3}
+  collisionVolume: 1
+  pickupClip: {fileID: 8300000, guid: 8102627573414084a812048286bff4fb, type: 3}
+  pickupVolume: 0.506

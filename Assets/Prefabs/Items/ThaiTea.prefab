@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5226038833700723618}
   - component: {fileID: 1521600901597545891}
   m_Layer: 0
-  m_Name: TestItem 1
+  m_Name: ThaiTea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -297,7 +297,6 @@ MonoBehaviour:
   itemData: {fileID: 11400000, guid: 41efac3ecf908aa4099593744fa26c8b, type: 2}
   spriteRenderer: {fileID: 7052085896162765451}
   audioSource: {fileID: 4012345678901234567}
-  hoverStatsUi: {fileID: 0}
   isInInventory: 0
   collisionSoundThreshold: 1.5
   collisionSoundCooldown: 0.1

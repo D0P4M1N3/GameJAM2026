@@ -72,7 +72,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 87
+    m_Bits: 215
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 22606cfbcd0f7184fb4f7d7e6d67d0df, type: 2}
   m_TargetDisplay: 0
@@ -282,11 +282,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraController
   target: {fileID: 0}
-  offset: {x: 0, y: 10, z: -10}
-  followSpeed: 5
   zoomSpeed: 5
   minZoom: 5
   maxZoom: 20
+  rotationSpeed: 5
+  snapAngle: 45
+  followSpeed: 5
 --- !u!1 &5417661389110771463
 GameObject:
   m_ObjectHideFlags: 0
