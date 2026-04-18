@@ -21,4 +21,8 @@ MonoBehaviour:
     <Speed>k__BackingField: 0
     <Health>k__BackingField: 4
     <Attack>k__BackingField: 0
-    <Value>k__BackingField: 0
+    <Value>k__BackingField: 4
+  collisionClip: {fileID: 0}
+  collisionVolume: 1
+  pickupClip: {fileID: 0}
+  pickupVolume: 1

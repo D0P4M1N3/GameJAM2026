@@ -19,6 +19,10 @@ MonoBehaviour:
   worldPrefab: {fileID: 8539456021668210493, guid: 83655d38808d11148a13cf939b3baf8d, type: 3}
   stats:
     <Speed>k__BackingField: 0
-    <Health>k__BackingField: 1
-    <Attack>k__BackingField: 4
-    <Value>k__BackingField: 0
+    <Health>k__BackingField: 2
+    <Attack>k__BackingField: 0
+    <Value>k__BackingField: 2
+  collisionClip: {fileID: 0}
+  collisionVolume: 1
+  pickupClip: {fileID: 0}
+  pickupVolume: 1
