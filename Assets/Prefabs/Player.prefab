@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4633716285351280827}
   - component: {fileID: 3122298847395962020}
   - component: {fileID: 7168244022685300921}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 1015750450378438915}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.514, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -141,6 +141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TopDownController
   inputReader: {fileID: 3122298847395962020}
+  cameraTransform: {fileID: 0}
   moveSpeed: 5
 --- !u!1 &2680091645408326104
 GameObject:
@@ -154,7 +155,7 @@ GameObject:
   - component: {fileID: 2733863017637463161}
   - component: {fileID: 983706362532541729}
   - component: {fileID: 3374333975831833456}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Vision Cone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -262,7 +263,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1345481311484397410}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -383,7 +383,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ACT_SunBoss_Brain
   BB_SunbossCTX_Master: {fileID: 7970373808131415435}
-  BrainStateMachine: {fileID: 0}
+  BrainStateMachine: {fileID: 11400000, guid: 074cf65996b886b4eb251e2648f54ade, type: 2}
   SM_SunBoss_Brain_INST: {fileID: 0}
 --- !u!114 &2090045858798103473
 MonoBehaviour:
@@ -574,7 +574,7 @@ MonoBehaviour:
   Ray:
     LayerMask:
       serializedVersion: 2
-      m_Bits: 4294967295
+      m_Bits: 64
     Target: {fileID: 0}
     Shooter: {fileID: 50122643273546919}
     DrawGizmo: 0
