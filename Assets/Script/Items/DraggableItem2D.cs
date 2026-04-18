@@ -13,13 +13,17 @@ public class DraggableItem2D : MonoBehaviour
     private Rigidbody2D cachedRigidbody;
     private Camera cachedCamera;
     private TargetJoint2D dragJoint;
+    private ItemWorldObject itemWorldObject;
     private Vector3 startPosition;
     private bool wasKinematic;
     private bool isDragging;
 
+    public bool IsDragging => isDragging;
+
     private void Awake()
     {
         cachedRigidbody = GetComponent<Rigidbody2D>();
+        itemWorldObject = GetComponent<ItemWorldObject>();
         EnsureJointReference();
         dragJoint.enabled = false;
     }
@@ -39,6 +43,12 @@ public class DraggableItem2D : MonoBehaviour
 
         Vector3 pointerWorldPosition = GetPointerWorldPosition(activeCamera);
         cachedRigidbody.bodyType = RigidbodyType2D.Dynamic;
+
+        if (itemWorldObject != null)
+        {
+            itemWorldObject.SuppressCollisionSound();
+            itemWorldObject.PlayPickupSound();
+        }
 
         EnsureJointReference();
         dragJoint.autoConfigureTarget = false;

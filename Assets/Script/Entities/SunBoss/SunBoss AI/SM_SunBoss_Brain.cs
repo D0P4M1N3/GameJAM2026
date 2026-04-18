@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 namespace SunBoss
 {
 
@@ -93,16 +94,16 @@ namespace SunBoss
         {
             var brain = BB.BB_SunbossCTX_Brain;
 
-            float baseMin = 3f;
-            float baseMax = 9f;
+            float baseMin = brain.MinPredictionError_Position;
+            float baseMax = brain.MaxPredictionError_Position;
 
-            float mult = brain.SearchRad_MULT;
-
-            float radius = Random.Range(baseMin * mult, baseMax * mult);
+            float radius = Random.Range(baseMin, baseMax) * brain.UncertainInPrediction;
 
             Vector2 offset = Random.insideUnitCircle * radius;
 
-            patrolTarget = brain.PlayerOBJ.transform.position +
+
+            Vector3 PointOfSpeculation = Vector3.Lerp(brain.PlayerOBJ.transform.position, brain.PlayerPosition_LastestKnown, brain.UncertainInPrediction);
+            patrolTarget = PointOfSpeculation +
                            new Vector3(offset.x, 0, offset.y);
         }
     }
@@ -113,27 +114,51 @@ namespace SunBoss
         // SeePlayer -> STATE_CHASE
         // SeeNothing -> STATE_SEEK
 
+        float GoSeekTimer = 0;
+
         public override void OnEnter()
         {
-            BB.BB_SunbossCTX_Brain.SearchRad_MULT = 1;
-        }
+            GoSeekTimer = BB.BB_SunbossCTX_Brain.ForgetTime;
+            BB.BB_SunbossCTX_Brain.UncertainInPrediction = 1;
+            BB.BB_SunbossCTX_Move.ACT_SunBoss_Navagent.agent.updateRotation = false;
+
+        }   
         public override void OnTick()
         {
             var bb = BB;
             var sense = bb.BB_SunbossCTX_Sense.ConeBox;
 
-            // Still see player → keep updating target
-            if (sense.ReachedTarget)
-            {
-                bb.BB_SunbossCTX_Move.ACT_SunBoss_Navagent
+
+            //GOTO TARGET
+            bb.BB_SunbossCTX_Move.ACT_SunBoss_Navagent
                     .GoToThisFrame(
                         bb.BB_SunbossCTX_Brain.PlayerOBJ.transform.position);
+
+
+            if (sense.ReachedTarget)
+            {
+                //FACE TARGET
+                Vector3 flatTarget = new Vector3(
+                    bb.BB_SunbossCTX_Brain.PlayerOBJ.transform.position.x,
+                    bb.BB_SunbossCTX_Body.WholeBody.transform.position.y,
+                    bb.BB_SunbossCTX_Brain.PlayerOBJ.transform.position.z
+                );
+                bb.BB_SunbossCTX_Body.WholeBody.LookAt(flatTarget);
             }
             else
             {
                 // Lost player → SEEK
-                stateMachine.SetState<STATE_SEEK>();
+                GoSeekTimer -= Time.deltaTime;
+                if (GoSeekTimer<0){
+                    stateMachine.SetState<STATE_SEEK>();
+                }
+                
             }
+        }
+
+        public override void OnExit()
+        {
+            BB.BB_SunbossCTX_Move.ACT_SunBoss_Navagent.agent.updateRotation = true;
         }
     }
 
@@ -176,13 +201,12 @@ namespace SunBoss
     public class STATE_SCAN : SunBossState
     {
         private float rotatedDegrees;
-        private float rotationSpeed = 180f; // degrees per second
+        bool Clockwise;
 
         public override void OnEnter()
         {
             rotatedDegrees = 0f;
             BB.BB_SunbossCTX_Move.ACT_SunBoss_Navagent.agent.updateRotation = true;
-            BB.BB_SunbossCTX_Brain.SearchRad_MULT *= BB.BB_SunbossCTX_Brain.SearchRad_MULT_Degration;
         }
 
         public override void OnTick()
@@ -197,14 +221,26 @@ namespace SunBoss
             }
 
             // --- ROTATE ---
-            float delta = rotationSpeed * Time.deltaTime;
+            float delta = BB.BB_SunbossCTX_Brain.ScanSpeed * Time.deltaTime;
 
-            BB.BB_SunbossCTX_Body.WholeBody.transform.Rotate(Vector3.up, delta);
 
-            rotatedDegrees += delta;
+            bool goPATROL = false;
+            if (Clockwise){
+                if (BB.BB_SunbossCTX_Brain.Rotation) 
+                    BB.BB_SunbossCTX_Body.WholeBody.transform.Rotate(Vector3.up, delta);
+                rotatedDegrees += delta;
+                goPATROL = (rotatedDegrees >= 360f);
+            }
+            else {
+                if (BB.BB_SunbossCTX_Brain.Rotation)
+                    BB.BB_SunbossCTX_Body.WholeBody.transform.Rotate(Vector3.up, -delta);
+                rotatedDegrees -= delta;
+                goPATROL = (rotatedDegrees <= -360f);
+            }
+            
 
             // --- FINISHED SCAN ---
-            if (rotatedDegrees >= 360f)
+            if (goPATROL)
             {
                 stateMachine.SetState<STATE_PATROL>();
             }
@@ -213,6 +249,11 @@ namespace SunBoss
         public override void OnExit()
         {
             BB.BB_SunbossCTX_Move.ACT_SunBoss_Navagent.agent.updateRotation = true;
+
+            BB.BB_SunbossCTX_Brain.UncertainInPrediction -= BB.BB_SunbossCTX_Brain.UncertainInPrediction_Reduction;
+            BB.BB_SunbossCTX_Brain.UncertainInPrediction = Mathf.Clamp(BB.BB_SunbossCTX_Brain.UncertainInPrediction, 0, 1);
+
+            Clockwise = !Clockwise;
         }
     }
 

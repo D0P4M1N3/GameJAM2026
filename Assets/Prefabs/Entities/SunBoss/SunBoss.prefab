@@ -383,7 +383,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ACT_SunBoss_Brain
   BB_SunbossCTX_Master: {fileID: 7970373808131415435}
-  SM_SunBoss_Brain: {fileID: 11400000, guid: 074cf65996b886b4eb251e2648f54ade, type: 2}
+  BrainStateMachine: {fileID: 0}
   SM_SunBoss_Brain_INST: {fileID: 0}
 --- !u!114 &2090045858798103473
 MonoBehaviour:
@@ -568,7 +568,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d7c4c3b739113e4996dfd6835ee2584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ConeBox
-  Angle: 90
+  Angle: 120
   Radius: 16
   PlaneNormal: {x: 0, y: 1, z: 0}
   Ray:
@@ -901,8 +901,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BBsunbossCTX_Master
   BB_SunbossCTX_Brain:
     ACT_SunBoss_Brain: {fileID: 377267718066385339}
+    UncertainInPrediction_Reduction: 0.2
+    MinPredictionError_Position: 8
+    MaxPredictionError_Position: 16
+    Rotation: 1
+    ScanSpeed: 180
+    ForgetTime: 2
     PlayerOBJ: {fileID: 0}
     PlayerPosition_LastestKnown: {x: 0, y: 0, z: 0}
+    UncertainInPrediction: 1
   BB_SunbossCTX_Body:
     WholeBody: {fileID: 50122643273546919}
     CharacterVisual: {fileID: 3542344378740080104}

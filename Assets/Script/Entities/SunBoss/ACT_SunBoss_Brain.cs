@@ -6,16 +6,16 @@ public class ACT_SunBoss_Brain : MonoBehaviour
     public BB_SunbossCTX_Master BB_SunbossCTX_Master;
 
     [Header("Configs")]
-    [SerializeField] SunBoss.SM_SunBoss_Brain SM_SunBoss_Brain;
+    [SerializeField] SM_SunBoss__BASE BrainStateMachine;
 
     [Header("Runtime")]
-    public SunBoss.SM_SunBoss_Brain SM_SunBoss_Brain_INST;
+    public SM_SunBoss__BASE SM_SunBoss_Brain_INST;
 
 
 
     private void Start()
     {
-        SM_SunBoss_Brain_INST = ScriptableObject.CreateInstance<SunBoss.SM_SunBoss_Brain>();
+        SM_SunBoss_Brain_INST = Instantiate(BrainStateMachine);
         SM_SunBoss_Brain_INST.BB_SunbossCTX_Master = BB_SunbossCTX_Master;
 
         SM_SunBoss_Brain_INST.Begin();
