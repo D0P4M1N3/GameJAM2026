@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0c095a5e5154ffb81e82464c5a9ea75, type: 3}
+  m_Name: Orange
+  m_EditorClassIdentifier: GameJAM2026.Runtime::ItemData
+  itemId: 7
+  displayName: Orange
+  description: 
+  icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  worldPrefab: {fileID: 8539456021668210493, guid: ab105f91e5eaadb4cbef2abd08adcf88, type: 3}
+  stats:
+    <Speed>k__BackingField: 3
+    <Health>k__BackingField: 0
+    <Attack>k__BackingField: 1
+    <Value>k__BackingField: 0
