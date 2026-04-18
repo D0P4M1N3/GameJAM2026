@@ -32,7 +32,7 @@ public class BB_SunbossCTX_Brain
 
     [Header("Runtime")]
     public GameObject PlayerOBJ;
-    public Vector3 PlayerPosition_LastKnown;
+    public Vector3 PlayerPosition_LastestKnown;
 }
 
 [Serializable]
