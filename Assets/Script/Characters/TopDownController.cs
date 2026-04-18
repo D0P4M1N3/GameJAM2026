@@ -4,6 +4,7 @@ public class TopDownController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private InputReader inputReader;
+    [SerializeField] private Transform cameraTransform;
 
     [Header("Movement Settings")]
     [SerializeField] private float moveSpeed = 5f;
@@ -12,7 +13,17 @@ public class TopDownController : MonoBehaviour
     {
         Vector2 input = inputReader.MoveInput;
 
-        Vector3 move = new Vector3(input.x, 0f, input.y);
+        Vector3 camForward = cameraTransform.forward;
+        Vector3 camRight = cameraTransform.right;
+
+        camForward.y = 0f;
+        camRight.y = 0f;
+
+        camForward.Normalize();
+        camRight.Normalize();
+
+        Vector3 move = camForward * input.y + camRight * input.x;
+
         transform.Translate(move * moveSpeed * Time.deltaTime, Space.World);
     }
 }

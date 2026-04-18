@@ -2,23 +2,23 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [Header("Target")]
     [SerializeField] private Transform target;
-
-    [Header("Offset")]
-    [SerializeField] private Vector3 offset = new Vector3(0, 10, -10);
-    [SerializeField] private float followSpeed = 5f;
-
-    [Header("Zoom")]
     [SerializeField] private float zoomSpeed = 5f;
     [SerializeField] private float minZoom = 5f;
     [SerializeField] private float maxZoom = 20f;
-
     private float currentZoom = 10f;
+    private float yaw = 0f;
+    private float pitch = 45f;
+    [SerializeField] private float rotationSpeed = 5f;
+    [SerializeField] private float snapAngle = 45f; 
+    [SerializeField] private float followSpeed = 10f;
+
+    private float targetYaw;
 
     private void Start()
     {
-        currentZoom = offset.magnitude;
+        currentZoom = Mathf.Clamp(currentZoom, minZoom, maxZoom);
+        targetYaw = yaw;
     }
 
     private void LateUpdate()
@@ -26,20 +26,21 @@ public class CameraController : MonoBehaviour
         if (target == null) return;
 
         HandleZoom();
-        FollowTarget();
+        HandleRotation();
+        UpdateCameraPosition();
     }
 
-    private void FollowTarget()
+    private void HandleRotation()
     {
-        Vector3 desiredPosition = target.position + offset.normalized * currentZoom;
+        if (Input.GetMouseButton(2))
+        {
+            float mouseX = Input.GetAxis("Mouse X");
+            targetYaw += mouseX * rotationSpeed * 100f * Time.deltaTime;
+        }
 
-        transform.position = Vector3.Lerp(
-            transform.position,
-            desiredPosition,
-            followSpeed * Time.deltaTime
-        );
+        float snappedYaw = Mathf.Round(targetYaw / snapAngle) * snapAngle;
 
-        transform.LookAt(target);
+        yaw = Mathf.LerpAngle(yaw, snappedYaw, Time.deltaTime * 10f);
     }
 
     private void HandleZoom()
@@ -51,5 +52,21 @@ public class CameraController : MonoBehaviour
             currentZoom -= scroll * zoomSpeed * 10f;
             currentZoom = Mathf.Clamp(currentZoom, minZoom, maxZoom);
         }
+    }
+
+    private void UpdateCameraPosition()
+    {
+        Quaternion rotation = Quaternion.Euler(pitch, yaw, 0f);
+        Vector3 direction = rotation * Vector3.forward;
+
+        Vector3 desiredPosition = target.position - direction * currentZoom;
+
+        transform.position = Vector3.Lerp(
+            transform.position,
+            desiredPosition,
+            followSpeed * Time.deltaTime
+        );
+
+        transform.LookAt(target);
     }
 }
