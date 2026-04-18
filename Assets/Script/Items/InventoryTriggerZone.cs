@@ -31,6 +31,7 @@ public class InventoryTriggerZone : MonoBehaviour
         }
 
         itemWorldObject.SetInventoryState(true);
+        itemWorldObject.SuppressCollisionSound();
     }
 
     private void OnTriggerExit2D(Collider2D other)

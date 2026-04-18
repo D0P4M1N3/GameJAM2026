@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,8 @@ public class InventoryData : MonoBehaviour
     [SerializeField] private List<InventoryEntry> items = new();
     [SerializeField] private int totalItemCount;
     [SerializeField] private ItemStats totalStats;
+
+    public event Action Changed;
 
     public IReadOnlyList<InventoryEntry> Items => items;
     public int TotalItemCount => totalItemCount;
@@ -77,5 +80,7 @@ public class InventoryData : MonoBehaviour
             totalItemCount++;
             totalStats += entry.Item.Stats;
         }
+
+        Changed?.Invoke();
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,8 @@ public class StashData : MonoBehaviour
     [SerializeField] private List<StashEntry> entries = new();
     [SerializeField] private int totalItemCount;
     [SerializeField] private ItemStats totalStats;
+
+    public event Action Changed;
 
     public IReadOnlyList<StashEntry> Entries => entries;
     public int TotalItemCount => totalItemCount;
@@ -99,5 +102,7 @@ public class StashData : MonoBehaviour
             totalItemCount += entry.Quantity;
             totalStats += entry.Item.Stats * entry.Quantity;
         }
+
+        Changed?.Invoke();
     }
 }
