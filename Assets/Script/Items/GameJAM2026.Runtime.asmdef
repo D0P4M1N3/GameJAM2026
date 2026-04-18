@@ -1,7 +1,10 @@
 {
   "name": "GameJAM2026.Runtime",
   "rootNamespace": "",
-  "references": [],
+  "references": [
+    "Unity.TextMeshPro",
+    "Unity.ugui"
+  ],
   "includePlatforms": [],
   "excludePlatforms": [],
   "allowUnsafeCode": false,
