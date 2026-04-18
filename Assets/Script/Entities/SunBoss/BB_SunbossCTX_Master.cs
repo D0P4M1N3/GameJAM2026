@@ -30,9 +30,13 @@ public class BB_SunbossCTX_Brain
     [Header("References")]
     public ACT_SunBoss_Brain ACT_SunBoss_Brain;
 
-    [Header("Runtime")]
+    [Header("Patrol")]
+    public float SearchRad_MULT_Degration = 0.8f;
+
+    [Header("\nRuntime")]
     public GameObject PlayerOBJ;
     public Vector3 PlayerPosition_LastestKnown;
+    public float SearchRad_MULT = 1f;
 }
 
 [Serializable]
