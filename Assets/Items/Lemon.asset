@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0c095a5e5154ffb81e82464c5a9ea75, type: 3}
   m_Name: Lemon
   m_EditorClassIdentifier: GameJAM2026.Runtime::ItemData
-  itemId: 0
+  itemId: 9
   displayName: Lemon
   description: 
   icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
