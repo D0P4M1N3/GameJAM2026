@@ -176,7 +176,7 @@ namespace SunBoss
     public class STATE_SCAN : SunBossState
     {
         private float rotatedDegrees;
-        private float rotationSpeed = 180f; // degrees per second
+        bool Clockwise;
 
         public override void OnEnter()
         {
@@ -196,14 +196,26 @@ namespace SunBoss
             }
 
             // --- ROTATE ---
-            float delta = rotationSpeed * Time.deltaTime;
+            float delta = BB.BB_SunbossCTX_Brain.ScanSpeed * Time.deltaTime;
 
-            //BB.BB_SunbossCTX_Body.WholeBody.transform.Rotate(Vector3.up, delta);
 
-            rotatedDegrees += delta;
+            bool goPATROL = false;
+            if (Clockwise){
+                if (BB.BB_SunbossCTX_Brain.Rotation) 
+                    BB.BB_SunbossCTX_Body.WholeBody.transform.Rotate(Vector3.up, delta);
+                rotatedDegrees += delta;
+                goPATROL = (rotatedDegrees >= 360f);
+            }
+            else {
+                if (BB.BB_SunbossCTX_Brain.Rotation)
+                    BB.BB_SunbossCTX_Body.WholeBody.transform.Rotate(Vector3.up, -delta);
+                rotatedDegrees -= delta;
+                goPATROL = (rotatedDegrees <= -360f);
+            }
+            
 
             // --- FINISHED SCAN ---
-            if (rotatedDegrees >= 360f)
+            if (goPATROL)
             {
                 stateMachine.SetState<STATE_PATROL>();
             }
@@ -215,6 +227,8 @@ namespace SunBoss
 
             BB.BB_SunbossCTX_Brain.UncertainInPrediction -= BB.BB_SunbossCTX_Brain.UncertainInPrediction_Reduction;
             BB.BB_SunbossCTX_Brain.UncertainInPrediction = Mathf.Clamp(BB.BB_SunbossCTX_Brain.UncertainInPrediction, 0, 1);
+
+            Clockwise = !Clockwise;
         }
     }
 
