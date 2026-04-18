@@ -568,7 +568,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d7c4c3b739113e4996dfd6835ee2584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ConeBox
-  Angle: 90
+  Angle: 120
   Radius: 16
   PlaneNormal: {x: 0, y: 1, z: 0}
   Ray:
@@ -906,6 +906,7 @@ MonoBehaviour:
     MaxPredictionError_Position: 16
     Rotation: 1
     ScanSpeed: 180
+    ForgetTime: 2
     PlayerOBJ: {fileID: 0}
     PlayerPosition_LastestKnown: {x: 0, y: 0, z: 0}
     UncertainInPrediction: 1

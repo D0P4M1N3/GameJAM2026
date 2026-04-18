@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 namespace SunBoss
 {
 
@@ -113,27 +114,51 @@ namespace SunBoss
         // SeePlayer -> STATE_CHASE
         // SeeNothing -> STATE_SEEK
 
+        float GoSeekTimer = 0;
+
         public override void OnEnter()
         {
+            GoSeekTimer = BB.BB_SunbossCTX_Brain.ForgetTime;
             BB.BB_SunbossCTX_Brain.UncertainInPrediction = 1;
-        }
+            BB.BB_SunbossCTX_Move.ACT_SunBoss_Navagent.agent.updateRotation = false;
+
+        }   
         public override void OnTick()
         {
             var bb = BB;
             var sense = bb.BB_SunbossCTX_Sense.ConeBox;
 
-            // Still see player → keep updating target
-            if (sense.ReachedTarget)
-            {
-                bb.BB_SunbossCTX_Move.ACT_SunBoss_Navagent
+
+            //GOTO TARGET
+            bb.BB_SunbossCTX_Move.ACT_SunBoss_Navagent
                     .GoToThisFrame(
                         bb.BB_SunbossCTX_Brain.PlayerOBJ.transform.position);
+
+
+            if (sense.ReachedTarget)
+            {
+                //FACE TARGET
+                Vector3 flatTarget = new Vector3(
+                    bb.BB_SunbossCTX_Brain.PlayerOBJ.transform.position.x,
+                    bb.BB_SunbossCTX_Body.WholeBody.transform.position.y,
+                    bb.BB_SunbossCTX_Brain.PlayerOBJ.transform.position.z
+                );
+                bb.BB_SunbossCTX_Body.WholeBody.LookAt(flatTarget);
             }
             else
             {
                 // Lost player → SEEK
-                stateMachine.SetState<STATE_SEEK>();
+                GoSeekTimer -= Time.deltaTime;
+                if (GoSeekTimer<0){
+                    stateMachine.SetState<STATE_SEEK>();
+                }
+                
             }
+        }
+
+        public override void OnExit()
+        {
+            BB.BB_SunbossCTX_Move.ACT_SunBoss_Navagent.agent.updateRotation = true;
         }
     }
 

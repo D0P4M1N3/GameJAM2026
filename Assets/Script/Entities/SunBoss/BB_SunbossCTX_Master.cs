@@ -39,6 +39,9 @@ public class BB_SunbossCTX_Brain
     public bool Rotation = true;
     public float ScanSpeed = 360;// degrees per second
 
+    [Header("Chase")]
+    public float ForgetTime = 1f;
+
     [Header("\nRuntime")]
     public GameObject PlayerOBJ;
     public Vector3 PlayerPosition_LastestKnown;
