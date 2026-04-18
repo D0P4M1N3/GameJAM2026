@@ -12,11 +12,11 @@ GameObject:
   - component: {fileID: 7052085896162765451}
   - component: {fileID: 1529972548708408136}
   - component: {fileID: 6396378842719268746}
-  - component: {fileID: 4012345678901234567}
   - component: {fileID: 5226038833700723618}
   - component: {fileID: 1521600901597545891}
+  - component: {fileID: 2154074675404343315}
   m_Layer: 0
-  m_Name: TestItem 2
+  m_Name: Chocolate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 5.36, z: 0}
-  m_LocalScale: {x: 4.73, y: 4.73, z: 4.73}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 0.31132078, g: 0.20374353, b: 0.077830195, a: 1}
+  m_Color: {r: 0.4490565, g: 0.30707717, b: 0.060156632, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -168,7 +168,44 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!82 &4012345678901234567
+--- !u!114 &5226038833700723618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8539456021668210493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 783d1161f58f4ed49b58323a7c23e2f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: GameJAM2026.Runtime::DraggableItem2D
+  dragCamera: {fileID: 0}
+  dragDepth: 0
+  dragFrequency: 12
+  dragDampingRatio: 1
+  maxDragForce: 250
+--- !u!114 &1521600901597545891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8539456021668210493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 508cecc4d2874c9596a6a75a32de1909, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: GameJAM2026.Runtime::ItemWorldObject
+  itemData: {fileID: 11400000, guid: 41efac3ecf908aa4099593744fa26c8b, type: 2}
+  spriteRenderer: {fileID: 7052085896162765451}
+  audioSource: {fileID: 2154074675404343315}
+  isInInventory: 0
+  collisionSoundThreshold: 1.5
+  collisionSoundCooldown: 0.1
+  pickupCollisionMuteDuration: 0.2
+  randomPitchRange: {x: 0.92, y: 1.08}
+--- !u!82 &2154074675404343315
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -265,40 +302,3 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &5226038833700723618
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8539456021668210493}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 783d1161f58f4ed49b58323a7c23e2f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: GameJAM2026.Runtime::DraggableItem2D
-  dragCamera: {fileID: 0}
-  dragDepth: 0
-  dragFrequency: 12
-  dragDampingRatio: 1
-  maxDragForce: 250
---- !u!114 &1521600901597545891
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8539456021668210493}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 508cecc4d2874c9596a6a75a32de1909, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: GameJAM2026.Runtime::ItemWorldObject
-  itemData: {fileID: 11400000, guid: 41efac3ecf908aa4099593744fa26c8b, type: 2}
-  spriteRenderer: {fileID: 7052085896162765451}
-  audioSource: {fileID: 4012345678901234567}
-  isInInventory: 0
-  collisionSoundThreshold: 1.5
-  collisionSoundCooldown: 0.1
-  pickupCollisionMuteDuration: 0.2
-  randomPitchRange: {x: 0.92, y: 1.08}

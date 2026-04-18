@@ -2933,15 +2933,33 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 41efac3ecf908aa4099593744fa26c8b, type: 2}
     quantity: 3
   - item: {fileID: 11400000, guid: e46231dec6777894e8c3b0f7dff5b8a5, type: 2}
-    quantity: 6
+    quantity: 4
   - item: {fileID: 11400000, guid: bfdba622486346a4a9a45604ee3a04b3, type: 2}
-    quantity: 8
-  totalItemCount: 17
+    quantity: 4
+  - item: {fileID: 11400000, guid: 3f8b3e98052b58d49ad0154bf9bc9f28, type: 2}
+    quantity: 4
+  - item: {fileID: 11400000, guid: 258ee84056b7c934bae98fccad4eed4b, type: 2}
+    quantity: 4
+  - item: {fileID: 11400000, guid: cc9983dd59b77b34e8102b4482dc07c5, type: 2}
+    quantity: 4
+  - item: {fileID: 11400000, guid: 3f163d1a2b6789b4cac5a69f01b4271a, type: 2}
+    quantity: 2
+  - item: {fileID: 11400000, guid: e93402ccdf105af439cec057c1061a24, type: 2}
+    quantity: 3
+  - item: {fileID: 11400000, guid: a3324139f0606ed458e427f6775efa1c, type: 2}
+    quantity: 3
+  - item: {fileID: 11400000, guid: 581cbda859272ce41b6c199a9fb51d4d, type: 2}
+    quantity: 3
+  - item: {fileID: 11400000, guid: 45a4e4a1b6733f2428532ec62ba085a3, type: 2}
+    quantity: 3
+  - item: {fileID: 11400000, guid: 9e4dd21559ef3934eaa1372e8978e0d8, type: 2}
+    quantity: 1
+  totalItemCount: 38
   totalStats:
-    <Speed>k__BackingField: 49
-    <Health>k__BackingField: 15
-    <Attack>k__BackingField: 0
-    <Value>k__BackingField: 24
+    <Speed>k__BackingField: 76
+    <Health>k__BackingField: 55
+    <Attack>k__BackingField: 9
+    <Value>k__BackingField: 108
 --- !u!4 &1549461765
 Transform:
   m_ObjectHideFlags: 0
