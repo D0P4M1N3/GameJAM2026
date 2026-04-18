@@ -1,11 +1,15 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class ItemUI : MonoBehaviour
+public class ItemUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Image iconImage;
     [SerializeField] private TMP_Text amountText;
+
+    private ItemData boundItemData;
+    private HoveredItemStatsUI hoverStatsUi;
 
     private void Awake()
     {
@@ -20,6 +24,7 @@ public class ItemUI : MonoBehaviour
     public void Bind(ItemData itemData, int amount)
     {
         EnsureReferences();
+        boundItemData = itemData;
 
         Sprite icon = itemData != null ? itemData.Icon : null;
         if (iconImage != null)
@@ -32,6 +37,51 @@ public class ItemUI : MonoBehaviour
         {
             amountText.text = Mathf.Max(0, amount).ToString();
         }
+    }
+
+    public void SetHoverStatsUi(HoveredItemStatsUI targetHoverStatsUi)
+    {
+        hoverStatsUi = targetHoverStatsUi;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (hoverStatsUi == null)
+        {
+            hoverStatsUi = FindFirstObjectByType<HoveredItemStatsUI>();
+        }
+
+        if (hoverStatsUi == null || boundItemData == null)
+        {
+            return;
+        }
+
+        hoverStatsUi.ShowItem(boundItemData);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (hoverStatsUi == null)
+        {
+            hoverStatsUi = FindFirstObjectByType<HoveredItemStatsUI>();
+        }
+
+        if (hoverStatsUi == null)
+        {
+            return;
+        }
+
+        hoverStatsUi.ClearIfShowing(boundItemData);
+    }
+
+    private void OnDisable()
+    {
+        if (hoverStatsUi == null)
+        {
+            return;
+        }
+
+        hoverStatsUi.ClearIfShowing(boundItemData);
     }
 
     private void EnsureReferences()

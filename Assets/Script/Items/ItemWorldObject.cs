@@ -7,6 +7,7 @@ public class ItemWorldObject : MonoBehaviour
     [SerializeField] private ItemData itemData;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private AudioSource audioSource;
+    [SerializeField] private HoveredItemStatsUI hoverStatsUi;
     [SerializeField] private bool isInInventory;
     [SerializeField] private float collisionSoundThreshold = 1.5f;
     [SerializeField] private float collisionSoundCooldown = 0.1f;
@@ -17,6 +18,7 @@ public class ItemWorldObject : MonoBehaviour
     private DraggableItem2D draggableItem;
     private float lastCollisionSoundTime = float.NegativeInfinity;
     private float collisionSoundSuppressedUntil = float.NegativeInfinity;
+    private bool keepHoverVisibleWhileDragging;
 
     public ItemData ItemData => itemData;
     public bool IsInInventory => isInInventory;
@@ -26,6 +28,7 @@ public class ItemWorldObject : MonoBehaviour
     {
         EnsureSpriteRendererReference();
         EnsureAudioSourceReference();
+        EnsureHoverStatsUiReference();
         RefreshVisuals();
     }
 
@@ -33,6 +36,7 @@ public class ItemWorldObject : MonoBehaviour
     {
         EnsureSpriteRendererReference();
         EnsureAudioSourceReference();
+        EnsureHoverStatsUiReference();
         ConfigureAudioSource();
         RefreshVisuals();
     }
@@ -41,7 +45,28 @@ public class ItemWorldObject : MonoBehaviour
     {
         EnsureSpriteRendererReference();
         EnsureAudioSourceReference();
+        EnsureHoverStatsUiReference();
         ConfigureAudioSource();
+    }
+
+    private void OnMouseEnter()
+    {
+        ShowHoverStats();
+    }
+
+    private void OnMouseExit()
+    {
+        if (keepHoverVisibleWhileDragging)
+        {
+            return;
+        }
+
+        ClearHoverStats();
+    }
+
+    private void OnDisable()
+    {
+        ClearHoverStats();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -89,6 +114,18 @@ public class ItemWorldObject : MonoBehaviour
         PlayClipWithRandomPitch(itemData.PickupClip, itemData.PickupVolume);
     }
 
+    public void BeginDragHover()
+    {
+        keepHoverVisibleWhileDragging = true;
+        ShowHoverStats();
+    }
+
+    public void EndDragHover()
+    {
+        keepHoverVisibleWhileDragging = false;
+        ClearHoverStats();
+    }
+
     private void EnsureSpriteRendererReference()
     {
         if (spriteRenderer == null)
@@ -107,6 +144,14 @@ public class ItemWorldObject : MonoBehaviour
         if (draggableItem == null)
         {
             draggableItem = GetComponent<DraggableItem2D>();
+        }
+    }
+
+    private void EnsureHoverStatsUiReference()
+    {
+        if (hoverStatsUi == null)
+        {
+            hoverStatsUi = FindFirstObjectByType<HoveredItemStatsUI>();
         }
     }
 
@@ -171,6 +216,26 @@ public class ItemWorldObject : MonoBehaviour
         }
 
         return Time.time >= lastCollisionSoundTime + collisionSoundCooldown;
+    }
+
+    private void ShowHoverStats()
+    {
+        if (hoverStatsUi == null || itemData == null)
+        {
+            return;
+        }
+
+        hoverStatsUi.ShowItem(itemData);
+    }
+
+    private void ClearHoverStats()
+    {
+        if (hoverStatsUi == null || itemData == null)
+        {
+            return;
+        }
+
+        hoverStatsUi.ClearIfShowing(itemData);
     }
 
     private void RefreshVisuals()

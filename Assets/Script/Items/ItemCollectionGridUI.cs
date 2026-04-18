@@ -15,6 +15,7 @@ public class ItemCollectionGridUI : MonoBehaviour
     [SerializeField] private Transform contentRoot;
     [SerializeField] private ItemUI itemUiPrefab;
     [SerializeField] private bool stackInventoryItems = true;
+    [SerializeField] private HoveredItemStatsUI hoverStatsUi;
 
     private readonly List<ItemUI> spawnedItems = new();
 
@@ -23,6 +24,11 @@ public class ItemCollectionGridUI : MonoBehaviour
         if (contentRoot == null)
         {
             contentRoot = transform;
+        }
+
+        if (hoverStatsUi == null)
+        {
+            hoverStatsUi = FindFirstObjectByType<HoveredItemStatsUI>();
         }
     }
 
@@ -42,6 +48,11 @@ public class ItemCollectionGridUI : MonoBehaviour
         if (contentRoot == null)
         {
             contentRoot = transform;
+        }
+
+        if (hoverStatsUi == null)
+        {
+            hoverStatsUi = FindFirstObjectByType<HoveredItemStatsUI>();
         }
     }
 
@@ -169,6 +180,7 @@ public class ItemCollectionGridUI : MonoBehaviour
     {
         ItemUI itemUi = Instantiate(itemUiPrefab, contentRoot);
         itemUi.Bind(itemData, amount);
+        itemUi.SetHoverStatsUi(hoverStatsUi);
         spawnedItems.Add(itemUi);
     }
 

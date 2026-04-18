@@ -48,6 +48,7 @@ public class DraggableItem2D : MonoBehaviour
         {
             itemWorldObject.SuppressCollisionSound();
             itemWorldObject.PlayPickupSound();
+            itemWorldObject.BeginDragHover();
         }
 
         EnsureJointReference();
@@ -107,6 +108,11 @@ public class DraggableItem2D : MonoBehaviour
 
         cachedRigidbody.bodyType = wasKinematic ? RigidbodyType2D.Kinematic : RigidbodyType2D.Dynamic;
         isDragging = false;
+
+        if (itemWorldObject != null)
+        {
+            itemWorldObject.EndDragHover();
+        }
     }
 
     private void EnsureJointReference()

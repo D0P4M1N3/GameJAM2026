@@ -7,12 +7,16 @@ public class InventoryData : MonoBehaviour
     [SerializeField] private List<InventoryEntry> items = new();
     [SerializeField] private int totalItemCount;
     [SerializeField] private ItemStats totalStats;
+    [SerializeField] private Color mixedColor = Color.clear;
+    [SerializeField] [Min(0f)] private float totalColorWeight;
 
     public event Action Changed;
 
     public IReadOnlyList<InventoryEntry> Items => items;
     public int TotalItemCount => totalItemCount;
     public ItemStats TotalStats => totalStats;
+    public Color MixedColor => mixedColor;
+    public float TotalColorWeight => totalColorWeight;
 
     private void Awake()
     {
@@ -63,6 +67,9 @@ public class InventoryData : MonoBehaviour
     {
         totalItemCount = 0;
         totalStats = ItemStats.Zero;
+        mixedColor = Color.clear;
+        totalColorWeight = 0f;
+        Color accumulatedColor = Color.clear;
 
         if (items == null)
         {
@@ -79,6 +86,20 @@ public class InventoryData : MonoBehaviour
 
             totalItemCount++;
             totalStats += entry.Item.Stats;
+
+            float colorWeight = Mathf.Max(0f, entry.Item.SizeValue);
+            if (colorWeight <= 0f)
+            {
+                continue;
+            }
+
+            accumulatedColor += entry.Item.ItemColor * colorWeight;
+            totalColorWeight += colorWeight;
+        }
+
+        if (totalColorWeight > 0f)
+        {
+            mixedColor = accumulatedColor / totalColorWeight;
         }
 
         Changed?.Invoke();

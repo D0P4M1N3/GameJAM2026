@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: GameJAM2026.Runtime::ItemData
   itemId: 1
   displayName: Yadom
-  description: 
+  description: Boss is superior GDP, he discover how to goon 24/7 non stop speed
+    run
+  itemColor: {r: 0.62564474, g: 0.7735849, b: 0.30286577, a: 1}
+  sizeValue: 4
   icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   worldPrefab: {fileID: 8539456021668210493, guid: 0096a9bd09057524ca9bd54ba7a51dee, type: 3}
   stats:

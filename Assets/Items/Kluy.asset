@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: GameJAM2026.Runtime::ItemData
   itemId: 2
   displayName: Kluy
-  description: 
+  description: Boss is superior GDP, he discover how to goon 24/7 non stop speed
+    run
+  itemColor: {r: 1, g: 0.9206585, b: 0.7028302, a: 1}
+  sizeValue: 5
   icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   worldPrefab: {fileID: 8539456021668210493, guid: bd7ba896cf3060d41b34edc961aeaedf, type: 3}
   stats:

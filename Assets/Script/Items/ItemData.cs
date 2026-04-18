@@ -6,6 +6,8 @@ public class ItemData : ScriptableObject
     [SerializeField] private string itemId;
     [SerializeField] private string displayName;
     [SerializeField] [TextArea] private string description;
+    [SerializeField] private Color itemColor = Color.white;
+    [SerializeField] [Min(0f)] private float sizeValue = 1f;
     [SerializeField] private Sprite icon;
     [SerializeField] private GameObject worldPrefab;
     [SerializeField] private ItemStats stats;
@@ -17,6 +19,8 @@ public class ItemData : ScriptableObject
     public string ItemId => itemId;
     public string DisplayName => string.IsNullOrWhiteSpace(displayName) ? name : displayName;
     public string Description => description;
+    public Color ItemColor => itemColor;
+    public float SizeValue => sizeValue;
     public Sprite Icon => icon;
     public GameObject WorldPrefab => worldPrefab;
     public ItemStats Stats => stats;
