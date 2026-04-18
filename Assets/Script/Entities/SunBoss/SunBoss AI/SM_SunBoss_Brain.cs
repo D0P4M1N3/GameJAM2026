@@ -118,7 +118,6 @@ namespace SunBoss
 
         public override void OnEnter()
         {
-            GoSeekTimer = BB.BB_SunbossCTX_Brain.ForgetTime;
             BB.BB_SunbossCTX_Brain.UncertainInPrediction = 1;
             BB.BB_SunbossCTX_Move.ACT_SunBoss_Navagent.agent.updateRotation = false;
 
@@ -137,6 +136,9 @@ namespace SunBoss
 
             if (sense.ReachedTarget)
             {
+                GoSeekTimer = BB.BB_SunbossCTX_Brain.ForgetTime;
+
+
                 //FACE TARGET
                 Vector3 flatTarget = new Vector3(
                     bb.BB_SunbossCTX_Brain.PlayerOBJ.transform.position.x,

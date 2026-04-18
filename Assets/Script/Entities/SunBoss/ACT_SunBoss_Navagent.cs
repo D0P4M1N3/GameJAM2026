@@ -10,6 +10,10 @@ public class ACT_SunBoss_Navagent : MonoBehaviour
     [SerializeField] private bool followThisFrameActive;
     [SerializeField] private Vector3 currentTarget;
 
+    // NEW: cache last reachable point
+    private Vector3 lastReachableTarget;
+    private bool hasReachableTarget;
+
     void Awake()
     {
     }
@@ -28,27 +32,61 @@ public class ACT_SunBoss_Navagent : MonoBehaviour
 
 
 
-
-
     // Path Commands ////////////////////////////////////////////
+
     public void GoToOnce(Vector3 worldPos)
     {
-        currentTarget = worldPos;
-        agent.isStopped = false;
-        agent.SetDestination(worldPos);
+        if (TryGetReachablePoint(worldPos, out var reachable))
+        {
+            currentTarget = reachable;
+
+            lastReachableTarget = reachable;
+            hasReachableTarget = true;
+
+            agent.isStopped = false;
+            agent.SetDestination(reachable);
+        }
+        else if (hasReachableTarget)
+        {
+            // fallback
+            currentTarget = lastReachableTarget;
+
+            agent.isStopped = false;
+            agent.SetDestination(lastReachableTarget);
+        }
     }
+
     public void GoToThisFrame(Vector3 worldPos)
     {
         followThisFrameActive = true;
 
-        // Avoid redundant SetDestination calls (small optimization)
-        if (!agent.hasPath || Vector3.Distance(currentTarget, worldPos) > 0.05f)
+        Vector3 finalTarget;
+
+        if (TryGetReachablePoint(worldPos, out var reachable))
         {
-            currentTarget = worldPos;
+            finalTarget = reachable;
+
+            lastReachableTarget = reachable;
+            hasReachableTarget = true;
+        }
+        else if (hasReachableTarget)
+        {
+            finalTarget = lastReachableTarget;
+        }
+        else
+        {
+            return; // nothing valid yet
+        }
+
+        // Avoid redundant SetDestination calls
+        if (!agent.hasPath || Vector3.Distance(currentTarget, finalTarget) > 0.05f)
+        {
+            currentTarget = finalTarget;
             agent.isStopped = false;
-            agent.SetDestination(worldPos);
+            agent.SetDestination(finalTarget);
         }
     }
+
     public void CancelPath()
     {
         agent.isStopped = true;
@@ -57,10 +95,8 @@ public class ACT_SunBoss_Navagent : MonoBehaviour
 
 
 
-
-
-
     // Utilities ////////////////////////////////////////////
+
     public bool HasPath()
     {
         return agent.hasPath;
@@ -70,5 +106,33 @@ public class ACT_SunBoss_Navagent : MonoBehaviour
     {
         if (!agent.hasPath) return false;
         return agent.remainingDistance <= threshold;
+    }
+
+
+
+    // INTERNAL ////////////////////////////////////////////
+
+    bool TryGetReachablePoint(Vector3 input, out Vector3 result, float sampleRadius = 3f)
+    {
+        NavMeshHit hit;
+
+        // Step 1: project onto NavMesh
+        if (!NavMesh.SamplePosition(input, out hit, sampleRadius, NavMesh.AllAreas))
+        {
+            result = default;
+            return false;
+        }
+
+        // Step 2: validate full path
+        NavMeshPath path = new NavMeshPath();
+        if (agent.CalculatePath(hit.position, path) &&
+            path.status == NavMeshPathStatus.PathComplete)
+        {
+            result = hit.position;
+            return true;
+        }
+
+        result = default;
+        return false;
     }
 }
