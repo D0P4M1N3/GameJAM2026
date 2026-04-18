@@ -278,6 +278,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 377267718066385339, guid: 60854ad8846874f4d9a3c8c6c77dd51a, type: 3}
+      propertyPath: SM_SunBoss_Brain
+      value: 
+      objectReference: {fileID: 11400000, guid: 009bfc1606067194faa2708d945c83a2, type: 2}
+    - target: {fileID: 377267718066385339, guid: 60854ad8846874f4d9a3c8c6c77dd51a, type: 3}
+      propertyPath: BrainStateMachine
+      value: 
+      objectReference: {fileID: 11400000, guid: 074cf65996b886b4eb251e2648f54ade, type: 2}
     - target: {fileID: 7868574379826556882, guid: 60854ad8846874f4d9a3c8c6c77dd51a, type: 3}
       propertyPath: m_Name
       value: SunBoss

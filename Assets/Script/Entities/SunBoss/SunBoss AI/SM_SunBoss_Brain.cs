@@ -93,16 +93,16 @@ namespace SunBoss
         {
             var brain = BB.BB_SunbossCTX_Brain;
 
-            float baseMin = 3f;
-            float baseMax = 9f;
+            float baseMin = 2f;
+            float baseMax = 5f;
 
-            float mult = brain.SearchRad_MULT;
-
-            float radius = Random.Range(baseMin * mult, baseMax * mult);
+            float radius = Random.Range(baseMin, baseMax);
 
             Vector2 offset = Random.insideUnitCircle * radius;
 
-            patrolTarget = brain.PlayerOBJ.transform.position +
+
+            Vector3 PointOfSpeculation = Vector3.Lerp(brain.PlayerOBJ.transform.position, brain.PlayerPosition_LastestKnown, brain.UncertainInPrediction);
+            patrolTarget = PointOfSpeculation +
                            new Vector3(offset.x, 0, offset.y);
         }
     }
@@ -115,7 +115,7 @@ namespace SunBoss
 
         public override void OnEnter()
         {
-            BB.BB_SunbossCTX_Brain.SearchRad_MULT = 1;
+            BB.BB_SunbossCTX_Brain.UncertainInPrediction = 1;
         }
         public override void OnTick()
         {
@@ -182,7 +182,7 @@ namespace SunBoss
         {
             rotatedDegrees = 0f;
             BB.BB_SunbossCTX_Move.ACT_SunBoss_Navagent.agent.updateRotation = true;
-            BB.BB_SunbossCTX_Brain.SearchRad_MULT *= BB.BB_SunbossCTX_Brain.SearchRad_MULT_Degration;
+            BB.BB_SunbossCTX_Brain.UncertainInPrediction *= BB.BB_SunbossCTX_Brain.UncertainInPrediction_Reduction;
         }
 
         public override void OnTick()
@@ -199,7 +199,7 @@ namespace SunBoss
             // --- ROTATE ---
             float delta = rotationSpeed * Time.deltaTime;
 
-            BB.BB_SunbossCTX_Body.WholeBody.transform.Rotate(Vector3.up, delta);
+            //BB.BB_SunbossCTX_Body.WholeBody.transform.Rotate(Vector3.up, delta);
 
             rotatedDegrees += delta;
 
