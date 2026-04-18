@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-public class ActEnemy_Navagent : MonoBehaviour
+public class ACT_SunBoss_Navagent : MonoBehaviour
 {
     [Header("References")]
     public NavMeshAgent agent;

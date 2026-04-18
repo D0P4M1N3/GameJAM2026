@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1441437044860885865
+--- !u!1 &5603104467128959877
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,37 +8,50 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5420319051287075441}
-  - component: {fileID: 8388842830921885398}
+  - component: {fileID: 7600843330494990635}
+  - component: {fileID: 377267718066385339}
+  - component: {fileID: 2090045858798103473}
   m_Layer: 0
-  m_Name: = Navigation
+  m_Name: '= [Actuators]'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5420319051287075441
+--- !u!4 &7600843330494990635
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1441437044860885865}
+  m_GameObject: {fileID: 5603104467128959877}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 50122643273546919}
+  m_Father: {fileID: 1579265690751216283}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8388842830921885398
+--- !u!114 &377267718066385339
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1441437044860885865}
+  m_GameObject: {fileID: 5603104467128959877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 635c31d41858c5d43bea0076813513e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ACT_SunBoss_Brain
+--- !u!114 &2090045858798103473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5603104467128959877}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 097c5575774f3444fb1ff11718ba5803, type: 3}
@@ -47,6 +60,40 @@ MonoBehaviour:
   agent: {fileID: 2145279457055403716}
   followThisFrameActive: 0
   currentTarget: {x: 0, y: 0, z: 0}
+--- !u!1 &6401150910587160555
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1579265690751216283}
+  m_Layer: 0
+  m_Name: //// Shared Systems
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1579265690751216283
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6401150910587160555}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7600843330494990635}
+  - {fileID: 878528569433214890}
+  - {fileID: 3542344378740080104}
+  m_Father: {fileID: 50122643273546919}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6657547786420296877
 GameObject:
   m_ObjectHideFlags: 0
@@ -77,7 +124,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 50122643273546919}
+  m_Father: {fileID: 1579265690751216283}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &726050064575403084
 MonoBehaviour:
@@ -224,9 +271,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 878528569433214890}
-  - {fileID: 5420319051287075441}
-  - {fileID: 3542344378740080104}
+  - {fileID: 3269305767127293705}
+  - {fileID: 1579265690751216283}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!195 &2145279457055403716
@@ -251,6 +297,61 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!1 &8024217679555645612
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3269305767127293705}
+  - component: {fileID: 7970373808131415435}
+  m_Layer: 0
+  m_Name: //// BlackBoard
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3269305767127293705
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8024217679555645612}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 50122643273546919}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7970373808131415435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8024217679555645612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8815827ce531c7d499636f71128c7884, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BBsunbossCTX_Master
+  BB_SunbossCTX_Brain:
+    ACT_SunBoss_Brain: {fileID: 377267718066385339}
+    PlayerOBJ: {fileID: 0}
+    PlayerPosition_LastKnown: {x: 0, y: 0, z: 0}
+  BB_SunbossCTX_Body:
+    WholeBody: {fileID: 50122643273546919}
+    CharacterVisual: {fileID: 3542344378740080104}
+  BB_SunbossCTX_Sense:
+    ConeBox: {fileID: 726050064575403084}
+  BB_SunbossCTX_Move:
+    ACT_SunBoss_Navagent: {fileID: 2090045858798103473}
 --- !u!1 &8110179157959177042
 GameObject:
   m_ObjectHideFlags: 0
@@ -409,5 +510,5 @@ Transform:
   m_Children:
   - {fileID: 2270232260038031115}
   - {fileID: 8427701902450647505}
-  m_Father: {fileID: 50122643273546919}
+  m_Father: {fileID: 1579265690751216283}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
