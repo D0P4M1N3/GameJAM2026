@@ -93,10 +93,10 @@ namespace SunBoss
         {
             var brain = BB.BB_SunbossCTX_Brain;
 
-            float baseMin = 2f;
-            float baseMax = 5f;
+            float baseMin = brain.MinPredictionError_Position;
+            float baseMax = brain.MaxPredictionError_Position;
 
-            float radius = Random.Range(baseMin, baseMax);
+            float radius = Random.Range(baseMin, baseMax) * brain.UncertainInPrediction;
 
             Vector2 offset = Random.insideUnitCircle * radius;
 
@@ -182,7 +182,6 @@ namespace SunBoss
         {
             rotatedDegrees = 0f;
             BB.BB_SunbossCTX_Move.ACT_SunBoss_Navagent.agent.updateRotation = true;
-            BB.BB_SunbossCTX_Brain.UncertainInPrediction *= BB.BB_SunbossCTX_Brain.UncertainInPrediction_Reduction;
         }
 
         public override void OnTick()
@@ -213,6 +212,9 @@ namespace SunBoss
         public override void OnExit()
         {
             BB.BB_SunbossCTX_Move.ACT_SunBoss_Navagent.agent.updateRotation = true;
+
+            BB.BB_SunbossCTX_Brain.UncertainInPrediction -= BB.BB_SunbossCTX_Brain.UncertainInPrediction_Reduction;
+            BB.BB_SunbossCTX_Brain.UncertainInPrediction = Mathf.Clamp(BB.BB_SunbossCTX_Brain.UncertainInPrediction, 0, 1);
         }
     }
 

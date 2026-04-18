@@ -32,6 +32,8 @@ public class BB_SunbossCTX_Brain
 
     [Header("Patrol")]
     public float UncertainInPrediction_Reduction = 0.8f;
+    public float MinPredictionError_Position = 5;
+    public float MaxPredictionError_Position = 10;
 
     [Header("\nRuntime")]
     public GameObject PlayerOBJ;
