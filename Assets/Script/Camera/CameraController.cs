@@ -1,16 +1,25 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
     [SerializeField] private Transform target;
+
+    [Header("Offset")]
+    [SerializeField] private Vector3 targetOffset = new Vector3(0, 1.5f, 0); 
+
+    [Header("Zoom")]
     [SerializeField] private float zoomSpeed = 5f;
     [SerializeField] private float minZoom = 5f;
     [SerializeField] private float maxZoom = 20f;
     private float currentZoom = 10f;
+
+    [Header("Rotation")]
     private float yaw = 0f;
-    private float pitch = 45f;
+    [SerializeField] private float pitch = 45f;
     [SerializeField] private float rotationSpeed = 5f;
-    [SerializeField] private float snapAngle = 45f; 
+    [SerializeField] private float snapAngle = 45f;
+
+    [Header("Follow")]
     [SerializeField] private float followSpeed = 10f;
 
     private float targetYaw;
@@ -39,7 +48,6 @@ public class CameraController : MonoBehaviour
         }
 
         float snappedYaw = Mathf.Round(targetYaw / snapAngle) * snapAngle;
-
         yaw = Mathf.LerpAngle(yaw, snappedYaw, Time.deltaTime * 10f);
     }
 
@@ -56,10 +64,12 @@ public class CameraController : MonoBehaviour
 
     private void UpdateCameraPosition()
     {
+        Vector3 focusPoint = target.position + targetOffset;
+
         Quaternion rotation = Quaternion.Euler(pitch, yaw, 0f);
         Vector3 direction = rotation * Vector3.forward;
 
-        Vector3 desiredPosition = target.position - direction * currentZoom;
+        Vector3 desiredPosition = focusPoint - direction * currentZoom;
 
         transform.position = Vector3.Lerp(
             transform.position,
@@ -67,6 +77,6 @@ public class CameraController : MonoBehaviour
             followSpeed * Time.deltaTime
         );
 
-        transform.LookAt(target);
+        transform.LookAt(focusPoint);
     }
 }
