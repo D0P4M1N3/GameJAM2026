@@ -4,8 +4,7 @@ using UnityEngine;
 public class BB_Player_Master : MonoBehaviour
 {
     [Header("\n\n---- Stats")]
-    [SerializeField] private CharacterStats characterStats;
-    public CharacterStats CharacterStats => characterStats;
+    public CharacterStats CharacterStats => DATA_Player.Instance.CharacterStats;
 
     [Header("\n\n---- Body")]
     public BB_PlayerCTX_Body BB_PlayerCTX_Body;
@@ -13,28 +12,6 @@ public class BB_Player_Master : MonoBehaviour
     [Header("\n\n---- Movement")]
     public BB_PlayerCTX_Move BB_PlayerCTX_Move;
 
-    private void Awake()
-    {
-        EnsureCharacterStatsReference();
-    }
-
-    private void OnValidate()
-    {
-        EnsureCharacterStatsReference();
-    }
-
-    private void EnsureCharacterStatsReference()
-    {
-        if (characterStats == null)
-        {
-            characterStats = GetComponent<CharacterStats>();
-        }
-
-        if (characterStats == null)
-        {
-            characterStats = GetComponentInChildren<CharacterStats>();
-        }
-    }
 }
 
 [Serializable]

@@ -9,15 +9,6 @@ public class ACT_SunBoss_Combat : MonoBehaviour
     private Coroutine debugRoutine;
     private bool wasReachedLastFrame = false;
 
-    private void Awake()
-    {
-        EnsureTargetCharacterStatsReference();
-    }
-
-    private void OnValidate()
-    {
-        EnsureTargetCharacterStatsReference();
-    }
 
     private void Update()
     {
@@ -46,25 +37,11 @@ public class ACT_SunBoss_Combat : MonoBehaviour
     {
         while (true)
         {
-            if (targetCharacterStats != null)
-            {
-                targetCharacterStats.HP -= (int)BB_Sunboss_Master.CharacterStats.finalDamage;
-                targetCharacterStats.HP = (int)Mathf.Clamp(targetCharacterStats.HP, 0, targetCharacterStats.finalMaxHP);
-            }
-
+            targetCharacterStats.HP -= (int)BB_Sunboss_Master.CharacterStats.finalDamage;
+            targetCharacterStats.HP = (int)Mathf.Clamp(targetCharacterStats.HP, 0, targetCharacterStats.finalMaxHP);
             yield return new WaitForSeconds(0.123f);
         }
     }
 
-    private void EnsureTargetCharacterStatsReference()
-    {
-        if (targetCharacterStats == null)
-        {
-            BB_Player_Master playerMaster = FindFirstObjectByType<BB_Player_Master>();
-            if (playerMaster != null)
-            {
-                targetCharacterStats = playerMaster.CharacterStats;
-            }
-        }
-    }
+
 }
