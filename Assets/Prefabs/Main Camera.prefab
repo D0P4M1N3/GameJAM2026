@@ -72,7 +72,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 215
+    m_Bits: 223
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 22606cfbcd0f7184fb4f7d7e6d67d0df, type: 2}
   m_TargetDisplay: 0
@@ -141,6 +141,7 @@ GameObject:
   - component: {fileID: 8114368695081248647}
   - component: {fileID: 3989416675725159498}
   - component: {fileID: 8766310104449798709}
+  - component: {fileID: 2131704442735416348}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -290,6 +291,27 @@ MonoBehaviour:
   rotationSpeed: 5
   snapAngle: 90
   followSpeed: 90
+--- !u!114 &2131704442735416348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5259953934339149384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30ee078e5950b154893055de7e3f967e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CircleSync
+  WallMaterial: {fileID: 2100000, guid: 702f1b679b8bd174a85b64649f73d462, type: 2}
+  Camera: {fileID: 4459228605343409002}
+  RayLength: 3000
+  Target: {fileID: 0}
+  Mask:
+    serializedVersion: 2
+    m_Bits: 8
+  Size: 0.5
+  Offset: {x: 0.5, y: 0.5, z: 1, w: 1}
 --- !u!1 &5417661389110771463
 GameObject:
   m_ObjectHideFlags: 0
