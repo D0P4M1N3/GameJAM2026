@@ -81,29 +81,7 @@ public class ACT_SunBoss_Navagent : MonoBehaviour
     // INTERNAL ////////////////////////////////////////////
     void STATS_UPDATE()
     {
-        agent.speed = BB_Sunboss_Master.CharacterStats.Speed;
+        agent.speed = BB_Sunboss_Master.CharacterStats.finalSpeed;
     }
-    bool TryGetReachablePoint(Vector3 input, out Vector3 result, float sampleRadius = 3f)
-    {
-        NavMeshHit hit;
-
-        // Step 1: project onto NavMesh
-        if (!NavMesh.SamplePosition(input, out hit, sampleRadius, NavMesh.AllAreas))
-        {
-            result = default;
-            return false;
-        }
-
-        // Step 2: validate full path
-        NavMeshPath path = new NavMeshPath();
-        if (agent.CalculatePath(hit.position, path) &&
-            path.status == NavMeshPathStatus.PathComplete)
-        {
-            result = hit.position;
-            return true;
-        }
-
-        result = default;
-        return false;
-    }
+    
 }
