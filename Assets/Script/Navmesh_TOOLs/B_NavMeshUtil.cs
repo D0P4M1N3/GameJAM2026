@@ -59,6 +59,115 @@ public static class B_NavMeshUtil
         return FindClosestVertex(worldPosition);
     }
 
+
+
+
+
+
+    /// <summary>
+    /// Projects a world-space point onto the NavMesh,
+    /// but guarantees the result is reachable by the given agent
+    /// (i.e., same connected NavMesh island).
+    /// </summary>
+    public static bool ProjectOnConnected(
+        NavMeshAgent agent,
+        Vector3 worldPosition,
+        out Vector3 result)
+    {
+        result = agent.transform.position;
+
+        if (!agent.isOnNavMesh)
+            return false;
+
+        const float searchRadius = 2.0f;
+        const int maxAttempts = 6;
+
+        // ----------------------------------------
+        // 1. Try fast sample first
+        // ----------------------------------------
+        if (NavMesh.SamplePosition(worldPosition, out NavMeshHit hit, searchRadius, agent.areaMask))
+        {
+            if (IsReachable(agent, hit.position))
+            {
+                result = hit.position;
+                return true;
+            }
+        }
+
+        // ----------------------------------------
+        // 2. Expand search radius (progressive sampling)
+        // ----------------------------------------
+        for (int i = 1; i <= maxAttempts; i++)
+        {
+            float radius = searchRadius * (i + 1);
+
+            if (NavMesh.SamplePosition(worldPosition, out NavMeshHit h, radius, agent.areaMask))
+            {
+                if (IsReachable(agent, h.position))
+                {
+                    result = h.position;
+                    return true;
+                }
+            }
+        }
+
+        // ----------------------------------------
+        // 3. Fallback: scan cached vertices
+        // ----------------------------------------
+        EnsureCache();
+
+        float bestDist = float.MaxValue;
+        Vector3 best = agent.transform.position;
+        bool found = false;
+
+        for (int i = 0; i < _navVertexCount; i++)
+        {
+            Vector3 v = _navVertices[i];
+
+            float d = Vector3.SqrMagnitude(v - worldPosition);
+            if (d >= bestDist)
+                continue;
+
+            if (!IsReachable(agent, v))
+                continue;
+
+            bestDist = d;
+            best = v;
+            found = true;
+        }
+
+        if (found)
+        {
+            result = best;
+            return true;
+        }
+
+        // ----------------------------------------
+        // 4. Absolute fallback (stay in place)
+        // ----------------------------------------
+        result = agent.transform.position;
+        return false;
+    }
+                private static bool IsReachable(NavMeshAgent agent, Vector3 target)
+                {
+                    NavMeshPath path = new NavMeshPath();
+
+                    if (!agent.CalculatePath(target, path))
+                        return false;
+
+                    return path.status == NavMeshPathStatus.PathComplete;
+                }
+
+
+
+
+
+
+
+
+
+
+
     /// <summary>
     /// Force rebuild NavMesh cache.
     /// Call if NavMesh is rebuilt at runtime.

@@ -71,7 +71,7 @@ namespace SunBoss
 
         public override void OnEnter()
         {
-           
+            RandomOffset();
         }
 
         public override void OnTick()
@@ -103,19 +103,27 @@ namespace SunBoss
         {
             var brain = BB.BB_SunbossCTX_Brain;
 
+            Vector3 PointOfSpeculation = Vector3.Lerp(brain.ActualPlayerPosition_NavmeshProjected, brain.PlayerPosition_LastestKnown, brain.UncertainInPrediction);
+            patrolTarget = PointOfSpeculation +
+                           new Vector3(offset.x, 0, offset.y);
+
+            bool Success = false;
+            Success = B_NavMeshUtil.ProjectOnConnected(BB.BB_SunbossCTX_Move.ACT_SunBoss_Navagent.agent,patrolTarget, out Vector3 OUT );
+            patrolTarget = OUT;
+            brain.PatrolPointOBJ.transform.position = patrolTarget;
+        }
+        Vector2 offset;
+        void RandomOffset()
+        {
+            var brain = BB.BB_SunbossCTX_Brain;
+
             float baseMin = brain.MinPredictionError_Position;
             float baseMax = brain.MaxPredictionError_Position;
 
             float radius = Random.Range(baseMin, baseMax) * brain.UncertainInPrediction;
 
-            Vector2 offset = Random.insideUnitCircle * radius;
+            offset = Random.insideUnitCircle * radius;
 
-
-            Vector3 PointOfSpeculation = Vector3.Lerp(brain.ActualPlayerPosition_NavmeshProjected, brain.PlayerPosition_LastestKnown, brain.UncertainInPrediction);
-            patrolTarget = PointOfSpeculation +
-                           new Vector3(offset.x, 0, offset.y);
-
-            patrolTarget = B_NavMeshUtil.Project(patrolTarget);
         }
     }
 
