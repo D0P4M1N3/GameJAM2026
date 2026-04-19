@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class TopDownController : MonoBehaviour
 {
@@ -24,6 +24,8 @@ public class TopDownController : MonoBehaviour
         camRight.Normalize();
 
         Vector3 move = camForward * input.y + camRight * input.x;
+
+        move = Vector3.ClampMagnitude(move, 1f);
 
         transform.Translate(move * moveSpeed * Time.deltaTime, Space.World);
     }

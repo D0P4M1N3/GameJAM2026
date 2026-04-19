@@ -105,6 +105,113 @@ TextMesh:
   m_Color:
     serializedVersion: 2
     rgba: 4290314495
+--- !u!1 &2692055956451615826
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6856473898393588064}
+  - component: {fileID: 3508397003563323724}
+  - component: {fileID: 8041797851874725835}
+  - component: {fileID: 5647434270613764794}
+  m_Layer: 0
+  m_Name: Ray
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6856473898393588064
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2692055956451615826}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 50122643273546919}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &3508397003563323724
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2692055956451615826}
+  m_Mesh: {fileID: 0}
+--- !u!23 &8041797851874725835
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2692055956451615826}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 54605e7d718704d4c90d10c9a3492889, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5647434270613764794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2692055956451615826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e98ab00dfbb1e1b4a8423cab88d55229, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VisionConeRenderer
+  rayCount: 150
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 64
+  coneBox: {fileID: 726050064575403084}
 --- !u!1 &4564704909439019260
 GameObject:
   m_ObjectHideFlags: 0
@@ -227,7 +334,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7200995944762848596
 Transform:
   m_ObjectHideFlags: 0
@@ -253,7 +360,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 0
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_Intensity: 111
   m_Range: 16
   m_SpotAngle: 85
@@ -689,7 +796,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &782188451487552280
 Transform:
   m_ObjectHideFlags: 0
@@ -715,7 +822,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 2
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.34606776, b: 0, a: 1}
   m_Intensity: 16
   m_Range: 10
   m_SpotAngle: 30
@@ -832,6 +939,7 @@ Transform:
   - {fileID: 3269305767127293705}
   - {fileID: 1579265690751216283}
   - {fileID: 1565657093015388262}
+  - {fileID: 6856473898393588064}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!195 &2145279457055403716
@@ -902,15 +1010,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BBsunbossCTX_Master
   CharacterStats:
     Speed: 5
-    MaxHealth: 20
+    MaxHP: 20
     Damage: 1
-    Damage_MULT: 1
+    mSpeed: 1
+    mMaxHP: 1
+    mDamage: 1
   BB_SunbossCTX_Brain:
     ACT_SunBoss_Brain: {fileID: 377267718066385339}
     PatrolPointOBJ: {fileID: 0}
     UncertainInPrediction_Reduction: 0.2
-    MinPredictionError_Position: 8
-    MaxPredictionError_Position: 16
+    MinPredictionError_Position: 5
+    MaxPredictionError_Position: 10
     Rotation: 1
     ScanSpeed: 180
     ForgetTime: 2

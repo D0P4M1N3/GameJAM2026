@@ -282,12 +282,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraController
   target: {fileID: 0}
+  targetOffset: {x: 0, y: 0, z: 0}
   zoomSpeed: 5
   minZoom: 5
   maxZoom: 20
+  pitch: 45
   rotationSpeed: 5
-  snapAngle: 45
-  followSpeed: 5
+  snapAngle: 90
+  followSpeed: 90
 --- !u!1 &5417661389110771463
 GameObject:
   m_ObjectHideFlags: 0
