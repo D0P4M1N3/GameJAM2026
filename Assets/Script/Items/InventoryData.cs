@@ -127,4 +127,27 @@ public class InventoryData : MonoBehaviour
 
         Changed?.Invoke();
     }
+
+
+
+
+
+
+
+
+
+
+
+    public void ApplyStats_Player()
+    {
+        CharacterStats targetCharacterStats = DATA_Player.Instance.CharacterStats;
+
+        //Modifiers
+        targetCharacterStats.mMaxHP += totalStats.Health;
+        targetCharacterStats.mDamage += totalStats.Attack;
+        targetCharacterStats.mSpeed += totalStats.Speed;
+
+        //Once
+        targetCharacterStats.Currency += totalStats.Value;
+    }
 }

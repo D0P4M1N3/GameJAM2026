@@ -7,12 +7,13 @@ public class CharacterStats
 {
     [Header("Base")]
     public float Speed = 5;
-    public int MaxHP = 20;
+    public float MaxHP = 20;
     public float Damage = 1;
     public float Storage = 10;
 
     [Header("Current")]
-    public int HP = int.MaxValue;
+    public float HP = float.PositiveInfinity;
+    public float Currency = 0;
 
     [Header("Modifier")]
     public float mSpeed = 1;

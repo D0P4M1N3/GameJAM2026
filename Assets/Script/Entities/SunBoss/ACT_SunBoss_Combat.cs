@@ -37,8 +37,8 @@ public class ACT_SunBoss_Combat : MonoBehaviour
         while (true)
         {
             CharacterStats targetCharacterStats = DATA_Player.Instance.CharacterStats;
-            targetCharacterStats.HP -= (int)BB_Sunboss_Master.CharacterStats.finalDamage;
-            targetCharacterStats.HP = (int)Mathf.Clamp(targetCharacterStats.HP, 0, targetCharacterStats.finalMaxHP);
+            targetCharacterStats.HP -= BB_Sunboss_Master.CharacterStats.finalDamage;
+            targetCharacterStats.HP = Mathf.Clamp(targetCharacterStats.HP, 0, targetCharacterStats.finalMaxHP);
             yield return new WaitForSeconds(0.123f);
         }
     }
