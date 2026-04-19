@@ -320,11 +320,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!20 &288147413 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 4459228605343409002, guid: 3efc12cc1f67f6145b16f610da3af604, type: 3}
-  m_PrefabInstance: {fileID: 5332154754141023221}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &393101834
 GameObject:
   m_ObjectHideFlags: 0
@@ -436,11 +431,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 393101834}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &393675479 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5259953934339149384, guid: 3efc12cc1f67f6145b16f610da3af604, type: 3}
-  m_PrefabInstance: {fileID: 5332154754141023221}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &403583524
 GameObject:
   m_ObjectHideFlags: 0
@@ -1284,27 +1274,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3030192163158360768, guid: 3efc12cc1f67f6145b16f610da3af604, type: 3}
   m_PrefabInstance: {fileID: 5332154754141023221}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1075667507
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 393675479}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30ee078e5950b154893055de7e3f967e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CircleSync
-  WallMaterial: {fileID: 2100000, guid: 702f1b679b8bd174a85b64649f73d462, type: 2}
-  Camera: {fileID: 288147413}
-  RayLength: 3000
-  Target: {fileID: 463406091}
-  Mask:
-    serializedVersion: 2
-    m_Bits: 8
-  Size: 2
-  Offset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &1089398090
 GameObject:
   m_ObjectHideFlags: 0
@@ -3496,6 +3465,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2131704442735416348, guid: 3efc12cc1f67f6145b16f610da3af604, type: 3}
+      propertyPath: Target
+      value: 
+      objectReference: {fileID: 463406091}
     - target: {fileID: 3030192163158360768, guid: 3efc12cc1f67f6145b16f610da3af604, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3551,10 +3524,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5259953934339149384, guid: 3efc12cc1f67f6145b16f610da3af604, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1075667507}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3efc12cc1f67f6145b16f610da3af604, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
