@@ -455,6 +455,7 @@ GameObject:
   - component: {fileID: 7600843330494990635}
   - component: {fileID: 377267718066385339}
   - component: {fileID: 2090045858798103473}
+  - component: {fileID: 6256405832344378724}
   m_Layer: 0
   m_Name: '= [Actuators]'
   m_TagString: Untagged
@@ -508,6 +509,19 @@ MonoBehaviour:
   agent: {fileID: 2145279457055403716}
   followThisFrameActive: 0
   currentTarget: {x: 0, y: 0, z: 0}
+--- !u!114 &6256405832344378724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5603104467128959877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cce8d9097e7e73499d3247eb4683e15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ACT_SunBoss_Combat
+  BB_Sunboss_Master: {fileID: 7970373808131415435}
 --- !u!1 &5622921461501998674
 GameObject:
   m_ObjectHideFlags: 0
@@ -1012,9 +1026,12 @@ MonoBehaviour:
     Speed: 5
     MaxHP: 20
     Damage: 1
+    Storage: 10
+    HP: 2147483647
     mSpeed: 1
     mMaxHP: 1
     mDamage: 1
+    mStorage: 0
   BB_SunbossCTX_Brain:
     ACT_SunBoss_Brain: {fileID: 377267718066385339}
     PatrolPointOBJ: {fileID: 0}
@@ -1035,6 +1052,8 @@ MonoBehaviour:
     ConeBox: {fileID: 726050064575403084}
   BB_SunbossCTX_Move:
     ACT_SunBoss_Navagent: {fileID: 2090045858798103473}
+  BB_SunbossCTX_Combat:
+    ACT_SunBoss_Combat: {fileID: 0}
   BB_SunbossCTX_Debug:
     TextUI_State: {fileID: 2294929049969548292}
     TextUI_Sight: {fileID: 4017897345384448578}

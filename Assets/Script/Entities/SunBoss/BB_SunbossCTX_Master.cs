@@ -18,6 +18,9 @@ public class BB_Sunboss_Master : MonoBehaviour
 
     [Header("\n\n---- Move")]
     public BB_SunbossCTX_Move BB_SunbossCTX_Move;
+    
+    [Header("\n\n---- Combat")]
+    public BB_SunbossCTX_Combat BB_SunbossCTX_Combat;
 
 
 
@@ -71,6 +74,12 @@ public class BB_SunbossCTX_Sense
 public class BB_SunbossCTX_Move
 {
     public ACT_SunBoss_Navagent ACT_SunBoss_Navagent;
+}
+
+[Serializable]
+public class BB_SunbossCTX_Combat
+{
+    public ACT_SunBoss_Combat ACT_SunBoss_Combat;
 }
 
 [Serializable]
