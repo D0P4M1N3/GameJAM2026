@@ -190,6 +190,9 @@ MonoBehaviour:
   BB_Player_Master: {fileID: 5522960294862400285}
   inputReader: {fileID: 3122298847395962020}
   cameraTransform: {fileID: 0}
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 72
 --- !u!54 &5766282951497282806
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -214,9 +217,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 80
-  m_CollisionDetection: 0
+  m_Interpolate: 1
+  m_Constraints: 84
+  m_CollisionDetection: 2
 --- !u!1 &2680091645408326104
 GameObject:
   m_ObjectHideFlags: 0
@@ -608,13 +611,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08317e01ff40dc54e8a3d703f30c76b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BB_PlayerCTX_Master
-  CharacterStats:
-    Speed: 5
-    MaxHP: 20
-    Damage: 1
-    mSpeed: 1
-    mMaxHP: 1
-    mDamage: 1
   BB_PlayerCTX_Body:
     WholeBody: {fileID: 6161299359824271258}
   BB_PlayerCTX_Move:

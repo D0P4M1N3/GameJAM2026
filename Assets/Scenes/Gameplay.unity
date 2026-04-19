@@ -2822,7 +2822,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DATA_Player
   BB_Player_Master: {fileID: 0}
   CharacterStats:
-    Speed: 5
+    Speed: 200
     MaxHP: 20
     Damage: 1
     Storage: 10
