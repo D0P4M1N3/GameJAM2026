@@ -34,52 +34,24 @@ public class ACT_SunBoss_Navagent : MonoBehaviour
 
 
     // Path Commands ////////////////////////////////////////////
-
-    //public void GoToOnce(Vector3 worldPos)
-    //{
-    //    STATS_UPDATE();
-
-    //    if (TryGetReachablePoint(worldPos, out var reachable))
-    //    {
-    //        currentTarget = reachable;
-
-    //        lastReachableTarget = reachable;
-    //        hasReachableTarget = true;
-
-    //        agent.isStopped = false;
-    //        agent.SetDestination(reachable);
-    //    }
-    //    else if (hasReachableTarget)
-    //    {
-    //        // fallback
-    //        currentTarget = lastReachableTarget;
-
-    //        agent.isStopped = false;
-    //        agent.SetDestination(lastReachableTarget);
-    //    }
-    //}
-
+    public void GoToOnce(Vector3 worldPos)
+    {
+        STATS_UPDATE();
+        currentTarget = worldPos;
+        agent.isStopped = false;
+        agent.SetDestination(worldPos);
+    }
     public void GoToThisFrame(Vector3 worldPos)
     {
         followThisFrameActive = true;
 
-        Vector3 finalTarget = lastReachableTarget;
-
-        if (TryGetReachablePoint(worldPos, out var reachable))
-        {
-            finalTarget = reachable;
-            lastReachableTarget = reachable;
-            hasReachableTarget = true;
-        }
-
-        // Avoid redundant SetDestination calls
-        if (!agent.hasPath || Vector3.Distance(currentTarget, finalTarget) > 0.05f)
+        // Avoid redundant SetDestination calls (small optimization)
+        if (!agent.hasPath || Vector3.Distance(currentTarget, worldPos) > 0.05f)
         {
             STATS_UPDATE();
-
-            currentTarget = finalTarget;
+            currentTarget = worldPos;
             agent.isStopped = false;
-            agent.SetDestination(finalTarget);
+            agent.SetDestination(worldPos);
         }
     }
 

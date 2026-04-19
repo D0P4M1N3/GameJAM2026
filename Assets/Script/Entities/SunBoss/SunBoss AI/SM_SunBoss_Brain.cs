@@ -24,7 +24,10 @@ namespace SunBoss
 
         public override void Tick_Override()
         {
-            BB_Sunboss_Master.BB_SunbossCTX_Debug.TextUI_State.text = GetCurrentState();
+            BB_Sunboss_Master.BB_SunbossCTX_Debug.TextUI_State.text =
+                GetCurrentState() +
+                "\nUncertain: " + BB_Sunboss_Master.BB_SunbossCTX_Brain.UncertainInPrediction;
+                ;
 
             BB_Sunboss_Master.BB_SunbossCTX_Sense.ConeBox.Ray.Target = BB_Sunboss_Master.BB_SunbossCTX_Brain.PlayerOBJ.transform;
             BB_Sunboss_Master.BB_SunbossCTX_Debug.TextUI_Sight.text =
@@ -111,6 +114,8 @@ namespace SunBoss
             Vector3 PointOfSpeculation = Vector3.Lerp(brain.ActualPlayerPosition_NavmeshProjected, brain.PlayerPosition_LastestKnown, brain.UncertainInPrediction);
             patrolTarget = PointOfSpeculation +
                            new Vector3(offset.x, 0, offset.y);
+
+            patrolTarget = B_NavMeshUtil.Project(patrolTarget);
         }
     }
 

@@ -1734,6 +1734,14 @@ PrefabInstance:
       propertyPath: BB_SunbossCTX_Brain.PlayerOBJ
       value: 
       objectReference: {fileID: 1308447173}
+    - target: {fileID: 7970373808131415435, guid: 60854ad8846874f4d9a3c8c6c77dd51a, type: 3}
+      propertyPath: BB_SunbossCTX_Brain.MaxPredictionError_Position
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7970373808131415435, guid: 60854ad8846874f4d9a3c8c6c77dd51a, type: 3}
+      propertyPath: BB_SunbossCTX_Brain.MinPredictionError_Position
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3318,6 +3326,8 @@ MonoBehaviour:
   MaxWobble: 0.03
   WobbleSpeed: 1
   Recovery: 1
+  maxSpeed: 10
+  wobbleInfluence: 0.5
 --- !u!136 &2105267182
 CapsuleCollider:
   m_ObjectHideFlags: 0
