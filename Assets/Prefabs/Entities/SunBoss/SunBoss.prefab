@@ -210,7 +210,7 @@ MonoBehaviour:
   rayCount: 150
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 72
   coneBox: {fileID: 726050064575403084}
 --- !u!1 &4564704909439019260
 GameObject:
@@ -696,7 +696,7 @@ MonoBehaviour:
   Ray:
     LayerMask:
       serializedVersion: 2
-      m_Bits: 64
+      m_Bits: 72
     Target: {fileID: 0}
     Shooter: {fileID: 50122643273546919}
     DrawGizmo: 0

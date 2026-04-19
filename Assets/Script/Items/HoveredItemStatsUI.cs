@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HoveredItemStatsUI : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class HoveredItemStatsUI : MonoBehaviour
     [SerializeField] [TextArea] private string emptyDescription = "";
 
     private readonly List<StatRowUI> spawnedRows = new();
+    private CanvasGroup panelCanvasGroup;
     private ItemData currentItem;
 
     private void Awake()
@@ -23,10 +25,21 @@ public class HoveredItemStatsUI : MonoBehaviour
             panelRoot = gameObject;
         }
 
-        if (contentRoot == null)
+        EnsureContentRootReference();
+
+        if (panelRoot != null)
         {
-            contentRoot = transform;
+            panelCanvasGroup = panelRoot.GetComponent<CanvasGroup>();
+            if (panelCanvasGroup == null)
+            {
+                panelCanvasGroup = panelRoot.AddComponent<CanvasGroup>();
+            }
         }
+    }
+
+    private void OnValidate()
+    {
+        EnsureContentRootReference();
     }
 
     private void OnEnable()
@@ -41,6 +54,7 @@ public class HoveredItemStatsUI : MonoBehaviour
         ShowTitle();
         ShowDescription();
         RefreshRows(itemData != null ? itemData.Stats : ItemStats.Zero);
+        RebuildLayout();
     }
 
     public void ClearIfShowing(ItemData itemData)
@@ -56,10 +70,11 @@ public class HoveredItemStatsUI : MonoBehaviour
     public void Clear()
     {
         currentItem = null;
-        SetPanelVisible(false);
         ShowTitle();
         ShowDescription();
         ClearRows();
+        RebuildLayout();
+        SetPanelVisible(false);
     }
 
     private void ShowTitle()
@@ -104,7 +119,7 @@ public class HoveredItemStatsUI : MonoBehaviour
             return;
         }
 
-        StatRowUI row = Instantiate(statRowPrefab, contentRoot);
+        StatRowUI row = Instantiate(statRowPrefab, contentRoot, false);
         row.Bind(statName, statValue);
         spawnedRows.Add(row);
     }
@@ -124,13 +139,52 @@ public class HoveredItemStatsUI : MonoBehaviour
         spawnedRows.Clear();
     }
 
+    private void RebuildLayout()
+    {
+        Canvas.ForceUpdateCanvases();
+
+        if (contentRoot is RectTransform contentRectTransform)
+        {
+            LayoutRebuilder.ForceRebuildLayoutImmediate(contentRectTransform);
+        }
+    }
+
     private void SetPanelVisible(bool isVisible)
     {
-        if (panelRoot == null)
+        if (panelCanvasGroup == null)
         {
             return;
         }
 
-        panelRoot.SetActive(isVisible);
+        panelCanvasGroup.alpha = isVisible ? 1f : 0f;
+        panelCanvasGroup.interactable = isVisible;
+        panelCanvasGroup.blocksRaycasts = isVisible;
+    }
+
+    private void EnsureContentRootReference()
+    {
+        if (contentRoot != null)
+        {
+            return;
+        }
+
+        Transform statContentRow = transform.Find("StatContentRow");
+        if (statContentRow != null)
+        {
+            contentRoot = statContentRow;
+            return;
+        }
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Transform child = transform.GetChild(i);
+            if (child.GetComponent<VerticalLayoutGroup>() != null || child.GetComponent<HorizontalLayoutGroup>() != null)
+            {
+                contentRoot = child;
+                return;
+            }
+        }
+
+        contentRoot = null;
     }
 }
