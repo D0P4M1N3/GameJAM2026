@@ -4,7 +4,7 @@ using UnityEngine;
 public class BB_Player_Master : MonoBehaviour
 {
     [Header("\n\n---- Stats")]
-    public CharacterStats CharacterStats;
+    public CharacterStats CharacterStats => DATA_Player.Instance.CharacterStats;
 
     [Header("\n\n---- Body")]
     public BB_PlayerCTX_Body BB_PlayerCTX_Body;
