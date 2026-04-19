@@ -35,50 +35,41 @@ public class ACT_SunBoss_Navagent : MonoBehaviour
 
     // Path Commands ////////////////////////////////////////////
 
-    public void GoToOnce(Vector3 worldPos)
-    {
-        STATS_UPDATE();
+    //public void GoToOnce(Vector3 worldPos)
+    //{
+    //    STATS_UPDATE();
 
-        if (TryGetReachablePoint(worldPos, out var reachable))
-        {
-            currentTarget = reachable;
+    //    if (TryGetReachablePoint(worldPos, out var reachable))
+    //    {
+    //        currentTarget = reachable;
 
-            lastReachableTarget = reachable;
-            hasReachableTarget = true;
+    //        lastReachableTarget = reachable;
+    //        hasReachableTarget = true;
 
-            agent.isStopped = false;
-            agent.SetDestination(reachable);
-        }
-        else if (hasReachableTarget)
-        {
-            // fallback
-            currentTarget = lastReachableTarget;
+    //        agent.isStopped = false;
+    //        agent.SetDestination(reachable);
+    //    }
+    //    else if (hasReachableTarget)
+    //    {
+    //        // fallback
+    //        currentTarget = lastReachableTarget;
 
-            agent.isStopped = false;
-            agent.SetDestination(lastReachableTarget);
-        }
-    }
+    //        agent.isStopped = false;
+    //        agent.SetDestination(lastReachableTarget);
+    //    }
+    //}
 
     public void GoToThisFrame(Vector3 worldPos)
     {
         followThisFrameActive = true;
 
-        Vector3 finalTarget;
+        Vector3 finalTarget = lastReachableTarget;
 
         if (TryGetReachablePoint(worldPos, out var reachable))
         {
             finalTarget = reachable;
-
             lastReachableTarget = reachable;
             hasReachableTarget = true;
-        }
-        else if (hasReachableTarget)
-        {
-            finalTarget = lastReachableTarget;
-        }
-        else
-        {
-            return; // nothing valid yet
         }
 
         // Avoid redundant SetDestination calls

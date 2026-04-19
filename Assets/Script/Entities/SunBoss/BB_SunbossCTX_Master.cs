@@ -47,6 +47,7 @@ public class BB_SunbossCTX_Brain
 
     [Header("\nRuntime")]
     public GameObject PlayerOBJ;
+    public Vector3 ActualPlayerPosition_NavmeshProjected;
     public Vector3 PlayerPosition_LastestKnown;
     public float UncertainInPrediction = 1f;
 }

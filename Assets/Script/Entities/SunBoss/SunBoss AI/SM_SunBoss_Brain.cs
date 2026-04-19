@@ -29,9 +29,13 @@ namespace SunBoss
             BB_Sunboss_Master.BB_SunbossCTX_Sense.ConeBox.Ray.Target = BB_Sunboss_Master.BB_SunbossCTX_Brain.PlayerOBJ.transform;
             BB_Sunboss_Master.BB_SunbossCTX_Debug.TextUI_Sight.text =
                 "Target Seen: " + BB_Sunboss_Master.BB_SunbossCTX_Sense.ConeBox.ReachedTarget.ToString();
-            if (BB_Sunboss_Master.BB_SunbossCTX_Sense.ConeBox.ReachedTarget)
+
+
+            BB_Sunboss_Master.BB_SunbossCTX_Brain.ActualPlayerPosition_NavmeshProjected = B_NavMeshUtil.Project( BB_Sunboss_Master.BB_SunbossCTX_Brain.PlayerOBJ.transform.position);
+
+			if (BB_Sunboss_Master.BB_SunbossCTX_Sense.ConeBox.ReachedTarget)
             {
-                BB_Sunboss_Master.BB_SunbossCTX_Brain.PlayerPosition_LastestKnown = BB_Sunboss_Master.BB_SunbossCTX_Brain.PlayerOBJ.transform.position;
+                BB_Sunboss_Master.BB_SunbossCTX_Brain.PlayerPosition_LastestKnown = BB_Sunboss_Master.BB_SunbossCTX_Brain.ActualPlayerPosition_NavmeshProjected;
             }
         }
     }
@@ -64,13 +68,15 @@ namespace SunBoss
 
         public override void OnEnter()
         {
-            PickNewPatrolPoint();
+           
         }
 
         public override void OnTick()
         {
             var bb = BB;
             var sense = bb.BB_SunbossCTX_Sense.ConeBox;
+
+            PickNewPatrolPoint();
 
             // --- TRANSITION: SEE PLAYER ---
             if (sense.ReachedTarget)
@@ -102,7 +108,7 @@ namespace SunBoss
             Vector2 offset = Random.insideUnitCircle * radius;
 
 
-            Vector3 PointOfSpeculation = Vector3.Lerp(brain.PlayerOBJ.transform.position, brain.PlayerPosition_LastestKnown, brain.UncertainInPrediction);
+            Vector3 PointOfSpeculation = Vector3.Lerp(brain.ActualPlayerPosition_NavmeshProjected, brain.PlayerPosition_LastestKnown, brain.UncertainInPrediction);
             patrolTarget = PointOfSpeculation +
                            new Vector3(offset.x, 0, offset.y);
         }
@@ -131,7 +137,7 @@ namespace SunBoss
             //GOTO TARGET
             bb.BB_SunbossCTX_Move.ACT_SunBoss_Navagent
                     .GoToThisFrame(
-                        bb.BB_SunbossCTX_Brain.PlayerOBJ.transform.position);
+                        bb.BB_SunbossCTX_Brain.ActualPlayerPosition_NavmeshProjected);
 
 
             if (sense.ReachedTarget)
@@ -141,9 +147,9 @@ namespace SunBoss
 
                 //FACE TARGET
                 Vector3 flatTarget = new Vector3(
-                    bb.BB_SunbossCTX_Brain.PlayerOBJ.transform.position.x,
+                    bb.BB_SunbossCTX_Brain.ActualPlayerPosition_NavmeshProjected.x,
                     bb.BB_SunbossCTX_Body.WholeBody.transform.position.y,
-                    bb.BB_SunbossCTX_Brain.PlayerOBJ.transform.position.z
+                    bb.BB_SunbossCTX_Brain.ActualPlayerPosition_NavmeshProjected.z
                 );
                 bb.BB_SunbossCTX_Body.WholeBody.LookAt(flatTarget);
             }
