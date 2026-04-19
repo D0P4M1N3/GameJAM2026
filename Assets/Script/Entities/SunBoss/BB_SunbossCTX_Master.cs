@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BB_SunbossCTX_Master : MonoBehaviour
+public class BB_Sunboss_Master : MonoBehaviour
 {
     [Header("\n\n---- Stats")]
     public CharacterStats CharacterStats;

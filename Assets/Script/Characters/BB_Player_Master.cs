@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class BB_PlayerCTX_Master : MonoBehaviour
+public class BB_Player_Master : MonoBehaviour
 {
     [Header("\n\n---- Stats")]
     public CharacterStats CharacterStats;

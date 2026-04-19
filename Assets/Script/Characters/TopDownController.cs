@@ -3,11 +3,12 @@ using UnityEngine;
 public class TopDownController : MonoBehaviour
 {
     [Header("References")]
+    public BB_Player_Master BB_Player_Master;
     [SerializeField] private InputReader inputReader;
     [SerializeField] private Transform cameraTransform;
 
     [Header("Movement Settings")]
-    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float moveSpeed => BB_Player_Master.CharacterStats.Speed;
 
     private void Update()
     {

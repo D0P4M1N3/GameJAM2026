@@ -3,7 +3,7 @@ using UnityEngine;
 public class ACT_SunBoss_Brain : MonoBehaviour
 {
     [Header("References")]
-    public BB_SunbossCTX_Master BB_SunbossCTX_Master;
+    public BB_Sunboss_Master BB_Sunboss_Master;
 
     [Header("Configs")]
     [SerializeField] SM_SunBoss__BASE BrainStateMachine;
@@ -16,7 +16,7 @@ public class ACT_SunBoss_Brain : MonoBehaviour
     private void Start()
     {
         SM_SunBoss_Brain_INST = Instantiate(BrainStateMachine);
-        SM_SunBoss_Brain_INST.BB_SunbossCTX_Master = BB_SunbossCTX_Master;
+        SM_SunBoss_Brain_INST.BB_Sunboss_Master = BB_Sunboss_Master;
 
         SM_SunBoss_Brain_INST.Begin();
     }

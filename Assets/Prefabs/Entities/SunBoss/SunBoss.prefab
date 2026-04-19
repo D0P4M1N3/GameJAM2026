@@ -382,7 +382,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 635c31d41858c5d43bea0076813513e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ACT_SunBoss_Brain
-  BB_SunbossCTX_Master: {fileID: 7970373808131415435}
+  BB_Sunboss_Master: {fileID: 7970373808131415435}
   BrainStateMachine: {fileID: 11400000, guid: 074cf65996b886b4eb251e2648f54ade, type: 2}
   SM_SunBoss_Brain_INST: {fileID: 0}
 --- !u!114 &2090045858798103473
@@ -397,6 +397,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 097c5575774f3444fb1ff11718ba5803, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ActEnemy_Navagent
+  BB_Sunboss_Master: {fileID: 7970373808131415435}
   agent: {fileID: 2145279457055403716}
   followThisFrameActive: 0
   currentTarget: {x: 0, y: 0, z: 0}
@@ -899,6 +900,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8815827ce531c7d499636f71128c7884, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BBsunbossCTX_Master
+  CharacterStats:
+    Speed: 5
+    MaxHealth: 20
+    Damage: 1
+    Damage_MULT: 1
   BB_SunbossCTX_Brain:
     ACT_SunBoss_Brain: {fileID: 377267718066385339}
     UncertainInPrediction_Reduction: 0.2

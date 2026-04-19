@@ -24,14 +24,14 @@ namespace SunBoss
 
         public override void Tick_Override()
         {
-            BB_SunbossCTX_Master.BB_SunbossCTX_Debug.TextUI_State.text = GetCurrentState();
+            BB_Sunboss_Master.BB_SunbossCTX_Debug.TextUI_State.text = GetCurrentState();
 
-            BB_SunbossCTX_Master.BB_SunbossCTX_Sense.ConeBox.Ray.Target = BB_SunbossCTX_Master.BB_SunbossCTX_Brain.PlayerOBJ.transform;
-            BB_SunbossCTX_Master.BB_SunbossCTX_Debug.TextUI_Sight.text =
-                "Target Seen: " + BB_SunbossCTX_Master.BB_SunbossCTX_Sense.ConeBox.ReachedTarget.ToString();
-            if (BB_SunbossCTX_Master.BB_SunbossCTX_Sense.ConeBox.ReachedTarget)
+            BB_Sunboss_Master.BB_SunbossCTX_Sense.ConeBox.Ray.Target = BB_Sunboss_Master.BB_SunbossCTX_Brain.PlayerOBJ.transform;
+            BB_Sunboss_Master.BB_SunbossCTX_Debug.TextUI_Sight.text =
+                "Target Seen: " + BB_Sunboss_Master.BB_SunbossCTX_Sense.ConeBox.ReachedTarget.ToString();
+            if (BB_Sunboss_Master.BB_SunbossCTX_Sense.ConeBox.ReachedTarget)
             {
-                BB_SunbossCTX_Master.BB_SunbossCTX_Brain.PlayerPosition_LastestKnown = BB_SunbossCTX_Master.BB_SunbossCTX_Brain.PlayerOBJ.transform.position;
+                BB_Sunboss_Master.BB_SunbossCTX_Brain.PlayerPosition_LastestKnown = BB_Sunboss_Master.BB_SunbossCTX_Brain.PlayerOBJ.transform.position;
             }
         }
     }
@@ -39,8 +39,8 @@ namespace SunBoss
     public abstract class SunBossState : B_STATE
     {
         // QUICK CONSTRUCTOR
-        protected BB_SunbossCTX_Master BB =>
-            ((SM_SunBoss__BASE)stateMachine).BB_SunbossCTX_Master;
+        protected BB_Sunboss_Master BB =>
+            ((SM_SunBoss__BASE)stateMachine).BB_Sunboss_Master;
     }
 
 

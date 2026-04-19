@@ -4,6 +4,7 @@ using UnityEngine.AI;
 public class ACT_SunBoss_Navagent : MonoBehaviour
 {
     [Header("References")]
+    public BB_Sunboss_Master BB_Sunboss_Master;
     public NavMeshAgent agent;
 
     [Header("Runtime (View Only)")]
@@ -36,6 +37,8 @@ public class ACT_SunBoss_Navagent : MonoBehaviour
 
     public void GoToOnce(Vector3 worldPos)
     {
+        STATS_UPDATE();
+
         if (TryGetReachablePoint(worldPos, out var reachable))
         {
             currentTarget = reachable;
@@ -81,6 +84,8 @@ public class ACT_SunBoss_Navagent : MonoBehaviour
         // Avoid redundant SetDestination calls
         if (!agent.hasPath || Vector3.Distance(currentTarget, finalTarget) > 0.05f)
         {
+            STATS_UPDATE();
+
             currentTarget = finalTarget;
             agent.isStopped = false;
             agent.SetDestination(finalTarget);
@@ -111,7 +116,10 @@ public class ACT_SunBoss_Navagent : MonoBehaviour
 
 
     // INTERNAL ////////////////////////////////////////////
-
+    void STATS_UPDATE()
+    {
+        agent.speed = BB_Sunboss_Master.CharacterStats.Speed;
+    }
     bool TryGetReachablePoint(Vector3 input, out Vector3 result, float sampleRadius = 3f)
     {
         NavMeshHit hit;
