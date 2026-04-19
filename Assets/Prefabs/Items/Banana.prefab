@@ -294,7 +294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 508cecc4d2874c9596a6a75a32de1909, type: 3}
   m_Name: 
   m_EditorClassIdentifier: GameJAM2026.Runtime::ItemWorldObject
-  itemData: {fileID: 11400000, guid: 41efac3ecf908aa4099593744fa26c8b, type: 2}
+  itemData: {fileID: 11400000, guid: e46231dec6777894e8c3b0f7dff5b8a5, type: 2}
   spriteRenderer: {fileID: 7052085896162765451}
   audioSource: {fileID: 4012345678901234567}
   hoverStatsUi: {fileID: 0}

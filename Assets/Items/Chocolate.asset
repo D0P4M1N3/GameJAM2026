@@ -15,12 +15,14 @@ MonoBehaviour:
   itemId: 3
   displayName: Chocolate
   description: 
+  itemColor: {r: 1, g: 1, b: 1, a: 1}
+  sizeValue: 1
   icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   worldPrefab: {fileID: 8539456021668210493, guid: ee7a41da5f2268a469098ebea9848b09, type: 3}
   stats:
     <Speed>k__BackingField: 3
-    <Health>k__BackingField: 0
-    <Attack>k__BackingField: 1
+    <Health>k__BackingField: 1
+    <Attack>k__BackingField: 0
     <Value>k__BackingField: 4
   collisionClip: {fileID: 8300000, guid: da2d0bb30d6c9bc44a1d6e2d8b76288e, type: 3}
   collisionVolume: 1
