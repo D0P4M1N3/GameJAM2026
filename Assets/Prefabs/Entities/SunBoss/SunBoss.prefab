@@ -207,12 +207,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e98ab00dfbb1e1b4a8423cab88d55229, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VisionConeRenderer
-  radius: 16
-  angle: 120
-  rayCount: 30
+  rayCount: 150
   obstacleMask:
     serializedVersion: 2
     m_Bits: 64
+  coneBox: {fileID: 726050064575403084}
 --- !u!1 &4564704909439019260
 GameObject:
   m_ObjectHideFlags: 0

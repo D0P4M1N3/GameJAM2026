@@ -3592,6 +3592,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4633716285351280827, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
+      propertyPath: m_Radius
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 5470522645547580403, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
+      propertyPath: MaxWobble
+      value: 0.015
+      objectReference: {fileID: 0}
     - target: {fileID: 6657033605025860922, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
       propertyPath: m_Name
       value: Player
