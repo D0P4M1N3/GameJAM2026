@@ -2278,16 +2278,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1386643389}
-        m_TargetAssemblyTypeName: StashSpawner, GameJAM2026.Runtime
-        m_MethodName: ResetStash
-        m_Mode: 1
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: GameSceneManager, Assembly-CSharp
+        m_MethodName: LoadScene
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Gameplay
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1021687074
@@ -2949,7 +2949,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1386643388}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -5.61, y: 1.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
@@ -3008,6 +3008,71 @@ Transform:
   m_Children: []
   m_Father: {fileID: 111341748}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1392799448
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1043451333200621071, guid: 608b39c81b71c4548b7271dda358ff9e, type: 3}
+      propertyPath: m_Name
+      value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 5492137316954170339, guid: 608b39c81b71c4548b7271dda358ff9e, type: 3}
+      propertyPath: stashData
+      value: 
+      objectReference: {fileID: 1549461764}
+    - target: {fileID: 5492137316954170339, guid: 608b39c81b71c4548b7271dda358ff9e, type: 3}
+      propertyPath: inventoryData
+      value: 
+      objectReference: {fileID: 1001204854}
+    - target: {fileID: 7484573982318285572, guid: 608b39c81b71c4548b7271dda358ff9e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 960
+      objectReference: {fileID: 0}
+    - target: {fileID: 7484573982318285572, guid: 608b39c81b71c4548b7271dda358ff9e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 540
+      objectReference: {fileID: 0}
+    - target: {fileID: 7484573982318285572, guid: 608b39c81b71c4548b7271dda358ff9e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7484573982318285572, guid: 608b39c81b71c4548b7271dda358ff9e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7484573982318285572, guid: 608b39c81b71c4548b7271dda358ff9e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7484573982318285572, guid: 608b39c81b71c4548b7271dda358ff9e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7484573982318285572, guid: 608b39c81b71c4548b7271dda358ff9e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7484573982318285572, guid: 608b39c81b71c4548b7271dda358ff9e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7484573982318285572, guid: 608b39c81b71c4548b7271dda358ff9e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7484573982318285572, guid: 608b39c81b71c4548b7271dda358ff9e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 608b39c81b71c4548b7271dda358ff9e, type: 3}
 --- !u!1 &1417123235
 GameObject:
   m_ObjectHideFlags: 0
@@ -3408,6 +3473,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1549461765}
   - component: {fileID: 1549461764}
+  - component: {fileID: 1549461766}
   m_Layer: 0
   m_Name: StashData
   m_TagString: Untagged
@@ -3427,37 +3493,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aeae28714ee4a5f87f4c4886f47fc79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: GameJAM2026.Runtime::StashData
-  entries:
-  - item: {fileID: 11400000, guid: 41efac3ecf908aa4099593744fa26c8b, type: 2}
-    quantity: 3
-  - item: {fileID: 11400000, guid: e46231dec6777894e8c3b0f7dff5b8a5, type: 2}
-    quantity: 4
-  - item: {fileID: 11400000, guid: bfdba622486346a4a9a45604ee3a04b3, type: 2}
-    quantity: 4
-  - item: {fileID: 11400000, guid: 3f8b3e98052b58d49ad0154bf9bc9f28, type: 2}
-    quantity: 4
-  - item: {fileID: 11400000, guid: 258ee84056b7c934bae98fccad4eed4b, type: 2}
-    quantity: 4
-  - item: {fileID: 11400000, guid: cc9983dd59b77b34e8102b4482dc07c5, type: 2}
-    quantity: 4
-  - item: {fileID: 11400000, guid: 3f163d1a2b6789b4cac5a69f01b4271a, type: 2}
-    quantity: 2
-  - item: {fileID: 11400000, guid: e93402ccdf105af439cec057c1061a24, type: 2}
-    quantity: 3
-  - item: {fileID: 11400000, guid: a3324139f0606ed458e427f6775efa1c, type: 2}
-    quantity: 3
-  - item: {fileID: 11400000, guid: 581cbda859272ce41b6c199a9fb51d4d, type: 2}
-    quantity: 3
-  - item: {fileID: 11400000, guid: 45a4e4a1b6733f2428532ec62ba085a3, type: 2}
-    quantity: 3
-  - item: {fileID: 11400000, guid: 9e4dd21559ef3934eaa1372e8978e0d8, type: 2}
-    quantity: 1
-  totalItemCount: 38
+  entries: []
+  totalItemCount: 0
   totalStats:
-    <Speed>k__BackingField: 76
-    <Health>k__BackingField: 55
-    <Attack>k__BackingField: 9
-    <Value>k__BackingField: 108
+    <Speed>k__BackingField: 0
+    <Health>k__BackingField: 0
+    <Attack>k__BackingField: 0
+    <Value>k__BackingField: 0
 --- !u!4 &1549461765
 Transform:
   m_ObjectHideFlags: 0
@@ -3473,6 +3515,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1549461766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1549461763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 956d74fa9e2649cea5c4a39bf1f64357, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StarterPackManager
+  stashData: {fileID: 0}
+  starterItemPool:
+  - {fileID: 11400000, guid: fac8b46cf2827e64e83bea4cb121666c, type: 2}
+  - {fileID: 11400000, guid: cc9983dd59b77b34e8102b4482dc07c5, type: 2}
+  - {fileID: 11400000, guid: e93402ccdf105af439cec057c1061a24, type: 2}
+  - {fileID: 11400000, guid: 45a4e4a1b6733f2428532ec62ba085a3, type: 2}
+  starterItemCount: 3
 --- !u!1 &1623290110
 GameObject:
   m_ObjectHideFlags: 0
@@ -4321,8 +4382,8 @@ SceneRoots:
   - {fileID: 1087625714}
   - {fileID: 1115754637}
   - {fileID: 1001204855}
-  - {fileID: 1549461765}
   - {fileID: 1386643391}
+  - {fileID: 1549461765}
   - {fileID: 294852383}
   - {fileID: 1671989302}
   - {fileID: 533547059}
@@ -4331,3 +4392,4 @@ SceneRoots:
   - {fileID: 607502959}
   - {fileID: 1623290111}
   - {fileID: 2135193986}
+  - {fileID: 1392799448}

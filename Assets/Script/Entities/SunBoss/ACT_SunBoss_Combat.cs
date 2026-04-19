@@ -4,9 +4,20 @@ using System.Collections;
 public class ACT_SunBoss_Combat : MonoBehaviour
 {
     public BB_Sunboss_Master BB_Sunboss_Master;
+    [SerializeField] private CharacterStats targetCharacterStats;
 
     private Coroutine debugRoutine;
     private bool wasReachedLastFrame = false;
+
+    private void Awake()
+    {
+        EnsureTargetCharacterStatsReference();
+    }
+
+    private void OnValidate()
+    {
+        EnsureTargetCharacterStatsReference();
+    }
 
     private void Update()
     {
@@ -35,10 +46,25 @@ public class ACT_SunBoss_Combat : MonoBehaviour
     {
         while (true)
         {
-            // This logic should be on Player
-            DATA_Player.Instance.CharacterStats.HP -= (int)BB_Sunboss_Master.CharacterStats.finalDamage;
-            DATA_Player.Instance.CharacterStats.HP = (int)Mathf.Clamp(DATA_Player.Instance.CharacterStats.HP, 0, DATA_Player.Instance.CharacterStats.finalMaxHP);
+            if (targetCharacterStats != null)
+            {
+                targetCharacterStats.HP -= (int)BB_Sunboss_Master.CharacterStats.finalDamage;
+                targetCharacterStats.HP = (int)Mathf.Clamp(targetCharacterStats.HP, 0, targetCharacterStats.finalMaxHP);
+            }
+
             yield return new WaitForSeconds(0.123f);
+        }
+    }
+
+    private void EnsureTargetCharacterStatsReference()
+    {
+        if (targetCharacterStats == null)
+        {
+            BB_Player_Master playerMaster = FindFirstObjectByType<BB_Player_Master>();
+            if (playerMaster != null)
+            {
+                targetCharacterStats = playerMaster.CharacterStats;
+            }
         }
     }
 }

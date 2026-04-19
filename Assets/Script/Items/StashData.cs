@@ -81,6 +81,29 @@ public class StashData : MonoBehaviour
         return true;
     }
 
+    public void SetEntries(IEnumerable<StashEntry> sourceEntries)
+    {
+        entries.Clear();
+
+        if (sourceEntries == null)
+        {
+            RecalculateSummary();
+            return;
+        }
+
+        foreach (StashEntry entry in sourceEntries)
+        {
+            if (!entry.IsValid)
+            {
+                continue;
+            }
+
+            entries.Add(new StashEntry(entry.Item, entry.Quantity));
+        }
+
+        RecalculateSummary();
+    }
+
     public void RecalculateSummary()
     {
         totalItemCount = 0;

@@ -63,6 +63,29 @@ public class InventoryData : MonoBehaviour
         return false;
     }
 
+    public void SetItems(IEnumerable<ItemData> sourceItems)
+    {
+        items.Clear();
+
+        if (sourceItems == null)
+        {
+            RecalculateSummary();
+            return;
+        }
+
+        foreach (ItemData item in sourceItems)
+        {
+            if (item == null)
+            {
+                continue;
+            }
+
+            items.Add(new InventoryEntry(item));
+        }
+
+        RecalculateSummary();
+    }
+
     public void RecalculateSummary()
     {
         totalItemCount = 0;
