@@ -8,7 +8,7 @@ public class TopDownController : MonoBehaviour
     [SerializeField] private Transform cameraTransform;
 
     [Header("Movement Settings")]
-    [SerializeField] private float moveSpeed => BB_Player_Master.CharacterStats.Speed;
+    [SerializeField] private float moveSpeed => BB_Player_Master.CharacterStats.finalSpeed;
 
     private void Update()
     {
