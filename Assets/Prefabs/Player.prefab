@@ -360,6 +360,8 @@ MonoBehaviour:
   MaxWobble: 0.03
   WobbleSpeed: 1
   Recovery: 1
+  maxSpeed: 10
+  wobbleInfluence: 0.5
 --- !u!1 &6657033605025860922
 GameObject:
   m_ObjectHideFlags: 0
@@ -369,6 +371,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1345481311484397410}
+  - component: {fileID: 5522960294862400285}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -392,3 +395,25 @@ Transform:
   - {fileID: 6161299359824271258}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5522960294862400285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6657033605025860922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08317e01ff40dc54e8a3d703f30c76b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BB_PlayerCTX_Master
+  CharacterStats:
+    Speed: 5
+    MaxHealth: 20
+    Damage: 1
+    Damage_MULT: 1
+  BB_PlayerCTX_Body:
+    WholeBody: {fileID: 6161299359824271258}
+  BB_PlayerCTX_Move:
+    InputReader: {fileID: 3122298847395962020}
+    TopDownController: {fileID: 7168244022685300921}

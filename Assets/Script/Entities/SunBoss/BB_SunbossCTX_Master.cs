@@ -4,6 +4,9 @@ using UnityEngine.UI;
 
 public class BB_SunbossCTX_Master : MonoBehaviour
 {
+    [Header("\n\n---- Stats")]
+    public CharacterStats CharacterStats;
+
     [Header("\n\n---- Brain")]
     public BB_SunbossCTX_Brain BB_SunbossCTX_Brain;
 
