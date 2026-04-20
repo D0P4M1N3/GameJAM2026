@@ -14,7 +14,7 @@ public class CharacterStats
     [Header("Current")]
     public float HP = float.PositiveInfinity;
     public float Currency = 0;
-    public Color ItemColor = Color.white;
+    public Color CharacterColor = Color.white;
 
     [Header("Modifier")]
     public float mSpeed = 0;
