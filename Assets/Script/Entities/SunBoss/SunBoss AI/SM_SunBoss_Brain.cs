@@ -20,6 +20,8 @@ namespace SunBoss
             });
 
             SetState<STATE_PATROL>();
+
+            BB_Sunboss_Master.BB_SunbossCTX_Brain.PlayerOBJ = FindObjectOfType<BB_Player_Master>().BB_PlayerCTX_Body.WholeBody.gameObject;
         }
 
         public override void Tick_Override()
