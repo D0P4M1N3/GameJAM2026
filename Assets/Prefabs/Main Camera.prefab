@@ -283,11 +283,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraController
   target: {fileID: 0}
-  targetOffset: {x: 0, y: 0, z: 0}
+  targetOffset: {x: 0, y: 1, z: 0}
   zoomSpeed: 5
-  minZoom: 5
-  maxZoom: 20
-  pitch: 45
+  minZoom: 7
+  maxZoom: 7
+  pitch: 31
   rotationSpeed: 5
   snapAngle: 90
   followSpeed: 90
@@ -310,7 +310,7 @@ MonoBehaviour:
   Mask:
     serializedVersion: 2
     m_Bits: 8
-  Size: 0.5
+  Size: 1
   Offset: {x: 0.5, y: 0.5, z: 1, w: 1}
 --- !u!1 &5417661389110771463
 GameObject:

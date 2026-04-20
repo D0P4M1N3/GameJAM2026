@@ -86,7 +86,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 245091556410774639}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -103,7 +103,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 702f1b679b8bd174a85b64649f73d462, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -192,10 +192,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelScatterZone
   zoneType: 1
-  size: {x: 9.48, y: 0.26, z: 9.22}
+  size: {x: 9.48, y: 0, z: 9.22}
   buildingColor: {r: 0.25, g: 0.8, b: 1, a: 0.45}
   itemColor: {r: 0.45, g: 1, b: 0.3, a: 0.45}
   enemyColor: {r: 1, g: 0.45, b: 0.3, a: 0.45}
+  playerStartColor: {r: 1, g: 0.9, b: 0.2, a: 0.45}
 --- !u!1 &2323691682519554474
 GameObject:
   m_ObjectHideFlags: 0
@@ -246,7 +247,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2323691682519554474}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -263,7 +264,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 702f1b679b8bd174a85b64649f73d462, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -352,10 +353,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelScatterZone
   zoneType: 0
-  size: {x: 9.59, y: 6.8, z: 9.32}
+  size: {x: 9.59, y: 0, z: 9.32}
   buildingColor: {r: 0.25, g: 0.8, b: 1, a: 0.45}
   itemColor: {r: 0.45, g: 1, b: 0.3, a: 0.45}
   enemyColor: {r: 1, g: 0.45, b: 0.3, a: 0.45}
+  playerStartColor: {r: 1, g: 0.9, b: 0.2, a: 0.45}
 --- !u!1 &4516038823713232825
 GameObject:
   m_ObjectHideFlags: 0
@@ -400,11 +402,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fcd3d89287c45a8b64202b67aeec3ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelScatterZone
-  zoneType: 1
-  size: {x: 3.5, y: 0.34, z: 9.14}
+  zoneType: 2
+  size: {x: 3.5, y: 0, z: 9.14}
   buildingColor: {r: 0.25, g: 0.8, b: 1, a: 0.45}
   itemColor: {r: 0.45, g: 1, b: 0.3, a: 0.45}
   enemyColor: {r: 1, g: 0.45, b: 0.3, a: 0.45}
+  playerStartColor: {r: 1, g: 0.9, b: 0.2, a: 0.45}
 --- !u!1 &5536515863302082313
 GameObject:
   m_ObjectHideFlags: 0
@@ -440,6 +443,7 @@ Transform:
   - {fileID: 5397989227128648387}
   - {fileID: 3246979809905280814}
   - {fileID: 5067029186442294037}
+  - {fileID: 4674298513622557738}
   m_Father: {fileID: 7844004298756833377}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2809207119723268844
@@ -549,7 +553,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -42.15303, y: 12.346971, z: 0.08806133}
-  m_LocalScale: {x: 5, y: 25, z: 80}
+  m_LocalScale: {x: 5, y: 25, z: 88.88}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7844004298756833377}
@@ -570,7 +574,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5804992226654078341}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -587,7 +591,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 702f1b679b8bd174a85b64649f73d462, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -631,6 +635,56 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &7046218747230226389
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4674298513622557738}
+  - component: {fileID: 2769268081018381330}
+  m_Layer: 3
+  m_Name: 'Player Start Scatter Zone '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4674298513622557738
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7046218747230226389}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.29, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4397236949630765756}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2769268081018381330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7046218747230226389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fcd3d89287c45a8b64202b67aeec3ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LevelScatterZone
+  zoneType: 3
+  size: {x: 1.11, y: 0, z: 9.55}
+  buildingColor: {r: 0.25, g: 0.8, b: 1, a: 0.45}
+  itemColor: {r: 0.45, g: 1, b: 0.3, a: 0.45}
+  enemyColor: {r: 1, g: 0.45, b: 0.3, a: 0.45}
+  playerStartColor: {r: 0.6603774, g: 0.21362081, b: 0, a: 0.45}
 --- !u!1 &8439489126962671422
 GameObject:
   m_ObjectHideFlags: 0
@@ -660,7 +714,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 42.84697, y: 12.346971, z: 0.08806133}
-  m_LocalScale: {x: 5, y: 25, z: 80}
+  m_LocalScale: {x: 5, y: 25, z: 89.198456}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7844004298756833377}
@@ -681,7 +735,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8439489126962671422}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -698,7 +752,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 702f1b679b8bd174a85b64649f73d462, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

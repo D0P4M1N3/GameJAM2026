@@ -7,6 +7,7 @@ using UnityEngine.Serialization;
 public class LevelGenerator : MonoBehaviour
 {
     [SerializeField] private GameObject baseLevelRoot;
+    [SerializeField] private Transform playerRoot;
     [SerializeField] private NavMeshSurface navMeshSurface;
     [SerializeField] [FormerlySerializedAs("gameplayPickupPrefab")] private GameplayItemPickup fallbackGameplayPickupPrefab;
     [SerializeField] private LevelBalanceData levelBalanceData;
@@ -18,7 +19,10 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] [Min(1)] private int maxBuildingPlacementAttempts = 12;
     [SerializeField] [Min(1)] private int maxItemPlacementAttempts = 8;
     [SerializeField] [Min(1)] private int maxEnemyPlacementAttempts = 8;
-    [SerializeField] private bool spawnEnemies;
+    [SerializeField] [Min(1)] private int maxPlayerPlacementAttempts = 12;
+    [SerializeField] [Min(0f)] private float minBuildingSpacing = 1f;
+    [SerializeField] private float itemSpawnYOffset = 0.5f;
+    [SerializeField] private bool debugEnemySpawning;
     [SerializeField] private bool randomizeBuildingYaw = true;
     [SerializeField] private bool generateOnStart = true;
     [SerializeField] [HideInInspector] private LevelLootTable levelLootTable;
@@ -41,6 +45,7 @@ public class LevelGenerator : MonoBehaviour
 
     private void OnValidate()
     {
+        EnsurePlayerReference();
         EnsureNavMeshSurfaceReference();
     }
 
@@ -56,6 +61,7 @@ public class LevelGenerator : MonoBehaviour
         }
 
         CacheGroundColliders();
+        EnsurePlayerReference();
         EnsureNavMeshSurfaceReference();
 
         LevelScatterZone[] scatterZones = baseLevelRoot.GetComponentsInChildren<LevelScatterZone>(true);
@@ -63,6 +69,7 @@ public class LevelGenerator : MonoBehaviour
         var buildingZones = new List<LevelScatterZone>();
         var itemZones = new List<LevelScatterZone>();
         var enemyZones = new List<LevelScatterZone>();
+        var playerZones = new List<LevelScatterZone>();
         for (int i = 0; i < scatterZones.Length; i++)
         {
             LevelScatterZone zone = scatterZones[i];
@@ -74,19 +81,21 @@ public class LevelGenerator : MonoBehaviour
             {
                 itemZones.Add(zone);
             }
-            else
+            else if (zone.ZoneType == LevelScatterZoneType.Enemies)
             {
                 enemyZones.Add(zone);
+            }
+            else
+            {
+                playerZones.Add(zone);
             }
         }
 
         SpawnBuildings(buildingZones, baseLevelRoot.transform);
         SpawnItems(itemZones, baseLevelRoot.transform);
         RebuildNavMesh();
-        if (spawnEnemies)
-        {
-            SpawnEnemies(enemyZones, baseLevelRoot.transform);
-        }
+        PositionPlayer(playerZones);
+        SpawnEnemies(enemyZones, baseLevelRoot.transform);
     }
 
     [ContextMenu("Clear Generated Level")]
@@ -228,7 +237,7 @@ public class LevelGenerator : MonoBehaviour
             }
 
             LevelScatterZone zone = itemZones[Random.Range(0, itemZones.Count)];
-            Vector3 position = zone.GetRandomPoint();
+            Vector3 position = zone.GetRandomPoint() + Vector3.up * itemSpawnYOffset;
             GameObject instanceObject = Instantiate(pickupPrefab, position, Quaternion.identity, parent);
             GameplayItemPickup instance = instanceObject.GetComponent<GameplayItemPickup>();
             if (instance == null)
@@ -240,13 +249,21 @@ public class LevelGenerator : MonoBehaviour
 
             instance.Initialize(item);
 
-            if (!TryGetCombinedBounds(instanceObject, out Bounds bounds) || Contains(zone.GetWorldBounds(), bounds))
+            if (!TryGetCombinedBounds(instanceObject, out Bounds bounds))
             {
                 spawnedPickups.Add(instance);
                 return;
             }
 
-            DestroyGenerated(instanceObject);
+            if (!Contains(zone.GetWorldBounds(), bounds) || IntersectsPlacedBuilding(bounds))
+            {
+                DestroyGenerated(instanceObject);
+                continue;
+            }
+
+            spawnedPickups.Add(instance);
+            return;
+
         }
     }
 
@@ -254,47 +271,56 @@ public class LevelGenerator : MonoBehaviour
     {
         if (enemyZones.Count == 0)
         {
+            LogEnemyDebug("No enemy zones found.");
             return;
         }
 
         if (enemyPrefabs.Count == 0)
         {
             Debug.LogWarning("LevelGenerator found enemy zones but no enemy prefabs are assigned.", this);
+            LogEnemyDebug("Enemy prefabs list is empty.");
             return;
         }
 
         if (!TryGetEnemyCountRange(out int minCount, out int maxCount))
         {
             Debug.LogWarning("LevelGenerator found enemy zones but no LevelBalanceData enemy counts are assigned.", this);
+            LogEnemyDebug("Enemy count range is unavailable from level balance data.");
             return;
         }
 
         if (navMeshSurface == null)
         {
             Debug.LogWarning("LevelGenerator could not find a NavMeshSurface for enemy spawning.", this);
+            LogEnemyDebug("NavMeshSurface is missing.");
             return;
         }
 
         int enemyCount = Random.Range(minCount, maxCount + 1);
+        LogEnemyDebug($"Trying to spawn {enemyCount} enemies across {enemyZones.Count} zones.");
         for (int i = 0; i < enemyCount; i++)
         {
-            TrySpawnEnemy(enemyZones, parent);
+            TrySpawnEnemy(enemyZones, parent, i + 1);
         }
     }
 
-    private void TrySpawnEnemy(List<LevelScatterZone> enemyZones, Transform parent)
+    private void TrySpawnEnemy(List<LevelScatterZone> enemyZones, Transform parent, int enemyIndex)
     {
+        string failureReason = "No attempts were made.";
+
         for (int attempt = 0; attempt < maxEnemyPlacementAttempts; attempt++)
         {
             GameObject prefab = GetRandomEnemyPrefab();
             if (prefab == null)
             {
+                LogEnemyDebug($"Enemy {enemyIndex}: no valid enemy prefab found.");
                 return;
             }
 
             LevelScatterZone zone = enemyZones[Random.Range(0, enemyZones.Count)];
             if (!TryGetNavMeshPlacementPosition(zone, out Vector3 position))
             {
+                failureReason = $"attempt {attempt + 1}: no valid navmesh point in zone '{zone.name}'.";
                 continue;
             }
 
@@ -303,9 +329,19 @@ public class LevelGenerator : MonoBehaviour
                 : prefab.transform.rotation;
 
             GameObject instance = Instantiate(prefab, position, rotation, parent);
+            if (TryGetEnemyFootprintBounds(instance, out Bounds bounds) && IntersectsPlacedBuilding(bounds))
+            {
+                failureReason = $"attempt {attempt + 1}: spawned '{prefab.name}' overlapped a building at {position}.";
+                DestroyGenerated(instance);
+                continue;
+            }
+
             spawnedEnemies.Add(instance);
+            LogEnemyDebug($"Enemy {enemyIndex}: spawned '{prefab.name}' at {position} on attempt {attempt + 1}.");
             return;
         }
+
+        LogEnemyDebug($"Enemy {enemyIndex}: failed after {maxEnemyPlacementAttempts} attempts. Last reason: {failureReason}");
     }
 
     private GameObject ResolvePickupPrefab(ItemData item)
@@ -359,6 +395,20 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
+    private void EnsurePlayerReference()
+    {
+        if (playerRoot != null)
+        {
+            return;
+        }
+
+        TopDownController playerController = FindFirstObjectByType<TopDownController>();
+        if (playerController != null)
+        {
+            playerRoot = playerController.transform;
+        }
+    }
+
     private void RebuildNavMesh()
     {
         if (navMeshSurface == null)
@@ -368,6 +418,85 @@ public class LevelGenerator : MonoBehaviour
 
         navMeshSurface.BuildNavMesh();
         B_NavMeshUtil.RebuildCache();
+    }
+
+    private void PositionPlayer(List<LevelScatterZone> playerZones)
+    {
+        if (playerRoot == null || playerZones.Count == 0)
+        {
+            return;
+        }
+
+        for (int attempt = 0; attempt < maxPlayerPlacementAttempts; attempt++)
+        {
+            LevelScatterZone zone = playerZones[Random.Range(0, playerZones.Count)];
+            if (!TryGetPlayerSpawnPosition(zone, out Vector3 position))
+            {
+                continue;
+            }
+
+            if (TryGetShiftedBounds(playerRoot.gameObject, position, out Bounds bounds) && IntersectsPlacedBuilding(bounds))
+            {
+                continue;
+            }
+
+            ForceMovePlayer(position);
+            return;
+        }
+
+        Debug.LogWarning("LevelGenerator could not find a valid player spawn point.", this);
+    }
+
+    private bool TryGetPlayerSpawnPosition(LevelScatterZone zone, out Vector3 position)
+    {
+        position = default;
+        if (zone == null)
+        {
+            return false;
+        }
+
+        for (int attempt = 0; attempt < maxPlayerPlacementAttempts; attempt++)
+        {
+            Vector3 candidatePoint = zone.GetRandomPoint();
+            Vector3 projected = navMeshSurface != null ? B_NavMeshUtil.Project(candidatePoint) : candidatePoint;
+
+            if (navMeshSurface != null && NavMesh.SamplePosition(projected, out NavMeshHit navMeshHit, 1.5f, NavMesh.AllAreas))
+            {
+                position = navMeshHit.position;
+                return true;
+            }
+
+            if (TryGetGroundPlacementPosition(zone, out Vector3 groundPosition))
+            {
+                position = groundPosition;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private void LogEnemyDebug(string message)
+    {
+        if (!debugEnemySpawning)
+        {
+            return;
+        }
+
+        Debug.Log($"[LevelGenerator EnemyDebug] {message}", this);
+    }
+
+    private void ForceMovePlayer(Vector3 position)
+    {
+        Rigidbody playerRigidbody = playerRoot.GetComponent<Rigidbody>();
+        if (playerRigidbody != null)
+        {
+            playerRigidbody.linearVelocity = Vector3.zero;
+            playerRigidbody.angularVelocity = Vector3.zero;
+            playerRigidbody.position = position;
+        }
+
+        playerRoot.position = position;
     }
 
     private bool TryGetGroundPlacementPosition(LevelScatterZone zone, out Vector3 position)
@@ -525,13 +654,81 @@ public class LevelGenerator : MonoBehaviour
     {
         for (int i = 0; i < placedBuildingBounds.Count; i++)
         {
-            if (placedBuildingBounds[i].Intersects(candidateBounds))
+            if (GetExpandedXZBounds(placedBuildingBounds[i], minBuildingSpacing).Intersects(candidateBounds))
             {
                 return true;
             }
         }
 
         return false;
+    }
+
+    private static Bounds GetExpandedXZBounds(Bounds sourceBounds, float spacing)
+    {
+        if (spacing <= 0f)
+        {
+            return sourceBounds;
+        }
+
+        Bounds expandedBounds = sourceBounds;
+        expandedBounds.Expand(new Vector3(spacing * 2f, 0f, spacing * 2f));
+        return expandedBounds;
+    }
+
+    private static bool TryGetShiftedBounds(GameObject target, Vector3 centerPosition, out Bounds bounds)
+    {
+        if (!TryGetCombinedBounds(target, out bounds))
+        {
+            return false;
+        }
+
+        Vector3 delta = centerPosition - target.transform.position;
+        bounds.center += delta;
+        return true;
+    }
+
+    private static bool TryGetEnemyFootprintBounds(GameObject target, out Bounds bounds)
+    {
+        if (target == null)
+        {
+            bounds = default;
+            return false;
+        }
+
+        NavMeshAgent navMeshAgent = target.GetComponentInChildren<NavMeshAgent>();
+        if (navMeshAgent != null)
+        {
+            Vector3 center = navMeshAgent.transform.position + Vector3.up * (navMeshAgent.height * 0.5f);
+            Vector3 size = new(navMeshAgent.radius * 2f, navMeshAgent.height, navMeshAgent.radius * 2f);
+            bounds = new Bounds(center, size);
+            return true;
+        }
+
+        Collider[] colliders = target.GetComponentsInChildren<Collider>(true);
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            Collider collider = colliders[i];
+            if (collider == null || !collider.enabled || collider.isTrigger)
+            {
+                continue;
+            }
+
+            bounds = collider.bounds;
+            for (int j = i + 1; j < colliders.Length; j++)
+            {
+                Collider extraCollider = colliders[j];
+                if (extraCollider == null || !extraCollider.enabled || extraCollider.isTrigger)
+                {
+                    continue;
+                }
+
+                bounds.Encapsulate(extraCollider.bounds);
+            }
+
+            return true;
+        }
+
+        return TryGetCombinedBounds(target, out bounds);
     }
 
     private static bool Contains(Bounds container, Bounds target)
