@@ -297,6 +297,7 @@ MonoBehaviour:
   itemData: {fileID: 11400000, guid: 41efac3ecf908aa4099593744fa26c8b, type: 2}
   spriteRenderer: {fileID: 7052085896162765451}
   audioSource: {fileID: 4012345678901234567}
+  hoverStatsUi: {fileID: 0}
   isInInventory: 0
   collisionSoundThreshold: 1.5
   collisionSoundCooldown: 0.1

@@ -21,9 +21,9 @@ MonoBehaviour:
   icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   worldPrefab: {fileID: 8539456021668210493, guid: 44b7d9c36f3939841bb9cc6f87567e8d, type: 3}
   stats:
-    <Speed>k__BackingField: 2
-    <Health>k__BackingField: 0
-    <Attack>k__BackingField: 0
+    <Speed>k__BackingField: 1
+    <Health>k__BackingField: 1
+    <Attack>k__BackingField: 1
     <Value>k__BackingField: 3
   collisionClip: {fileID: 8300000, guid: da2d0bb30d6c9bc44a1d6e2d8b76288e, type: 3}
   collisionVolume: 1
