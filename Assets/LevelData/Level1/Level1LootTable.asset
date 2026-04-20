@@ -12,8 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c6b5bf341b34d54b8cfc4eb28d1ab01, type: 3}
   m_Name: Level1LootTable
   m_EditorClassIdentifier: 
-  minDrops: 10
-  maxDrops: 16
+  minDrops: 15
+  maxDrops: 24
   entries:
-  - item: {fileID: 11400000, guid: da2ce4e6dd7d8594993d7e5131bc5421, type: 2}
-    weight: 15
+  - item: {fileID: 11400000, guid: 1c69a43b7579be244bfb2f738d6c9cf4, type: 2}
+    weight: 13
+  - item: {fileID: 11400000, guid: 581cbda859272ce41b6c199a9fb51d4d, type: 2}
+    weight: 11
+  - item: {fileID: 11400000, guid: 3c92467d8d70fee4bbabf9d18caa381d, type: 2}
+    weight: 9
+  - item: {fileID: 11400000, guid: 3f8b3e98052b58d49ad0154bf9bc9f28, type: 2}
+    weight: 13
+  - item: {fileID: 11400000, guid: 882369ba77e2bcf4789fa5d0522c8452, type: 2}
+    weight: 11
+  - item: {fileID: 11400000, guid: 9e4dd21559ef3934eaa1372e8978e0d8, type: 2}
+    weight: 10
+  - item: {fileID: 11400000, guid: e93402ccdf105af439cec057c1061a24, type: 2}
+    weight: 13
+  - item: {fileID: 11400000, guid: 0d8019dd4c59bc741af129d618abadca, type: 2}
+    weight: 11
+  - item: {fileID: 11400000, guid: 258ee84056b7c934bae98fccad4eed4b, type: 2}
+    weight: 9
