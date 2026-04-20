@@ -35,7 +35,7 @@ public class BB_SunbossCTX_Brain
 {
     [Header("References")]
     public ACT_SunBoss_Brain ACT_SunBoss_Brain;
-    public GameObject PatrolPointOBJ;
+    //public GameObject PatrolPointOBJ;
 
     [Header("Patrol")]
     public float UncertainInPrediction_Reduction = 0.8f;

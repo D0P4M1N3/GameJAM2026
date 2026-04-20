@@ -112,7 +112,7 @@ namespace SunBoss
             bool Success = false;
             Success = B_NavMeshUtil.ProjectOnConnected(BB.BB_SunbossCTX_Move.ACT_SunBoss_Navagent.agent,patrolTarget, out Vector3 OUT );
             patrolTarget = OUT;
-            brain.PatrolPointOBJ.transform.position = patrolTarget;
+            //brain.PatrolPointOBJ.transform.position = patrolTarget;
         }
         Vector2 offset;
         void RandomOffset()
