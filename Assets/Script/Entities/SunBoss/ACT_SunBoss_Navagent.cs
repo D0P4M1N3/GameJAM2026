@@ -22,15 +22,15 @@ public class ACT_SunBoss_Navagent : MonoBehaviour
 
     private void Update()
     {
-        intrREGIS.__UpdateState();
-        if (intrREGIS.OnInterruptEnter)
-        {
-            CancelPath();
-        }
-        else if (intrREGIS.OnInterruptExit)
-        {
+        //intrREGIS.__UpdateState();
+        //if (intrREGIS.OnInterruptEnter)
+        //{
+        //    CancelPath();
+        //}
+        //else if (intrREGIS.OnInterruptExit)
+        //{
 
-        }
+        //}
     }
     void LateUpdate()
     {
@@ -57,16 +57,25 @@ public class ACT_SunBoss_Navagent : MonoBehaviour
     //}
     public void GoToThisFrame(Vector3 worldPos)
     {
-        followThisFrameActive = true;
-
-        // Avoid redundant SetDestination calls (small optimization)
-        if (!agent.hasPath || Vector3.Distance(currentTarget, worldPos) > 0.05f)
+        if (intrREGIS.isInterrupted)
         {
-            STATS_UPDATE();
-            currentTarget = worldPos;
-            agent.isStopped = false;
-            agent.SetDestination(worldPos);
+            CancelPath();
         }
+        else
+        {
+            followThisFrameActive = true;
+
+            // Avoid redundant SetDestination calls (small optimization)
+            if (!agent.hasPath || Vector3.Distance(currentTarget, worldPos) > 0.05f)
+            {
+                STATS_UPDATE();
+                currentTarget = worldPos;
+                agent.isStopped = false;
+                agent.SetDestination(worldPos);
+            }
+        }
+
+        
     }
 
     public void CancelPath()
