@@ -18,7 +18,7 @@ MonoBehaviour:
   itemColor: {r: 1, g: 1, b: 1, a: 1}
   sizeValue: 1
   icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  worldPrefab: {fileID: 8539456021668210493, guid: c4081166906c33146859b4eba23b7ec4, type: 3}
+  itemPrefab: {fileID: 4605916408527043268, guid: 1a4af790fc7bcb54f892903572d71160, type: 3}
   stats:
     <Speed>k__BackingField: 3
     <Health>k__BackingField: 0
