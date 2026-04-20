@@ -141,7 +141,8 @@ GameObject:
   - component: {fileID: 8114368695081248647}
   - component: {fileID: 3989416675725159498}
   - component: {fileID: 8766310104449798709}
-  - component: {fileID: 2131704442735416348}
+  - component: {fileID: 2109508409859845781}
+  - component: {fileID: 8240967917523761259}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -291,7 +292,28 @@ MonoBehaviour:
   rotationSpeed: 5
   snapAngle: 90
   followSpeed: 90
---- !u!114 &2131704442735416348
+--- !u!114 &2109508409859845781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5259953934339149384}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed4c45f205294f347a850674a984d7ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CircleSync
+  WallMaterial: {fileID: 2100000, guid: 702f1b679b8bd174a85b64649f73d462, type: 2}
+  Camera: {fileID: 1014708250973433347}
+  RayLength: 3000
+  Target: {fileID: 0}
+  Mask:
+    serializedVersion: 2
+    m_Bits: 8
+  Size: 0.5
+  Offset: {x: 0.5, y: 0.4, z: 1, w: 1}
+--- !u!114 &8240967917523761259
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -300,18 +322,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 5259953934339149384}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30ee078e5950b154893055de7e3f967e, type: 3}
+  m_Script: {fileID: 11500000, guid: 6f5e945de4300da4a846fbc395380c2c, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CircleSync
-  WallMaterial: {fileID: 2100000, guid: 702f1b679b8bd174a85b64649f73d462, type: 2}
-  Camera: {fileID: 4459228605343409002}
-  RayLength: 3000
-  Target: {fileID: 0}
-  Mask:
+  m_EditorClassIdentifier: Assembly-CSharp::CameraObstructionFade
+  target: {fileID: 0}
+  obstructionMask:
     serializedVersion: 2
     m_Bits: 8
-  Size: 1
-  Offset: {x: 0.5, y: 0.5, z: 1, w: 1}
+  fadeSpeed: 10
+  transparentAlpha: 0.1
 --- !u!1 &5417661389110771463
 GameObject:
   m_ObjectHideFlags: 0
