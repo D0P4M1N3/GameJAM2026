@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Level1BalanceData
   m_EditorClassIdentifier: 
   lootTable: {fileID: 11400000, guid: efad36a05f41423bb1d768cbe3877303, type: 2}
-  minBuildings: 20
-  maxBuildings: 35
-  minEnemies: 1
-  maxEnemies: 3
+  minBuildings: 13
+  maxBuildings: 23
+  minEnemies: 2
+  maxEnemies: 7
