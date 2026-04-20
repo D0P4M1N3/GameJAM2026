@@ -17,6 +17,8 @@ public class InventoryData : MonoBehaviour
     public ItemStats TotalStats => totalStats;
     public Color MixedColor => mixedColor;
     public float TotalColorWeight => totalColorWeight;
+    public int Capacity => GetCapacity();
+    public bool IsOverflowing => totalItemCount > Capacity;
 
     private void Awake()
     {
@@ -140,14 +142,66 @@ public class InventoryData : MonoBehaviour
 
     public void ApplyStats_Player()
     {
+        if (IsOverflowing)
+        {
+            Debug.LogWarning($"Cannot apply inventory stats while overflowing. {totalItemCount}/{Capacity} items.");
+            return;
+        }
+
         CharacterStats targetCharacterStats = DATA_Player.Instance.CharacterStats;
+        ItemStats appliedStats = totalStats;
 
         //Modifiers
-        targetCharacterStats.mMaxHP += totalStats.Health;
-        targetCharacterStats.mDamage += totalStats.Attack;
-        targetCharacterStats.mSpeed += totalStats.Speed;
+        targetCharacterStats.mMaxHP += appliedStats.Health;
+        targetCharacterStats.mDamage += appliedStats.Attack;
+        targetCharacterStats.mSpeed += appliedStats.Speed * 0.01f;
 
         //Once
-        targetCharacterStats.Currency += totalStats.Value;
+        targetCharacterStats.Currency += appliedStats.Value;
+
+        DestroyInventoryWorldObjects();
+        items.Clear();
+        RecalculateSummary();
+    }
+
+    private void DestroyInventoryWorldObjects()
+    {
+        ItemWorldObject[] inventoryWorldObjects = FindObjectsByType<ItemWorldObject>(FindObjectsSortMode.None);
+        for (int i = 0; i < inventoryWorldObjects.Length; i++)
+        {
+            ItemWorldObject itemWorldObject = inventoryWorldObjects[i];
+            if (itemWorldObject == null || !itemWorldObject.IsInInventory)
+            {
+                continue;
+            }
+
+            itemWorldObject.SetInventoryState(false);
+
+            if (Application.isPlaying)
+            {
+                Destroy(itemWorldObject.gameObject);
+            }
+            else
+            {
+                DestroyImmediate(itemWorldObject.gameObject);
+            }
+        }
+    }
+
+    private int GetCapacity()
+    {
+        if (DATA_Player.Instance == null || DATA_Player.Instance.CharacterStats == null)
+        {
+            return 0;
+        }
+
+        CharacterStats targetCharacterStats = DATA_Player.Instance.CharacterStats;
+        float resolvedCapacity = targetCharacterStats.finalStorage;
+        if (resolvedCapacity <= 0f)
+        {
+            resolvedCapacity = targetCharacterStats.Storage;
+        }
+
+        return Mathf.Max(0, Mathf.FloorToInt(resolvedCapacity));
     }
 }

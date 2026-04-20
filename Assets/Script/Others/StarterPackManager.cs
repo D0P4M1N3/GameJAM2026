@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class StarterPackManager : MonoBehaviour
 {
-    [SerializeField] private StashData stashData;
     [SerializeField] private List<ItemData> starterItemPool = new();
     [SerializeField] [Min(1)] private int starterItemCount = 3;
 
@@ -20,23 +19,13 @@ public class StarterPackManager : MonoBehaviour
             return;
         }
 
-        if (stashData == null)
-        {
-            stashData = FindFirstObjectByType<StashData>();
-        }
-
-        if (stashData != null && stashData.TotalItemCount > 0)
-        {
-            return;
-        }
-
         List<ItemData> grantedItems = DrawStarterItems();
         if (grantedItems.Count == 0)
         {
             return;
         }
 
-        GameManager.Instance.AddItemsToStash(grantedItems);
+        GameManager.Instance.TryGrantStarterPack(grantedItems);
     }
 
     private List<ItemData> DrawStarterItems()

@@ -6,10 +6,10 @@ using UnityEngine;
 public class CharacterStats
 {
     [Header("Base")]
-    public float Speed = 5;
-    public float MaxHP = 20;
-    public float Damage = 1;
-    public float Storage = 10;
+    public float Speed = 1f;
+    public float MaxHP = 5f;
+    public float Damage = 1f;
+    public float Storage = 10f;
 
     [Header("Current")]
     public float HP = float.PositiveInfinity;

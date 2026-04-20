@@ -5,14 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    private const string ItemPrepareSceneName = "ItemPrepare";
+
     public static GameManager Instance { get; private set; }
     
     [Header("Runtime Data")]
     [SerializeField] private StashData stashData;
     [SerializeField] private InventoryData inventoryData;
+    [SerializeField] private CollectBoxData collectBoxData;
+    [SerializeField] private bool hasGrantedStarterPack;
 
     private readonly List<ItemData> runtimeInventoryItems = new();
     private readonly List<StashEntry> runtimeStashEntries = new();
+    private readonly List<ItemData> runtimeCollectBoxItems = new();
 
     private bool isApplyingSceneData;
     private bool hasInitializedRuntimeData;
@@ -82,6 +87,12 @@ public class GameManager : MonoBehaviour
     {
         RebindSceneData();
         InitializeRuntimeDataFromScene();
+
+        if (scene.name == ItemPrepareSceneName)
+        {
+            MoveCollectBoxToStash();
+        }
+
         ApplyRuntimeDataToScene();
     }
 
@@ -117,7 +128,39 @@ public class GameManager : MonoBehaviour
             AddRuntimeStashItem(item);
         }
 
+        ApplyRuntimeDataToScene(refreshStashSpawn: true);
+    }
+
+    public void AddItemsToCollectBox(IEnumerable<ItemData> items)
+    {
+        if (items == null)
+        {
+            return;
+        }
+
+        foreach (ItemData item in items)
+        {
+            if (item == null)
+            {
+                continue;
+            }
+
+            runtimeCollectBoxItems.Add(item);
+        }
+
         ApplyRuntimeDataToScene();
+    }
+
+    public bool TryGrantStarterPack(IEnumerable<ItemData> items)
+    {
+        if (hasGrantedStarterPack || items == null)
+        {
+            return false;
+        }
+
+        hasGrantedStarterPack = true;
+        AddItemsToStash(items);
+        return true;
     }
 
     private void InitializeRuntimeDataFromScene()
@@ -127,12 +170,30 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        HandleInventoryChanged();
-        HandleStashChanged();
+        if (stashData == null && inventoryData == null && collectBoxData == null)
+        {
+            return;
+        }
+
+        if (inventoryData != null)
+        {
+            HandleInventoryChanged();
+        }
+
+        if (stashData != null)
+        {
+            HandleStashChanged();
+        }
+
+        if (collectBoxData != null)
+        {
+            HandleCollectBoxChanged();
+        }
+
         hasInitializedRuntimeData = true;
     }
 
-    private void ApplyRuntimeDataToScene()
+    private void ApplyRuntimeDataToScene(bool refreshStashSpawn = false)
     {
         isApplyingSceneData = true;
 
@@ -146,7 +207,17 @@ public class GameManager : MonoBehaviour
             stashData.SetEntries(runtimeStashEntries);
         }
 
+        if (collectBoxData != null)
+        {
+            collectBoxData.SetItems(runtimeCollectBoxItems);
+        }
+
         isApplyingSceneData = false;
+
+        if (refreshStashSpawn)
+        {
+            RefreshSceneStashSpawn();
+        }
     }
 
     private void RebindSceneData()
@@ -155,6 +226,7 @@ public class GameManager : MonoBehaviour
 
         stashData = FindFirstObjectByType<StashData>();
         inventoryData = FindFirstObjectByType<InventoryData>();
+        collectBoxData = FindFirstObjectByType<CollectBoxData>();
 
         SubscribeToSceneData();
     }
@@ -170,6 +242,11 @@ public class GameManager : MonoBehaviour
         {
             inventoryData.Changed += HandleInventoryChanged;
         }
+
+        if (collectBoxData != null)
+        {
+            collectBoxData.Changed += HandleCollectBoxChanged;
+        }
     }
 
     private void UnsubscribeFromSceneData()
@@ -182,6 +259,11 @@ public class GameManager : MonoBehaviour
         if (inventoryData != null)
         {
             inventoryData.Changed -= HandleInventoryChanged;
+        }
+
+        if (collectBoxData != null)
+        {
+            collectBoxData.Changed -= HandleCollectBoxChanged;
         }
     }
 
@@ -227,6 +309,27 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void HandleCollectBoxChanged()
+    {
+        if (isApplyingSceneData || collectBoxData == null)
+        {
+            return;
+        }
+
+        runtimeCollectBoxItems.Clear();
+        IReadOnlyList<InventoryEntry> items = collectBoxData.Items;
+        for (int i = 0; i < items.Count; i++)
+        {
+            InventoryEntry entry = items[i];
+            if (!entry.IsValid)
+            {
+                continue;
+            }
+
+            runtimeCollectBoxItems.Add(entry.Item);
+        }
+    }
+
     private void AddRuntimeStashItem(ItemData item)
     {
         if (item == null)
@@ -247,5 +350,31 @@ public class GameManager : MonoBehaviour
         }
 
         runtimeStashEntries.Add(new StashEntry(item, 1));
+    }
+
+    private void MoveCollectBoxToStash()
+    {
+        if (runtimeCollectBoxItems.Count == 0)
+        {
+            return;
+        }
+
+        for (int i = 0; i < runtimeCollectBoxItems.Count; i++)
+        {
+            AddRuntimeStashItem(runtimeCollectBoxItems[i]);
+        }
+
+        runtimeCollectBoxItems.Clear();
+    }
+
+    private void RefreshSceneStashSpawn()
+    {
+        StashSpawner stashSpawner = FindFirstObjectByType<StashSpawner>();
+        if (stashSpawner == null)
+        {
+            return;
+        }
+
+        stashSpawner.ResetStash();
     }
 }
