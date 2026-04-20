@@ -41,7 +41,7 @@ public class Wobble : MonoBehaviour
 
     void Update()
     {
-        float deltaTime = Time.deltaTime;
+        float deltaTime = Time.unscaledDeltaTime;
         time += deltaTime;
 
         // ===== VELOCITY =====

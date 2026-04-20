@@ -23,7 +23,7 @@ public class LevelScatterZone : MonoBehaviour
         Vector3 halfSize = GetHalfSize();
         Vector3 localPoint = new(
             Random.Range(-halfSize.x, halfSize.x),
-            Random.Range(-halfSize.y, halfSize.y),
+            0f,
             Random.Range(-halfSize.z, halfSize.z));
 
         return transform.TransformPoint(localPoint);
@@ -58,17 +58,31 @@ public class LevelScatterZone : MonoBehaviour
         Matrix4x4 previousMatrix = Gizmos.matrix;
         Gizmos.matrix = transform.localToWorldMatrix;
         Gizmos.color = GetZoneColor();
-        Gizmos.DrawWireCube(Vector3.zero, size);
-        Gizmos.DrawCube(Vector3.zero, size);
+        Vector3 gizmoSize = GetGizmoSize();
+        Gizmos.DrawWireCube(Vector3.zero, gizmoSize);
+        Gizmos.DrawCube(Vector3.zero, gizmoSize);
         Gizmos.matrix = previousMatrix;
+    }
+
+    private void OnValidate()
+    {
+        size.y = 0f;
     }
 
     private Vector3 GetHalfSize()
     {
         return new Vector3(
             Mathf.Abs(size.x) * 0.5f,
-            Mathf.Abs(size.y) * 0.5f,
+            0f,
             Mathf.Abs(size.z) * 0.5f);
+    }
+
+    private Vector3 GetGizmoSize()
+    {
+        return new Vector3(
+            Mathf.Abs(size.x),
+            0.05f,
+            Mathf.Abs(size.z));
     }
 
     private Color GetZoneColor()
