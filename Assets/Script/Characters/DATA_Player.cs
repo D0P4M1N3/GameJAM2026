@@ -4,6 +4,7 @@ public class DATA_Player : MonoBehaviour
 {
     public CharacterStats CharacterStats;
     public static DATA_Player Instance { get; private set; }
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -17,5 +18,4 @@ public class DATA_Player : MonoBehaviour
         // Optional: persist across scenes
         DontDestroyOnLoad(gameObject);
     }
-
 }
