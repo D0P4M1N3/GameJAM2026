@@ -1526,9 +1526,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: GameJAM2026.Runtime::InventoryTriggerZone
   inventoryData: {fileID: 1001204854}
   stashData: {fileID: 1549461764}
-  requiredOverlapRatio: 0.6
-  normalBoundsColor: {r: 0.15, g: 0.9, b: 0.95, a: 0.8}
-  overflowBoundsColor: {r: 1, g: 0.3, b: 0.2, a: 0.9}
+  boundsColor: {r: 0.15, g: 0.9, b: 0.95, a: 0.8}
 --- !u!1 &533547056
 GameObject:
   m_ObjectHideFlags: 0
@@ -2353,7 +2351,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Levell
+          m_StringArgument: Level
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1021687074

@@ -158,6 +158,7 @@ public class InventoryData : MonoBehaviour
 
         //Once
         targetCharacterStats.Currency += appliedStats.Value;
+        targetCharacterStats.CharacterColor = mixedColor;
 
         DestroyInventoryWorldObjects();
         items.Clear();

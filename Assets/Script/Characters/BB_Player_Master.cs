@@ -12,6 +12,10 @@ public class BB_Player_Master : MonoBehaviour
     [Header("\n\n---- Movement")]
     public BB_PlayerCTX_Move BB_PlayerCTX_Move;
 
+    [Header("\n\n---- Combat")]
+    public BB_PlayerCTX_Combat BB_PlayerCTX_Combat;
+
+
 }
 
 [Serializable]
@@ -25,4 +29,10 @@ public class BB_PlayerCTX_Move
 {
     public InputReader InputReader;
     public TopDownController TopDownController;
+}
+
+[Serializable]
+public class BB_PlayerCTX_Combat
+{
+    public ACT_Player_Combat ACT_Player_Combat;
 }
