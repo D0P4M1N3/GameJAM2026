@@ -23,8 +23,8 @@ public class CharacterStats
 
 
     [Header("Finals")]
-    public float finalSpeed => Speed * mSpeed;
-    public float finalMaxHP => MaxHP * mMaxHP;
-    public float finalDamage => Damage * mDamage;
-    public float finalStorage => Storage * mStorage;
+    public float finalSpeed => (Speed / 100f) * mSpeed;
+    public float finalMaxHP => (MaxHP / 100f) * mMaxHP;
+    public float finalDamage => (Damage / 100f) * mDamage;
+    public float finalStorage => (Storage / 100f) * mStorage;
 }
