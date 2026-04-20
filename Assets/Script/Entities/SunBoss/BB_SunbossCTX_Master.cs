@@ -74,6 +74,7 @@ public class BB_SunbossCTX_Sense
 public class BB_SunbossCTX_Move
 {
     public ACT_SunBoss_Navagent ACT_SunBoss_Navagent;
+    public float TurnSpeed = 360f;
 }
 
 [Serializable]

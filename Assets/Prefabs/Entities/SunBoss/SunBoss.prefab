@@ -133,7 +133,7 @@ Transform:
   m_GameObject: {fileID: 2692055956451615826}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.203, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -210,7 +210,7 @@ MonoBehaviour:
   rayCount: 150
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 72
+    m_Bits: 200
   coneBox: {fileID: 726050064575403084}
 --- !u!1 &2982463504126945524
 GameObject:
@@ -764,8 +764,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d7c4c3b739113e4996dfd6835ee2584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ConeBox
-  Angle: 120
-  Radius: 16
+  Angle: 70.25
+  Radius: 9
   PlaneNormal: {x: 0, y: 1, z: 0}
   Ray:
     LayerMask:
@@ -1131,6 +1131,7 @@ MonoBehaviour:
     Storage: 10
     HP: 2.1474836e+9
     Currency: 0
+    CharacterColor: {r: 1, g: 1, b: 1, a: 1}
     mSpeed: 1
     mMaxHP: 1
     mDamage: 1

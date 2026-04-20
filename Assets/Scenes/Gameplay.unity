@@ -3542,6 +3542,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 726050064575403084, guid: 60854ad8846874f4d9a3c8c6c77dd51a, type: 3}
+      propertyPath: Angle
+      value: 70.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 726050064575403084, guid: 60854ad8846874f4d9a3c8c6c77dd51a, type: 3}
+      propertyPath: Radius
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5647434270613764794, guid: 60854ad8846874f4d9a3c8c6c77dd51a, type: 3}
+      propertyPath: obstacleMask.m_Bits
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 6856473898393588064, guid: 60854ad8846874f4d9a3c8c6c77dd51a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.203
+      objectReference: {fileID: 0}
     - target: {fileID: 7868574379826556882, guid: 60854ad8846874f4d9a3c8c6c77dd51a, type: 3}
       propertyPath: m_Name
       value: SunBoss

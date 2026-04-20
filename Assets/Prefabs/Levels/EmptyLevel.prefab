@@ -30,10 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4397236949630765756}
-  - {fileID: 7907235706143353491}
-  - {fileID: 634419053081023725}
-  - {fileID: 6022015787845932340}
-  - {fileID: 5220499430812539650}
+  - {fileID: 8343781838960603469}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &245091556410774639
@@ -49,7 +46,7 @@ GameObject:
   - component: {fileID: 7629376118827013853}
   - component: {fileID: 43083864880829566}
   m_Layer: 3
-  m_Name: Cube (3)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,11 +61,11 @@ Transform:
   m_GameObject: {fileID: 245091556410774639}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.34697056, y: 12.346971, z: -42.41194}
+  m_LocalPosition: {x: 0.00001001358, y: 12.5, z: -42.5}
   m_LocalScale: {x: 80, y: 25, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7844004298756833377}
+  m_Father: {fileID: 8343781838960603469}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2093679532736867603
 MeshFilter:
@@ -103,7 +100,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 702f1b679b8bd174a85b64649f73d462, type: 2}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -193,10 +190,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelScatterZone
   zoneType: 1
   size: {x: 9.48, y: 0, z: 9.22}
-  buildingColor: {r: 0.25, g: 0.8, b: 1, a: 0.45}
-  itemColor: {r: 0.45, g: 1, b: 0.3, a: 0.45}
-  enemyColor: {r: 1, g: 0.45, b: 0.3, a: 0.45}
-  playerStartColor: {r: 1, g: 0.9, b: 0.2, a: 0.45}
+  gizmoColor: {r: 0.25, g: 0.8, b: 1, a: 0.45}
 --- !u!1 &2323691682519554474
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,7 +204,7 @@ GameObject:
   - component: {fileID: 2723674013070589677}
   - component: {fileID: 1104030941700216328}
   m_Layer: 3
-  m_Name: Cube (2)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -225,11 +219,11 @@ Transform:
   m_GameObject: {fileID: 2323691682519554474}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.34697056, y: 12.346971, z: 42.58806}
+  m_LocalPosition: {x: 0.00001001358, y: 12.5, z: 42.5}
   m_LocalScale: {x: 80, y: 25, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7844004298756833377}
+  m_Father: {fileID: 8343781838960603469}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2411649427172617517
 MeshFilter:
@@ -264,7 +258,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 702f1b679b8bd174a85b64649f73d462, type: 2}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -354,10 +348,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelScatterZone
   zoneType: 0
   size: {x: 9.59, y: 0, z: 9.32}
-  buildingColor: {r: 0.25, g: 0.8, b: 1, a: 0.45}
-  itemColor: {r: 0.45, g: 1, b: 0.3, a: 0.45}
-  enemyColor: {r: 1, g: 0.45, b: 0.3, a: 0.45}
-  playerStartColor: {r: 1, g: 0.9, b: 0.2, a: 0.45}
+  gizmoColor: {r: 0.25, g: 0.8, b: 1, a: 0.45}
 --- !u!1 &4516038823713232825
 GameObject:
   m_ObjectHideFlags: 0
@@ -404,10 +395,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelScatterZone
   zoneType: 2
   size: {x: 3.5, y: 0, z: 9.14}
-  buildingColor: {r: 0.25, g: 0.8, b: 1, a: 0.45}
-  itemColor: {r: 0.45, g: 1, b: 0.3, a: 0.45}
-  enemyColor: {r: 1, g: 0.45, b: 0.3, a: 0.45}
-  playerStartColor: {r: 1, g: 0.9, b: 0.2, a: 0.45}
+  gizmoColor: {r: 0.25, g: 0.8, b: 1, a: 0.45}
 --- !u!1 &5536515863302082313
 GameObject:
   m_ObjectHideFlags: 0
@@ -524,6 +512,41 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &5719196383611459444
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8343781838960603469}
+  m_Layer: 0
+  m_Name: Boundaries
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8343781838960603469
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5719196383611459444}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.34696054, y: -0.1530298, z: 0.08806038}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7907235706143353491}
+  - {fileID: 634419053081023725}
+  - {fileID: 6022015787845932340}
+  - {fileID: 5220499430812539650}
+  m_Father: {fileID: 7844004298756833377}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5804992226654078341
 GameObject:
   m_ObjectHideFlags: 0
@@ -537,7 +560,7 @@ GameObject:
   - component: {fileID: 2541949694300472846}
   - component: {fileID: 4785084286560779155}
   m_Layer: 3
-  m_Name: Cube
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -552,11 +575,11 @@ Transform:
   m_GameObject: {fileID: 5804992226654078341}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -42.15303, y: 12.346971, z: 0.08806133}
+  m_LocalPosition: {x: -42.499992, y: 12.5, z: 0}
   m_LocalScale: {x: 5, y: 25, z: 88.88}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7844004298756833377}
+  m_Father: {fileID: 8343781838960603469}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5772750884908940083
 MeshFilter:
@@ -591,7 +614,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 702f1b679b8bd174a85b64649f73d462, type: 2}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -681,10 +704,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelScatterZone
   zoneType: 3
   size: {x: 1.11, y: 0, z: 9.55}
-  buildingColor: {r: 0.25, g: 0.8, b: 1, a: 0.45}
-  itemColor: {r: 0.45, g: 1, b: 0.3, a: 0.45}
-  enemyColor: {r: 1, g: 0.45, b: 0.3, a: 0.45}
-  playerStartColor: {r: 0.6603774, g: 0.21362081, b: 0, a: 0.45}
+  gizmoColor: {r: 0.25, g: 0.8, b: 1, a: 0.45}
 --- !u!1 &8439489126962671422
 GameObject:
   m_ObjectHideFlags: 0
@@ -698,7 +718,7 @@ GameObject:
   - component: {fileID: 1510636465109393555}
   - component: {fileID: 2719558435580771063}
   m_Layer: 3
-  m_Name: Cube (1)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -713,11 +733,11 @@ Transform:
   m_GameObject: {fileID: 8439489126962671422}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 42.84697, y: 12.346971, z: 0.08806133}
+  m_LocalPosition: {x: 42.500008, y: 12.5, z: 0}
   m_LocalScale: {x: 5, y: 25, z: 89.198456}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7844004298756833377}
+  m_Father: {fileID: 8343781838960603469}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8396344964608071347
 MeshFilter:
@@ -752,7 +772,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 702f1b679b8bd174a85b64649f73d462, type: 2}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

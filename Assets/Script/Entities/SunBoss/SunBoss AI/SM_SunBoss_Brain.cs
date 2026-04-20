@@ -166,7 +166,15 @@ namespace SunBoss
                     bb.BB_SunbossCTX_Body.WholeBody.transform.position.y,
                     bb.BB_SunbossCTX_Brain.ActualPlayerPosition_NavmeshProjected.z
                 );
-                bb.BB_SunbossCTX_Body.WholeBody.LookAt(flatTarget);
+                Vector3 toTarget = flatTarget - bb.BB_SunbossCTX_Body.WholeBody.transform.position;
+                if (toTarget.sqrMagnitude > 0.0001f)
+                {
+                    Quaternion targetRotation = Quaternion.LookRotation(toTarget.normalized, Vector3.up);
+                    bb.BB_SunbossCTX_Body.WholeBody.rotation = Quaternion.RotateTowards(
+                        bb.BB_SunbossCTX_Body.WholeBody.rotation,
+                        targetRotation,
+                        bb.BB_SunbossCTX_Move.TurnSpeed * Time.deltaTime);
+                }
             }
             else
             {

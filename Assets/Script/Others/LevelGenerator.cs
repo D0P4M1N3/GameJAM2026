@@ -34,6 +34,10 @@ public class LevelGenerator : MonoBehaviour
     private readonly List<GameObject> spawnedEnemies = new();
     private readonly List<Bounds> placedBuildingBounds = new();
     private readonly List<Collider> groundColliders = new();
+    private Transform generatedRoot;
+    private Transform generatedBuildingsRoot;
+    private Transform generatedItemsRoot;
+    private Transform generatedEnemiesRoot;
 
     private void Start()
     {
@@ -130,6 +134,8 @@ public class LevelGenerator : MonoBehaviour
         spawnedEnemies.Clear();
         placedBuildingBounds.Clear();
         groundColliders.Clear();
+
+        DestroyGeneratedRoots();
     }
 
     private void SpawnBuildings(List<LevelScatterZone> buildingZones, Transform parent)
@@ -153,9 +159,10 @@ public class LevelGenerator : MonoBehaviour
         }
 
         int buildingCount = Random.Range(minCount, maxCount + 1);
+        Transform buildingsParent = GetOrCreateGeneratedCategoryRoot("Buildings", ref generatedBuildingsRoot);
         for (int i = 0; i < buildingCount; i++)
         {
-            TrySpawnBuilding(buildingZones, parent);
+            TrySpawnBuilding(buildingZones, buildingsParent != null ? buildingsParent : parent);
         }
     }
 
@@ -214,6 +221,7 @@ public class LevelGenerator : MonoBehaviour
         }
 
         List<ItemData> rolledItems = activeLootTable.RollDrops();
+        Transform itemsParent = GetOrCreateGeneratedCategoryRoot("Items", ref generatedItemsRoot);
         for (int i = 0; i < rolledItems.Count; i++)
         {
             ItemData item = rolledItems[i];
@@ -222,7 +230,7 @@ public class LevelGenerator : MonoBehaviour
                 continue;
             }
 
-            TrySpawnItem(itemZones, item, parent);
+            TrySpawnItem(itemZones, item, itemsParent != null ? itemsParent : parent);
         }
     }
 
@@ -297,10 +305,11 @@ public class LevelGenerator : MonoBehaviour
         }
 
         int enemyCount = Random.Range(minCount, maxCount + 1);
+        Transform enemiesParent = GetOrCreateGeneratedCategoryRoot("Enemies", ref generatedEnemiesRoot);
         LogEnemyDebug($"Trying to spawn {enemyCount} enemies across {enemyZones.Count} zones.");
         for (int i = 0; i < enemyCount; i++)
         {
-            TrySpawnEnemy(enemyZones, parent, i + 1);
+            TrySpawnEnemy(enemyZones, enemiesParent != null ? enemiesParent : parent, i + 1);
         }
     }
 
@@ -409,6 +418,57 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
+    private Transform GetOrCreateGeneratedRoot()
+    {
+        if (baseLevelRoot == null)
+        {
+            return null;
+        }
+
+        if (generatedRoot != null)
+        {
+            return generatedRoot;
+        }
+
+        Transform existingRoot = baseLevelRoot.transform.Find("Generated");
+        if (existingRoot != null)
+        {
+            generatedRoot = existingRoot;
+            return generatedRoot;
+        }
+
+        GameObject rootObject = new("Generated");
+        generatedRoot = rootObject.transform;
+        generatedRoot.SetParent(baseLevelRoot.transform, false);
+        return generatedRoot;
+    }
+
+    private Transform GetOrCreateGeneratedCategoryRoot(string categoryName, ref Transform categoryRoot)
+    {
+        Transform parentRoot = GetOrCreateGeneratedRoot();
+        if (parentRoot == null)
+        {
+            return null;
+        }
+
+        if (categoryRoot != null)
+        {
+            return categoryRoot;
+        }
+
+        Transform existingRoot = parentRoot.Find(categoryName);
+        if (existingRoot != null)
+        {
+            categoryRoot = existingRoot;
+            return categoryRoot;
+        }
+
+        GameObject categoryObject = new(categoryName);
+        categoryRoot = categoryObject.transform;
+        categoryRoot.SetParent(parentRoot, false);
+        return categoryRoot;
+    }
+
     private void RebuildNavMesh()
     {
         if (navMeshSurface == null)
@@ -418,6 +478,27 @@ public class LevelGenerator : MonoBehaviour
 
         navMeshSurface.BuildNavMesh();
         B_NavMeshUtil.RebuildCache();
+    }
+
+    private void DestroyGeneratedRoots()
+    {
+        generatedBuildingsRoot = null;
+        generatedItemsRoot = null;
+        generatedEnemiesRoot = null;
+
+        if (generatedRoot == null && baseLevelRoot != null)
+        {
+            generatedRoot = baseLevelRoot.transform.Find("Generated");
+        }
+
+        if (generatedRoot == null)
+        {
+            return;
+        }
+
+        Transform rootToDestroy = generatedRoot;
+        generatedRoot = null;
+        DestroyGenerated(rootToDestroy.gameObject);
     }
 
     private void PositionPlayer(List<LevelScatterZone> playerZones)

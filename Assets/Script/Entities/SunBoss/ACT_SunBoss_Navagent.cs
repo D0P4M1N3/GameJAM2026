@@ -105,6 +105,7 @@ public class ACT_SunBoss_Navagent : MonoBehaviour
     void STATS_UPDATE()
     {
         agent.speed = BB_Sunboss_Master.CharacterStats.finalSpeed;
+        agent.angularSpeed = BB_Sunboss_Master.BB_SunbossCTX_Move.TurnSpeed;
     }
     
 }
