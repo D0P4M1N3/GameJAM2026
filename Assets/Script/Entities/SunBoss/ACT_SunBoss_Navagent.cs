@@ -8,6 +8,7 @@ public class ACT_SunBoss_Navagent : MonoBehaviour
     public NavMeshAgent agent;
 
     [Header("Runtime (View Only)")]
+    public InterruptionRegistry intrREGIS;
     [SerializeField] private bool followThisFrameActive;
     [SerializeField] private Vector3 currentTarget;
 
@@ -19,6 +20,18 @@ public class ACT_SunBoss_Navagent : MonoBehaviour
     {
     }
 
+    private void Update()
+    {
+        intrREGIS.__UpdateState();
+        if (intrREGIS.OnInterruptEnter)
+        {
+            CancelPath();
+        }
+        else if (intrREGIS.OnInterruptExit)
+        {
+
+        }
+    }
     void LateUpdate()
     {
         // If GoToThisFrame wasn't called this frame → cancel
@@ -34,13 +47,14 @@ public class ACT_SunBoss_Navagent : MonoBehaviour
 
 
     // Path Commands ////////////////////////////////////////////
-    public void GoToOnce(Vector3 worldPos)
-    {
-        STATS_UPDATE();
-        currentTarget = worldPos;
-        agent.isStopped = false;
-        agent.SetDestination(worldPos);
-    }
+
+    //public void GoToOnce(Vector3 worldPos)
+    //{
+    //    STATS_UPDATE();
+    //    currentTarget = worldPos;
+    //    agent.isStopped = false;
+    //    agent.SetDestination(worldPos);
+    //}
     public void GoToThisFrame(Vector3 worldPos)
     {
         followThisFrameActive = true;

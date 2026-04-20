@@ -9,7 +9,7 @@ public class HomingProjectile : MonoBehaviour
     private float speed;
     private float turnSpeed;
 
-    private float Damage;
+    public float Damage;
 
     public void Initialize(Transform target, float speed, float turnSpeed, float Damage, float Lifetime = float.PositiveInfinity)
     {
