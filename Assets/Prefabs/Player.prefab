@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6333468312314339205}
   - component: {fileID: 4094584076729469548}
+  - component: {fileID: 7220712779957821915}
   m_Layer: 7
   m_Name: Actuators
   m_TagString: Untagged
@@ -44,6 +45,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25c95c150c912a049b852d5e58b9e3a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ACT_Player_Stats
+--- !u!114 &7220712779957821915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331559258187172856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4ee069b0fe9e684188315af164c6a76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ACT_Player_Combat
+  BB_Player_Master: {fileID: 5522960294862400285}
+  ProjectilePrefab: {fileID: 5407239988904915960, guid: 9c86755156bed99478b109e8531f5c99, type: 3}
+  projectileSpeed: 10
+  turnSpeed: 5
+  firePoint: {fileID: 6161299359824271258}
 --- !u!1 &467475437773881661
 GameObject:
   m_ObjectHideFlags: 0
@@ -746,6 +764,8 @@ MonoBehaviour:
   BB_PlayerCTX_Move:
     InputReader: {fileID: 3122298847395962020}
     TopDownController: {fileID: 7168244022685300921}
+  BB_PlayerCTX_Combat:
+    ACT_Player_Combat: {fileID: 7220712779957821915}
 --- !u!1001 &2999336232326669761
 PrefabInstance:
   m_ObjectHideFlags: 0
