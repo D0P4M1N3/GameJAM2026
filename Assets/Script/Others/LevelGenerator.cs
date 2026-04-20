@@ -2,12 +2,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Unity.AI.Navigation;
+using UnityEngine.Serialization;
 
 public class LevelGenerator : MonoBehaviour
 {
     [SerializeField] private GameObject baseLevelRoot;
     [SerializeField] private NavMeshSurface navMeshSurface;
-    [SerializeField] private GameplayItemPickup fallbackGameplayPickupPrefab;
+    [SerializeField] [FormerlySerializedAs("gameplayPickupPrefab")] private GameplayItemPickup fallbackGameplayPickupPrefab;
     [SerializeField] private LevelBalanceData levelBalanceData;
     [SerializeField] private LayerMask groundLayerMask = 1 << 6;
     [SerializeField] [Min(0.1f)] private float groundRaycastHeight = 50f;
@@ -17,8 +18,12 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] [Min(1)] private int maxBuildingPlacementAttempts = 12;
     [SerializeField] [Min(1)] private int maxItemPlacementAttempts = 8;
     [SerializeField] [Min(1)] private int maxEnemyPlacementAttempts = 8;
+    [SerializeField] private bool spawnEnemies;
     [SerializeField] private bool randomizeBuildingYaw = true;
     [SerializeField] private bool generateOnStart = true;
+    [SerializeField] [HideInInspector] private LevelLootTable levelLootTable;
+    [SerializeField] [HideInInspector] [Min(0)] private int minBuildings = 3;
+    [SerializeField] [HideInInspector] [Min(0)] private int maxBuildings = 6;
 
     private readonly List<GameObject> spawnedBuildings = new();
     private readonly List<GameplayItemPickup> spawnedPickups = new();
@@ -78,7 +83,10 @@ public class LevelGenerator : MonoBehaviour
         SpawnBuildings(buildingZones, baseLevelRoot.transform);
         SpawnItems(itemZones, baseLevelRoot.transform);
         RebuildNavMesh();
-        SpawnEnemies(enemyZones, baseLevelRoot.transform);
+        if (spawnEnemies)
+        {
+            SpawnEnemies(enemyZones, baseLevelRoot.transform);
+        }
     }
 
     [ContextMenu("Clear Generated Level")]
@@ -117,12 +125,25 @@ public class LevelGenerator : MonoBehaviour
 
     private void SpawnBuildings(List<LevelScatterZone> buildingZones, Transform parent)
     {
-        if (buildingZones.Count == 0 || buildingPrefabs.Count == 0 || levelBalanceData == null)
+        if (buildingZones.Count == 0)
         {
+            Debug.LogWarning("LevelGenerator found no building scatter zones.", this);
             return;
         }
 
-        int buildingCount = Random.Range(levelBalanceData.MinBuildings, levelBalanceData.MaxBuildings + 1);
+        if (buildingPrefabs.Count == 0)
+        {
+            Debug.LogWarning("LevelGenerator has no building prefabs assigned.", this);
+            return;
+        }
+
+        if (!TryGetBuildingCountRange(out int minCount, out int maxCount))
+        {
+            Debug.LogWarning("LevelGenerator has no building count source. Assign LevelBalanceData or keep legacy min/max building values.", this);
+            return;
+        }
+
+        int buildingCount = Random.Range(minCount, maxCount + 1);
         for (int i = 0; i < buildingCount; i++)
         {
             TrySpawnBuilding(buildingZones, parent);
@@ -170,13 +191,20 @@ public class LevelGenerator : MonoBehaviour
 
     private void SpawnItems(List<LevelScatterZone> itemZones, Transform parent)
     {
-        LevelLootTable levelLootTable = levelBalanceData != null ? levelBalanceData.LootTable : null;
-        if (itemZones.Count == 0 || levelLootTable == null)
+        if (itemZones.Count == 0)
         {
+            Debug.LogWarning("LevelGenerator found no item scatter zones.", this);
             return;
         }
 
-        List<ItemData> rolledItems = levelLootTable.RollDrops();
+        LevelLootTable activeLootTable = GetActiveLootTable();
+        if (activeLootTable == null)
+        {
+            Debug.LogWarning("LevelGenerator has no loot table. Assign LevelBalanceData or a legacy LevelLootTable.", this);
+            return;
+        }
+
+        List<ItemData> rolledItems = activeLootTable.RollDrops();
         for (int i = 0; i < rolledItems.Count; i++)
         {
             ItemData item = rolledItems[i];
@@ -224,8 +252,20 @@ public class LevelGenerator : MonoBehaviour
 
     private void SpawnEnemies(List<LevelScatterZone> enemyZones, Transform parent)
     {
-        if (enemyZones.Count == 0 || enemyPrefabs.Count == 0 || levelBalanceData == null)
+        if (enemyZones.Count == 0)
         {
+            return;
+        }
+
+        if (enemyPrefabs.Count == 0)
+        {
+            Debug.LogWarning("LevelGenerator found enemy zones but no enemy prefabs are assigned.", this);
+            return;
+        }
+
+        if (!TryGetEnemyCountRange(out int minCount, out int maxCount))
+        {
+            Debug.LogWarning("LevelGenerator found enemy zones but no LevelBalanceData enemy counts are assigned.", this);
             return;
         }
 
@@ -235,7 +275,7 @@ public class LevelGenerator : MonoBehaviour
             return;
         }
 
-        int enemyCount = Random.Range(levelBalanceData.MinEnemies, levelBalanceData.MaxEnemies + 1);
+        int enemyCount = Random.Range(minCount, maxCount + 1);
         for (int i = 0; i < enemyCount; i++)
         {
             TrySpawnEnemy(enemyZones, parent);
@@ -443,6 +483,44 @@ public class LevelGenerator : MonoBehaviour
         return availablePrefabs[Random.Range(0, availablePrefabs.Count)];
     }
 
+    private LevelLootTable GetActiveLootTable()
+    {
+        if (levelBalanceData != null && levelBalanceData.LootTable != null)
+        {
+            return levelBalanceData.LootTable;
+        }
+
+        return levelLootTable;
+    }
+
+    private bool TryGetBuildingCountRange(out int minCount, out int maxCount)
+    {
+        if (levelBalanceData != null)
+        {
+            minCount = levelBalanceData.MinBuildings;
+            maxCount = levelBalanceData.MaxBuildings;
+            return true;
+        }
+
+        minCount = minBuildings;
+        maxCount = Mathf.Max(minBuildings, maxBuildings);
+        return maxCount >= minCount;
+    }
+
+    private bool TryGetEnemyCountRange(out int minCount, out int maxCount)
+    {
+        if (levelBalanceData == null)
+        {
+            minCount = 0;
+            maxCount = 0;
+            return false;
+        }
+
+        minCount = levelBalanceData.MinEnemies;
+        maxCount = levelBalanceData.MaxEnemies;
+        return maxCount >= minCount;
+    }
+
     private bool IntersectsPlacedBuilding(Bounds candidateBounds)
     {
         for (int i = 0; i < placedBuildingBounds.Count; i++)
@@ -458,7 +536,10 @@ public class LevelGenerator : MonoBehaviour
 
     private static bool Contains(Bounds container, Bounds target)
     {
-        return container.Contains(target.min) && container.Contains(target.max);
+        return target.min.x >= container.min.x
+            && target.max.x <= container.max.x
+            && target.min.z >= container.min.z
+            && target.max.z <= container.max.z;
     }
 
     private static bool TryGetCombinedBounds(GameObject target, out Bounds bounds)
