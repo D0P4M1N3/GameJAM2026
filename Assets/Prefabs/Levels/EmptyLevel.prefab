@@ -147,6 +147,55 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &1863018086620843745
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3246979809905280814}
+  - component: {fileID: 6735293873105867167}
+  m_Layer: 3
+  m_Name: Items Scatter Zone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3246979809905280814
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1863018086620843745}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4397236949630765756}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6735293873105867167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1863018086620843745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fcd3d89287c45a8b64202b67aeec3ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LevelScatterZone
+  zoneType: 1
+  size: {x: 9.48, y: 0.26, z: 9.22}
+  buildingColor: {r: 0.25, g: 0.8, b: 1, a: 0.45}
+  itemColor: {r: 0.45, g: 1, b: 0.3, a: 0.45}
+  enemyColor: {r: 1, g: 0.45, b: 0.3, a: 0.45}
 --- !u!1 &2323691682519554474
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,6 +307,104 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &3037129991650630932
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5397989227128648387}
+  - component: {fileID: 8706247726113245810}
+  m_Layer: 3
+  m_Name: Building Scatter Zone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5397989227128648387
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3037129991650630932}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4397236949630765756}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8706247726113245810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3037129991650630932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fcd3d89287c45a8b64202b67aeec3ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LevelScatterZone
+  zoneType: 0
+  size: {x: 9.59, y: 6.8, z: 9.32}
+  buildingColor: {r: 0.25, g: 0.8, b: 1, a: 0.45}
+  itemColor: {r: 0.45, g: 1, b: 0.3, a: 0.45}
+  enemyColor: {r: 1, g: 0.45, b: 0.3, a: 0.45}
+--- !u!1 &4516038823713232825
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5067029186442294037}
+  - component: {fileID: 4293594947817635855}
+  m_Layer: 3
+  m_Name: Enemy Scatter Zone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5067029186442294037
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4516038823713232825}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.73, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4397236949630765756}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4293594947817635855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4516038823713232825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fcd3d89287c45a8b64202b67aeec3ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LevelScatterZone
+  zoneType: 1
+  size: {x: 3.5, y: 0.34, z: 9.14}
+  buildingColor: {r: 0.25, g: 0.8, b: 1, a: 0.45}
+  itemColor: {r: 0.45, g: 1, b: 0.3, a: 0.45}
+  enemyColor: {r: 1, g: 0.45, b: 0.3, a: 0.45}
 --- !u!1 &5536515863302082313
 GameObject:
   m_ObjectHideFlags: 0
@@ -270,7 +417,7 @@ GameObject:
   - component: {fileID: 2809207119723268844}
   - component: {fileID: 6551853577910771414}
   - component: {fileID: 8030312838478126098}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: Plane Playable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -289,7 +436,10 @@ Transform:
   m_LocalPosition: {x: 0.34697056, y: -0.1530298, z: 0.08806038}
   m_LocalScale: {x: 8, y: 8, z: 8}
   m_ConstrainProportionsScale: 1
-  m_Children: []
+  m_Children:
+  - {fileID: 5397989227128648387}
+  - {fileID: 3246979809905280814}
+  - {fileID: 5067029186442294037}
   m_Father: {fileID: 7844004298756833377}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2809207119723268844
