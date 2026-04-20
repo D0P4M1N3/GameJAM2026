@@ -1027,7 +1027,8 @@ MonoBehaviour:
     MaxHP: 20
     Damage: 1
     Storage: 10
-    HP: 2147483647
+    HP: 2.1474836e+9
+    Currency: 0
     mSpeed: 1
     mMaxHP: 1
     mDamage: 1

@@ -478,6 +478,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelGenerator
   baseLevelRoot: {fileID: 2006975210}
+  playerRoot: {fileID: 463406091}
   navMeshSurface: {fileID: 951028994}
   fallbackGameplayPickupPrefab: {fileID: 0}
   levelBalanceData: {fileID: 11400000, guid: 84f1baf272924405b0407e3c33881042, type: 2}
@@ -494,8 +495,12 @@ MonoBehaviour:
   - {fileID: 7868574379826556882, guid: 60854ad8846874f4d9a3c8c6c77dd51a, type: 3}
   maxBuildingPlacementAttempts: 12
   maxItemPlacementAttempts: 8
-  maxEnemyPlacementAttempts: 8
-  randomizeBuildingYaw: 1
+  maxEnemyPlacementAttempts: 35
+  maxPlayerPlacementAttempts: 12
+  minBuildingSpacing: 2.97
+  itemSpawnYOffset: 0.5
+  debugEnemySpawning: 1
+  randomizeBuildingYaw: 0
   generateOnStart: 1
   levelLootTable: {fileID: 0}
   minBuildings: 3
@@ -1739,6 +1744,10 @@ PrefabInstance:
       propertyPath: Target
       value: 
       objectReference: {fileID: 1666747386}
+    - target: {fileID: 2131704442735416348, guid: 3efc12cc1f67f6145b16f610da3af604, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 1666747386}
     - target: {fileID: 3030192163158360768, guid: 3efc12cc1f67f6145b16f610da3af604, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1787,10 +1796,6 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 463406091}
-    - target: {fileID: 8766310104449798709, guid: 3efc12cc1f67f6145b16f610da3af604, type: 3}
-      propertyPath: snapAngle
-      value: 90
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1807,18 +1812,6 @@ PrefabInstance:
     - target: {fileID: 130390453574914705, guid: 44aac0b6c7743ba4d8bc785836abb3ab, type: 3}
       propertyPath: m_Name
       value: EmptyLevel
-      objectReference: {fileID: 0}
-    - target: {fileID: 4293594947817635855, guid: 44aac0b6c7743ba4d8bc785836abb3ab, type: 3}
-      propertyPath: size.y
-      value: 0.34
-      objectReference: {fileID: 0}
-    - target: {fileID: 5536515863302082313, guid: 44aac0b6c7743ba4d8bc785836abb3ab, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 6735293873105867167, guid: 44aac0b6c7743ba4d8bc785836abb3ab, type: 3}
-      propertyPath: size.y
-      value: 0.26
       objectReference: {fileID: 0}
     - target: {fileID: 7844004298756833377, guid: 44aac0b6c7743ba4d8bc785836abb3ab, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1858,14 +1851,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7844004298756833377, guid: 44aac0b6c7743ba4d8bc785836abb3ab, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8310585426941586476, guid: 44aac0b6c7743ba4d8bc785836abb3ab, type: 3}
-      propertyPath: size.y
-      value: 3.62
-      objectReference: {fileID: 0}
-    - target: {fileID: 8310585426941586476, guid: 44aac0b6c7743ba4d8bc785836abb3ab, type: 3}
-      propertyPath: zoneType
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

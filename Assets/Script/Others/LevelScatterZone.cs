@@ -5,15 +5,14 @@ public enum LevelScatterZoneType
     Buildings,
     Items,
     Enemies,
+    PlayerStart,
 }
 
 public class LevelScatterZone : MonoBehaviour
 {
     [SerializeField] private LevelScatterZoneType zoneType;
     [SerializeField] private Vector3 size = new(6f, 0f, 6f);
-    [SerializeField] private Color buildingColor = new(0.25f, 0.8f, 1f, 0.45f);
-    [SerializeField] private Color itemColor = new(0.45f, 1f, 0.3f, 0.45f);
-    [SerializeField] private Color enemyColor = new(1f, 0.45f, 0.3f, 0.45f);
+    [SerializeField] private Color gizmoColor = new(0.25f, 0.8f, 1f, 0.45f);
 
     public LevelScatterZoneType ZoneType => zoneType;
     public Vector3 Size => size;
@@ -57,7 +56,7 @@ public class LevelScatterZone : MonoBehaviour
     {
         Matrix4x4 previousMatrix = Gizmos.matrix;
         Gizmos.matrix = transform.localToWorldMatrix;
-        Gizmos.color = GetZoneColor();
+        Gizmos.color = gizmoColor;
         Vector3 gizmoSize = GetGizmoSize();
         Gizmos.DrawWireCube(Vector3.zero, gizmoSize);
         Gizmos.DrawCube(Vector3.zero, gizmoSize);
@@ -83,15 +82,5 @@ public class LevelScatterZone : MonoBehaviour
             Mathf.Abs(size.x),
             0.05f,
             Mathf.Abs(size.z));
-    }
-
-    private Color GetZoneColor()
-    {
-        return zoneType switch
-        {
-            LevelScatterZoneType.Buildings => buildingColor,
-            LevelScatterZoneType.Items => itemColor,
-            _ => enemyColor,
-        };
     }
 }

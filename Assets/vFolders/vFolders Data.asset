@@ -66,6 +66,7 @@ MonoBehaviour:
       isIconRecursive: 0
       isColorRecursive: 0
   bookmarks:
+  - guid: 55c28161cec3cbb4cb53e33f12179e82
   - guid: 249e58e870a6592438241317ca145167
   - guid: 9c53962885c2c4f449125a979d6ad240
   - guid: 115ea17fa09bbf349aa69650362f8a92
