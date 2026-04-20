@@ -608,13 +608,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelGenerator
   baseLevelRoot: {fileID: 154839200}
-  gameplayPickupPrefab: {fileID: 0}
-  levelLootTable: {fileID: 11400000, guid: efad36a05f41423bb1d768cbe3877303, type: 2}
+  navMeshSurface: {fileID: 0}
+  fallbackGameplayPickupPrefab: {fileID: 0}
+  levelBalanceData: {fileID: 0}
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  groundRaycastHeight: 50
+  groundRaycastDistance: 200
   buildingPrefabs: []
-  minBuildings: 3
-  maxBuildings: 6
+  enemyPrefabs: []
   maxBuildingPlacementAttempts: 12
   maxItemPlacementAttempts: 8
+  maxEnemyPlacementAttempts: 8
   randomizeBuildingYaw: 1
   generateOnStart: 1
 --- !u!4 &534614611
