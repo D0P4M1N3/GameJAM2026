@@ -42,12 +42,16 @@ public class StarterPackManager : MonoBehaviour
             }
         }
 
-        int itemsToGrant = Mathf.Min(starterItemCount, availableItems.Count);
+        if (availableItems.Count == 0)
+        {
+            return grantedItems;
+        }
+
+        int itemsToGrant = starterItemCount;
         for (int i = 0; i < itemsToGrant; i++)
         {
             int index = Random.Range(0, availableItems.Count);
             grantedItems.Add(availableItems[index]);
-            availableItems.RemoveAt(index);
         }
 
         return grantedItems;
