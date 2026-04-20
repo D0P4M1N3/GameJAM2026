@@ -61,6 +61,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   stashData: {fileID: 0}
   inventoryData: {fileID: 0}
+  collectBoxData: {fileID: 0}
+  hasGrantedStarterPack: 0
 --- !u!1 &2348742958620319778
 GameObject:
   m_ObjectHideFlags: 0
@@ -207,13 +209,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7192d2098b704104c89b1d5d72e3d58d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DATA_Player
-  BB_Player_Master: {fileID: 0}
   CharacterStats:
     Speed: 5
     MaxHP: 20
     Damage: 1
     Storage: 10
-    HP: 2147483647
+    HP: 2.1474836e+9
+    Currency: 0
     mSpeed: 1
     mMaxHP: 1
     mDamage: 1
@@ -307,7 +309,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScreenFading
   blackScreen: {fileID: 3427763895902826980}
-  fadeDuration: 2
+  fadeDuration: 1
   valueProperty: _Value
   blackValue: 30
   clearValue: 0
