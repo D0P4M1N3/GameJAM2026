@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6335847621194668042}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 'TallBuilding '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 2517880079215528798}
   - component: {fileID: 7199582316708889093}
   - component: {fileID: 9129759305050745156}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Cube (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

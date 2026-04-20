@@ -20,7 +20,6 @@ public class ItemStatsUI : MonoBehaviour
     [SerializeField] private string healthPrefix = "Health: ";
     [SerializeField] private string attackPrefix = "Attack: ";
     [SerializeField] private string valuePrefix = "Value: ";
-
     private void OnEnable()
     {
         Subscribe();
@@ -37,10 +36,10 @@ public class ItemStatsUI : MonoBehaviour
     {
         ItemStats stats = GetStats();
 
-        SetText(speedText, speedPrefix, stats.Speed);
-        SetText(healthText, healthPrefix, stats.Health);
-        SetText(attackText, attackPrefix, stats.Attack);
-        SetText(valueText, valuePrefix, stats.Value);
+        SetText(speedText, speedPrefix, stats.Speed, includePercentSuffix: true);
+        SetText(healthText, healthPrefix, stats.Health, includePercentSuffix: true);
+        SetText(attackText, attackPrefix, stats.Attack, includePercentSuffix: true);
+        SetText(valueText, valuePrefix, stats.Value, includePercentSuffix: false);
     }
 
     private void Subscribe()
@@ -79,13 +78,19 @@ public class ItemStatsUI : MonoBehaviour
         };
     }
 
-    private static void SetText(TMP_Text target, string prefix, float value)
+    private static void SetText(TMP_Text target, string prefix, float value, bool includePercentSuffix)
     {
         if (target == null)
         {
             return;
         }
 
-        target.text = prefix + value.ToString("0.##");
+        target.text = prefix + FormatStatValue(value, includePercentSuffix);
+    }
+
+    private static string FormatStatValue(float value, bool includePercentSuffix)
+    {
+        string format = includePercentSuffix ? "+0.##;-0.##;0" : "0.##;-0.##;0";
+        return value.ToString(format) + (includePercentSuffix ? "%" : string.Empty);
     }
 }

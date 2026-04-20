@@ -1,13 +1,12 @@
 using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(AudioSource))]
 public class ItemWorldObject : MonoBehaviour
 {
     [SerializeField] private ItemData itemData;
-    [SerializeField] private SpriteRenderer spriteRenderer;
-    [SerializeField] private AudioSource audioSource;
-    [SerializeField] private HoveredItemStatsUI hoverStatsUi;
+    [SerializeField] [HideInInspector] private SpriteRenderer spriteRenderer;
+    [SerializeField] [HideInInspector] private AudioSource audioSource;
+    [SerializeField] [HideInInspector] private HoveredItemStatsUI hoverStatsUi;
     [SerializeField] private bool isInInventory;
     [SerializeField] private float collisionSoundThreshold = 1.5f;
     [SerializeField] private float collisionSoundCooldown = 0.1f;
@@ -16,6 +15,7 @@ public class ItemWorldObject : MonoBehaviour
 
     private StashSpawner owningSpawner;
     private DraggableItem2D draggableItem;
+    private SharedItemPrefabController sharedPrefabController;
     private float lastCollisionSoundTime = float.NegativeInfinity;
     private float collisionSoundSuppressedUntil = float.NegativeInfinity;
     private bool keepHoverVisibleWhileDragging;
@@ -51,10 +51,31 @@ public class ItemWorldObject : MonoBehaviour
 
     private void OnMouseEnter()
     {
+        if (sharedPrefabController != null)
+        {
+            return;
+        }
+
+        HandlePointerEnter();
+    }
+
+    public void HandlePointerEnter()
+    {
+        Debug.Log($"Pointer hit item: {itemData?.DisplayName ?? gameObject.name}", this);
         ShowHoverStats();
     }
 
     private void OnMouseExit()
+    {
+        if (sharedPrefabController != null)
+        {
+            return;
+        }
+
+        HandlePointerExit();
+    }
+
+    public void HandlePointerExit()
     {
         if (keepHoverVisibleWhileDragging)
         {
@@ -71,6 +92,16 @@ public class ItemWorldObject : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (sharedPrefabController != null)
+        {
+            return;
+        }
+
+        HandleCollisionEnter2D(collision);
+    }
+
+    public void HandleCollisionEnter2D(Collision2D collision)
+    {
         if (!CanPlayCollisionSound(collision))
         {
             return;
@@ -84,6 +115,7 @@ public class ItemWorldObject : MonoBehaviour
     {
         itemData = data;
         EnsureSpriteRendererReference();
+        sharedPrefabController?.ApplyItemData(data);
         RefreshVisuals();
     }
 
@@ -92,6 +124,7 @@ public class ItemWorldObject : MonoBehaviour
         owningSpawner = spawner;
         isInInventory = false;
         SetItemData(data);
+        sharedPrefabController?.InitializeForUi(data);
     }
 
     public void SetInventoryState(bool inInventory)
@@ -128,6 +161,11 @@ public class ItemWorldObject : MonoBehaviour
 
     private void EnsureSpriteRendererReference()
     {
+        if (sharedPrefabController == null)
+        {
+            sharedPrefabController = GetComponent<SharedItemPrefabController>();
+        }
+
         if (spriteRenderer == null)
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
@@ -240,7 +278,18 @@ public class ItemWorldObject : MonoBehaviour
 
     private void RefreshVisuals()
     {
-        if (spriteRenderer == null || itemData == null)
+        if (itemData == null)
+        {
+            return;
+        }
+
+        if (sharedPrefabController != null)
+        {
+            sharedPrefabController.ApplyItemData(itemData);
+            return;
+        }
+
+        if (spriteRenderer == null)
         {
             return;
         }

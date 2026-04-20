@@ -1,3 +1,4 @@
+using UnityEngine.Serialization;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "ItemData", menuName = "Inventory/Item Data")]
@@ -9,7 +10,9 @@ public class ItemData : ScriptableObject
     [SerializeField] private Color itemColor = Color.white;
     [SerializeField] [Min(0f)] private float sizeValue = 1f;
     [SerializeField] private Sprite icon;
-    [SerializeField] private GameObject worldPrefab;
+    [FormerlySerializedAs("uiPrefab")]
+    [FormerlySerializedAs("worldPrefab")]
+    [SerializeField] private GameObject itemPrefab;
     [SerializeField] private ItemStats stats;
     [SerializeField] private AudioClip collisionClip;
     [SerializeField] [Range(0f, 1f)] private float collisionVolume = 1f;
@@ -22,7 +25,7 @@ public class ItemData : ScriptableObject
     public Color ItemColor => itemColor;
     public float SizeValue => sizeValue;
     public Sprite Icon => icon;
-    public GameObject WorldPrefab => worldPrefab;
+    public GameObject ItemPrefab => itemPrefab;
     public ItemStats Stats => stats;
     public AudioClip CollisionClip => collisionClip;
     public float CollisionVolume => collisionVolume;

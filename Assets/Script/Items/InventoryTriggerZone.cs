@@ -5,6 +5,7 @@ public class InventoryTriggerZone : MonoBehaviour
 {
     [SerializeField] private InventoryData inventoryData;
     [SerializeField] private StashData stashData;
+    [SerializeField] [Range(0f, 1f)] private float requiredOverlapRatio = 0.6f;
     [SerializeField] private Color normalBoundsColor = new(0.15f, 0.9f, 0.95f, 0.8f);
     [SerializeField] private Color overflowBoundsColor = new(1f, 0.3f, 0.2f, 0.9f);
 
@@ -16,45 +17,17 @@ public class InventoryTriggerZone : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        ItemWorldObject itemWorldObject = other.GetComponent<ItemWorldObject>();
-        if (itemWorldObject == null || itemWorldObject.IsInInventory || itemWorldObject.ItemData == null)
-        {
-            return;
-        }
+        EvaluateItemOverlap(other);
+    }
 
-        if (inventoryData != null)
-        {
-            inventoryData.AddItem(itemWorldObject.ItemData);
-        }
-
-        if (stashData != null)
-        {
-            stashData.RemoveItem(itemWorldObject.ItemData);
-        }
-
-        itemWorldObject.SetInventoryState(true);
-        itemWorldObject.SuppressCollisionSound();
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        EvaluateItemOverlap(other);
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        ItemWorldObject itemWorldObject = other.GetComponent<ItemWorldObject>();
-        if (itemWorldObject == null || !itemWorldObject.IsInInventory || itemWorldObject.ItemData == null)
-        {
-            return;
-        }
-
-        if (inventoryData != null)
-        {
-            inventoryData.RemoveItem(itemWorldObject.ItemData);
-        }
-
-        if (stashData != null)
-        {
-            stashData.AddItem(itemWorldObject.ItemData);
-        }
-
-        itemWorldObject.SetInventoryState(false);
+        SetItemInventoryMembership(other, shouldBeInInventory: false);
     }
 
     private void OnDrawGizmos()
@@ -85,5 +58,75 @@ public class InventoryTriggerZone : MonoBehaviour
         }
 
         Gizmos.matrix = previousMatrix;
+    }
+
+    private void EvaluateItemOverlap(Collider2D itemCollider)
+    {
+        if (itemCollider == null)
+        {
+            return;
+        }
+
+        SetItemInventoryMembership(itemCollider, GetOverlapRatio(itemCollider) >= requiredOverlapRatio);
+    }
+
+    private void SetItemInventoryMembership(Collider2D itemCollider, bool shouldBeInInventory)
+    {
+        ItemWorldObject itemWorldObject = itemCollider != null ? itemCollider.GetComponent<ItemWorldObject>() : null;
+        if (itemWorldObject == null || itemWorldObject.ItemData == null || itemWorldObject.IsInInventory == shouldBeInInventory)
+        {
+            return;
+        }
+
+        if (shouldBeInInventory)
+        {
+            if (inventoryData != null)
+            {
+                inventoryData.AddItem(itemWorldObject.ItemData);
+            }
+
+            if (stashData != null)
+            {
+                stashData.RemoveItem(itemWorldObject.ItemData);
+            }
+
+            itemWorldObject.SuppressCollisionSound();
+        }
+        else
+        {
+            if (inventoryData != null)
+            {
+                inventoryData.RemoveItem(itemWorldObject.ItemData);
+            }
+
+            if (stashData != null)
+            {
+                stashData.AddItem(itemWorldObject.ItemData);
+            }
+        }
+
+        itemWorldObject.SetInventoryState(shouldBeInInventory);
+    }
+
+    private float GetOverlapRatio(Collider2D itemCollider)
+    {
+        Collider2D zoneCollider = GetComponent<Collider2D>();
+        if (zoneCollider == null || itemCollider == null)
+        {
+            return 0f;
+        }
+
+        Bounds zoneBounds = zoneCollider.bounds;
+        Bounds itemBounds = itemCollider.bounds;
+        float itemArea = itemBounds.size.x * itemBounds.size.y;
+        if (itemArea <= Mathf.Epsilon)
+        {
+            return 0f;
+        }
+
+        float overlapWidth = Mathf.Max(0f, Mathf.Min(zoneBounds.max.x, itemBounds.max.x) - Mathf.Max(zoneBounds.min.x, itemBounds.min.x));
+        float overlapHeight = Mathf.Max(0f, Mathf.Min(zoneBounds.max.y, itemBounds.max.y) - Mathf.Max(zoneBounds.min.y, itemBounds.min.y));
+        float overlapArea = overlapWidth * overlapHeight;
+        return overlapArea / itemArea;
     }
 }

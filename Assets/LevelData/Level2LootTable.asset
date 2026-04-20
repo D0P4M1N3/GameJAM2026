@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c6b5bf341b34d54b8cfc4eb28d1ab01, type: 3}
+  m_Name: Level2LootTable
+  m_EditorClassIdentifier: 
+  minDrops: 3
+  maxDrops: 5
+  entries:
+  - item: {fileID: 11400000, guid: bfdba622486346a4a9a45604ee3a04b3, type: 2}
+    weight: 20
+  - item: {fileID: 11400000, guid: 673f436f0c99ccd488a63d0581c195fe, type: 2}
+    weight: 18
+  - item: {fileID: 11400000, guid: 3f163d1a2b6789b4cac5a69f01b4271a, type: 2}
+    weight: 18
+  - item: {fileID: 11400000, guid: 99e18501065ef1345aaf127eab6023d5, type: 2}
+    weight: 16
+  - item: {fileID: 11400000, guid: da2ce4e6dd7d8594993d7e5131bc5421, type: 2}
+    weight: 14
+  - item: {fileID: 11400000, guid: 41efac3ecf908aa4099593744fa26c8b, type: 2}
+    weight: 14

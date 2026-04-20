@@ -116,6 +116,17 @@ public class GameManager : MonoBehaviour
         ApplyRuntimeDataToScene();
     }
 
+    public void AddItemToInventory(ItemData item)
+    {
+        if (item == null)
+        {
+            return;
+        }
+
+        runtimeInventoryItems.Add(item);
+        ApplyRuntimeDataToScene();
+    }
+
     public void AddItemsToStash(IEnumerable<ItemData> items)
     {
         if (items == null)
@@ -128,6 +139,12 @@ public class GameManager : MonoBehaviour
             AddRuntimeStashItem(item);
         }
 
+        ApplyRuntimeDataToScene(refreshStashSpawn: true);
+    }
+
+    public void AddItemToStash(ItemData item)
+    {
+        AddRuntimeStashItem(item);
         ApplyRuntimeDataToScene(refreshStashSpawn: true);
     }
 
@@ -148,6 +165,17 @@ public class GameManager : MonoBehaviour
             runtimeCollectBoxItems.Add(item);
         }
 
+        ApplyRuntimeDataToScene();
+    }
+
+    public void AddItemToCollectBox(ItemData item)
+    {
+        if (item == null)
+        {
+            return;
+        }
+
+        runtimeCollectBoxItems.Add(item);
         ApplyRuntimeDataToScene();
     }
 

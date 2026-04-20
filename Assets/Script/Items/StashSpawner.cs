@@ -42,7 +42,8 @@ public class StashSpawner : MonoBehaviour
         for (int entryIndex = 0; entryIndex < stashData.Entries.Count; entryIndex++)
         {
             StashEntry entry = stashData.Entries[entryIndex];
-            if (!entry.IsValid || entry.Item.WorldPrefab == null)
+            GameObject itemPrefab = ResolveItemPrefab(entry.Item);
+            if (!entry.IsValid || itemPrefab == null)
             {
                 continue;
             }
@@ -51,7 +52,7 @@ public class StashSpawner : MonoBehaviour
             {
                 Vector3 spawnPosition = GetSpawnPosition(parent, spawnIndex);
                 Quaternion spawnRotation = GetSpawnRotation(parent, spawnIndex);
-                GameObject instance = Instantiate(entry.Item.WorldPrefab, spawnPosition, spawnRotation, parent);
+                GameObject instance = Instantiate(itemPrefab, spawnPosition, spawnRotation, parent);
 
                 ItemWorldObject itemWorldObject = instance.GetComponent<ItemWorldObject>();
                 if (itemWorldObject != null)
@@ -150,12 +151,25 @@ public class StashSpawner : MonoBehaviour
 
     private Vector3 GetSpawnPosition(Transform parent, int spawnIndex)
     {
-        Vector2 randomOffset = Random.insideUnitCircle * spawnRadius;
+        float randomAngle = Random.Range(180f, 360f) * Mathf.Deg2Rad;
+        float randomDistance = Random.Range(0f, spawnRadius);
+        Vector2 randomOffset = new(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle));
+        randomOffset *= randomDistance;
         return parent.position + new Vector3(randomOffset.x, randomOffset.y, 0f);
     }
 
     private Quaternion GetSpawnRotation(Transform parent, int spawnIndex)
     {
         return parent.rotation;
+    }
+
+    private static GameObject ResolveItemPrefab(ItemData item)
+    {
+        if (item == null)
+        {
+            return null;
+        }
+
+        return item.ItemPrefab;
     }
 }

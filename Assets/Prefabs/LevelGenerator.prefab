@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3792282406753290259
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5214726285118501105}
+  - component: {fileID: 4779468128226042489}
+  m_Layer: 0
+  m_Name: LevelGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5214726285118501105
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3792282406753290259}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 9.05954, y: -0.5, z: -8.78753}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4779468128226042489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3792282406753290259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36e122ab5fd64f7fae0d5a1fe15ab2c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LevelGenerator
+  baseLevelRoot: {fileID: 0}
+  fallbackGameplayPickupPrefab: {fileID: 0}
+  levelLootTable: {fileID: 11400000, guid: efad36a05f41423bb1d768cbe3877303, type: 2}
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  groundRaycastHeight: 50
+  groundRaycastDistance: 200
+  buildingPrefabs:
+  - {fileID: 1605586198868720736, guid: dc7bda622f249304a941ba4a203140ca, type: 3}
+  - {fileID: 9184833062322216847, guid: f89dba64486e6ec478b3985f0ac630bf, type: 3}
+  - {fileID: 660000429290860177, guid: d124dbc2e65411f4399db3dde7b292ff, type: 3}
+  minBuildings: 11
+  maxBuildings: 20
+  maxBuildingPlacementAttempts: 12
+  maxItemPlacementAttempts: 8
+  randomizeBuildingYaw: 1
+  generateOnStart: 1
