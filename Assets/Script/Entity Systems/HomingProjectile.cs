@@ -9,11 +9,17 @@ public class HomingProjectile : MonoBehaviour
     private float speed;
     private float turnSpeed;
 
-    public void Initialize(Transform target, float speed, float turnSpeed)
+    private float Damage;
+
+    public void Initialize(Transform target, float speed, float turnSpeed, float Damage, float Lifetime = float.PositiveInfinity)
     {
         this.target = target;
         this.speed = speed;
         this.turnSpeed = turnSpeed;
+        this.Damage = Damage;
+
+        Destroy(this.gameObject, Lifetime);
+
 
         rb = GetComponent<Rigidbody>();
     }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5954147635602967263}
   - component: {fileID: 6405443237563034583}
   - component: {fileID: 4191279669058355471}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 6181868528401691184}
   - component: {fileID: 1512404421141709062}
   - component: {fileID: 5950307296008601187}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Homing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,7 +173,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4029950200489902}
   - component: {fileID: 5840619576479358976}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}

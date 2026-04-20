@@ -9,6 +9,7 @@ public class ACT_Player_Combat : MonoBehaviour
     public GameObject ProjectilePrefab;
     public float projectileSpeed = 10f;
     public float turnSpeed = 5f;
+    public float Lifetime = 2f;
 
     public Transform firePoint;
 
@@ -28,7 +29,7 @@ public class ACT_Player_Combat : MonoBehaviour
             return;
         }
 
-        hp.Initialize(target, projectileSpeed, turnSpeed);
+        hp.Initialize(target, projectileSpeed, turnSpeed, BB_Player_Master.CharacterStats.Damage, Lifetime);
     }
 
     private Transform GetClosestTarget()

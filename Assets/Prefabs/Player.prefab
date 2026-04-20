@@ -59,8 +59,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ACT_Player_Combat
   BB_Player_Master: {fileID: 5522960294862400285}
   ProjectilePrefab: {fileID: 5407239988904915960, guid: 9c86755156bed99478b109e8531f5c99, type: 3}
-  projectileSpeed: 10
-  turnSpeed: 5
+  projectileSpeed: 16
+  turnSpeed: 10
+  Lifetime: 2
   firePoint: {fileID: 6161299359824271258}
 --- !u!1 &467475437773881661
 GameObject:
