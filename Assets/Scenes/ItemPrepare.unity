@@ -3598,6 +3598,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StarterPackManager
   starterItemPool:
   - {fileID: 11400000, guid: da2ce4e6dd7d8594993d7e5131bc5421, type: 2}
+  - {fileID: 11400000, guid: 034a87466cb8d674c8de0b3510b69a55, type: 2}
   starterItemCount: 3
 --- !u!1 &1623290110
 GameObject:

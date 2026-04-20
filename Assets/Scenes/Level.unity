@@ -491,6 +491,8 @@ MonoBehaviour:
   - {fileID: 1605586198868720736, guid: dc7bda622f249304a941ba4a203140ca, type: 3}
   - {fileID: 9184833062322216847, guid: f89dba64486e6ec478b3985f0ac630bf, type: 3}
   - {fileID: 660000429290860177, guid: d124dbc2e65411f4399db3dde7b292ff, type: 3}
+  - {fileID: 2302339364339594334, guid: f0ab1072a00499c4499f2de91ac9092f, type: 3}
+  - {fileID: 8284358381825721581, guid: ac660e4df99b3084b84b99d5dcffc44c, type: 3}
   enemyPrefabs:
   - {fileID: 7868574379826556882, guid: 60854ad8846874f4d9a3c8c6c77dd51a, type: 3}
   maxBuildingPlacementAttempts: 12
