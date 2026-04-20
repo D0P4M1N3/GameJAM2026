@@ -16,10 +16,12 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] [Min(0.1f)] private float groundRaycastDistance = 200f;
     [SerializeField] private List<GameObject> buildingPrefabs = new();
     [SerializeField] private List<GameObject> enemyPrefabs = new();
+    [SerializeField] private GameObject exitGatePrefab;
     [SerializeField] [Min(1)] private int maxBuildingPlacementAttempts = 12;
     [SerializeField] [Min(1)] private int maxItemPlacementAttempts = 8;
     [SerializeField] [Min(1)] private int maxEnemyPlacementAttempts = 8;
     [SerializeField] [Min(1)] private int maxPlayerPlacementAttempts = 12;
+    [SerializeField] [Min(1)] private int maxExitGatePlacementAttempts = 12;
     [SerializeField] [Min(0f)] private float minBuildingSpacing = 1f;
     [SerializeField] private float itemSpawnYOffset = 0.5f;
     [SerializeField] private bool debugEnemySpawning;
@@ -32,12 +34,14 @@ public class LevelGenerator : MonoBehaviour
     private readonly List<GameObject> spawnedBuildings = new();
     private readonly List<GameplayItemPickup> spawnedPickups = new();
     private readonly List<GameObject> spawnedEnemies = new();
+    private GameObject spawnedExitGate;
     private readonly List<Bounds> placedBuildingBounds = new();
     private readonly List<Collider> groundColliders = new();
     private Transform generatedRoot;
     private Transform generatedBuildingsRoot;
     private Transform generatedItemsRoot;
     private Transform generatedEnemiesRoot;
+    private Transform generatedExitGateRoot;
 
     private void Start()
     {
@@ -74,6 +78,7 @@ public class LevelGenerator : MonoBehaviour
         var itemZones = new List<LevelScatterZone>();
         var enemyZones = new List<LevelScatterZone>();
         var playerZones = new List<LevelScatterZone>();
+        var exitGateZones = new List<LevelScatterZone>();
         for (int i = 0; i < scatterZones.Length; i++)
         {
             LevelScatterZone zone = scatterZones[i];
@@ -89,9 +94,13 @@ public class LevelGenerator : MonoBehaviour
             {
                 enemyZones.Add(zone);
             }
-            else
+            else if (zone.ZoneType == LevelScatterZoneType.PlayerStart)
             {
                 playerZones.Add(zone);
+            }
+            else
+            {
+                exitGateZones.Add(zone);
             }
         }
 
@@ -99,6 +108,7 @@ public class LevelGenerator : MonoBehaviour
         SpawnItems(itemZones, baseLevelRoot.transform);
         RebuildNavMesh();
         PositionPlayer(playerZones);
+        SpawnExitGate(exitGateZones, baseLevelRoot.transform);
         SpawnEnemies(enemyZones, baseLevelRoot.transform);
     }
 
@@ -129,9 +139,15 @@ public class LevelGenerator : MonoBehaviour
             }
         }
 
+        if (spawnedExitGate != null)
+        {
+            DestroyGenerated(spawnedExitGate);
+        }
+
         spawnedPickups.Clear();
         spawnedBuildings.Clear();
         spawnedEnemies.Clear();
+        spawnedExitGate = null;
         placedBuildingBounds.Clear();
         groundColliders.Clear();
 
@@ -313,6 +329,40 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
+    private void SpawnExitGate(List<LevelScatterZone> exitGateZones, Transform parent)
+    {
+        if (exitGatePrefab == null || exitGateZones.Count == 0)
+        {
+            return;
+        }
+
+        Transform exitGateParent = GetOrCreateGeneratedCategoryRoot("ExitGate", ref generatedExitGateRoot);
+        for (int attempt = 0; attempt < maxExitGatePlacementAttempts; attempt++)
+        {
+            LevelScatterZone zone = exitGateZones[Random.Range(0, exitGateZones.Count)];
+            if (!TryGetGroundPlacementPosition(zone, out Vector3 position))
+            {
+                continue;
+            }
+
+            Quaternion rotation = randomizeBuildingYaw
+                ? Quaternion.Euler(0f, Random.Range(0f, 360f), 0f) * exitGatePrefab.transform.rotation
+                : exitGatePrefab.transform.rotation;
+
+            GameObject instance = Instantiate(exitGatePrefab, position, rotation, exitGateParent != null ? exitGateParent : parent);
+            if (TryGetCombinedBounds(instance, out Bounds bounds) && IntersectsPlacedBuilding(bounds))
+            {
+                DestroyGenerated(instance);
+                continue;
+            }
+
+            spawnedExitGate = instance;
+            return;
+        }
+
+        Debug.LogWarning("LevelGenerator could not place exit gate after all attempts.", this);
+    }
+
     private void TrySpawnEnemy(List<LevelScatterZone> enemyZones, Transform parent, int enemyIndex)
     {
         string failureReason = "No attempts were made.";
@@ -485,6 +535,7 @@ public class LevelGenerator : MonoBehaviour
         generatedBuildingsRoot = null;
         generatedItemsRoot = null;
         generatedEnemiesRoot = null;
+        generatedExitGateRoot = null;
 
         if (generatedRoot == null && baseLevelRoot != null)
         {

@@ -22,15 +22,7 @@ public class ACT_SunBoss_Navagent : MonoBehaviour
 
     private void Update()
     {
-        //intrREGIS.__UpdateState();
-        //if (intrREGIS.OnInterruptEnter)
-        //{
-        //    CancelPath();
-        //}
-        //else if (intrREGIS.OnInterruptExit)
-        //{
-
-        //}
+        ApplyFacingMovementConstraint();
     }
     void LateUpdate()
     {
@@ -107,5 +99,44 @@ public class ACT_SunBoss_Navagent : MonoBehaviour
         agent.speed = BB_Sunboss_Master.CharacterStats.finalSpeed;
         agent.angularSpeed = BB_Sunboss_Master.BB_SunbossCTX_Move.TurnSpeed;
     }
-    
+
+    private void ApplyFacingMovementConstraint()
+    {
+        if (agent == null || BB_Sunboss_Master == null)
+        {
+            return;
+        }
+
+        float baseSpeed = BB_Sunboss_Master.CharacterStats.finalSpeed;
+        if (!agent.hasPath || agent.isStopped || agent.desiredVelocity.sqrMagnitude <= 0.0001f)
+        {
+            agent.speed = baseSpeed;
+            return;
+        }
+
+        Transform facingTransform = BB_Sunboss_Master.BB_SunbossCTX_Body != null
+            && BB_Sunboss_Master.BB_SunbossCTX_Body.WholeBody != null
+            ? BB_Sunboss_Master.BB_SunbossCTX_Body.WholeBody
+            : transform;
+
+        Vector3 desiredDirection = agent.desiredVelocity;
+        desiredDirection.y = 0f;
+        if (desiredDirection.sqrMagnitude <= 0.0001f)
+        {
+            agent.speed = baseSpeed;
+            return;
+        }
+
+        Vector3 forward = facingTransform.forward;
+        forward.y = 0f;
+        if (forward.sqrMagnitude <= 0.0001f)
+        {
+            agent.speed = baseSpeed;
+            return;
+        }
+
+        float angleToPath = Vector3.Angle(forward.normalized, desiredDirection.normalized);
+        float maxMoveAngle = Mathf.Max(0f, BB_Sunboss_Master.BB_SunbossCTX_Move.MaxMoveAngleFromFacing);
+        agent.speed = angleToPath <= maxMoveAngle ? baseSpeed : 0f;
+    }
 }

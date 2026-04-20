@@ -6,6 +6,7 @@ public enum LevelScatterZoneType
     Items,
     Enemies,
     PlayerStart,
+    ExitGate,
 }
 
 public class LevelScatterZone : MonoBehaviour
