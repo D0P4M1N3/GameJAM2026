@@ -16,15 +16,15 @@ public class CharacterStats
     public float Currency = 0;
 
     [Header("Modifier")]
-    public float mSpeed = 1;
-    public float mMaxHP = 1;
-    public float mDamage = 1;
+    public float mSpeed = 0;
+    public float mMaxHP = 0;
+    public float mDamage = 0;
     public float mStorage = 0;
 
 
     [Header("Finals")]
-    public float finalSpeed => (Speed / 100f) * mSpeed;
-    public float finalMaxHP => (MaxHP / 100f) * mMaxHP;
-    public float finalDamage => (Damage / 100f) * mDamage;
-    public float finalStorage => (Storage / 100f) * mStorage;
+    public float finalSpeed => (Speed / 100f) * mSpeed + Speed;
+    public float finalMaxHP => (MaxHP / 100f) * mMaxHP + MaxHP;
+    public float finalDamage => (Damage / 100f) * mDamage + Damage;
+    public float finalStorage => (Storage / 100f) * mStorage + Storage;
 }
