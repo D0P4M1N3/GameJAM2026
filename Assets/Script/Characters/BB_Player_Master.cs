@@ -35,4 +35,8 @@ public class BB_PlayerCTX_Move
 public class BB_PlayerCTX_Combat
 {
     public ACT_Player_Combat ACT_Player_Combat;
+    public GameObject ProjectilePrefab;
+    public float projectileSpeed = 10f;
+    public float turnSpeed = 5f;
+    public float BulletLifetime = 2f;
 }
