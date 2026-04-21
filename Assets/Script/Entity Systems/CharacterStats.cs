@@ -9,7 +9,7 @@ public class CharacterStats
     public float Speed = 1f;
     public float MaxHP = 5f;
     public float Damage = 1f;
-    public float Storage = 10f;
+    public float Storage = 0f;
 
     [Header("Current")]
     public float HP = float.PositiveInfinity;

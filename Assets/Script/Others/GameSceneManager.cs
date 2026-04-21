@@ -20,7 +20,19 @@ public class GameSceneManager : MonoBehaviour
 
     public void LoadScene(string sceneName)
     {
+        if (string.IsNullOrWhiteSpace(sceneName))
+        {
+            return;
+        }
+
         Time.timeScale = 1f; // Ensure time scale is reset when loading a new scene
+
+        if (!isActiveAndEnabled)
+        {
+            SceneManager.LoadScene(sceneName);
+            return;
+        }
+
         StartCoroutine(LoadSceneRoutine(sceneName));
     }
 

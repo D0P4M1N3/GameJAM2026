@@ -59,6 +59,13 @@ public class GameManager : MonoBehaviour
         }
 
         Time.timeScale = 1f;
+
+        if (!isActiveAndEnabled)
+        {
+            SceneManager.LoadScene(sceneName);
+            return;
+        }
+
         StartCoroutine(LoadSceneRoutine(sceneName));
     }
 
