@@ -727,7 +727,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainMenu
   playButton: {fileID: 509830919}
-  sceneName: Gameplay
+  sceneName: ItemPrepare
 --- !u!1 &1535126034
 GameObject:
   m_ObjectHideFlags: 0

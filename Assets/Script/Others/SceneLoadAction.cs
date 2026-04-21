@@ -18,17 +18,6 @@ public class SceneLoadAction : MonoBehaviour
             return;
         }
 
-        if (GameSceneManager.Instance != null)
-        {
-            if (debugLogs)
-            {
-                Debug.Log($"[SceneLoadAction] Loading scene '{sceneName}' via GameSceneManager.", this);
-            }
-
-            GameSceneManager.Instance.LoadScene(sceneName);
-            return;
-        }
-
         if (GameManager.Instance != null)
         {
             if (debugLogs)
@@ -37,6 +26,17 @@ public class SceneLoadAction : MonoBehaviour
             }
 
             GameManager.Instance.LoadScene(sceneName);
+            return;
+        }
+
+        if (GameSceneManager.Instance != null)
+        {
+            if (debugLogs)
+            {
+                Debug.Log($"[SceneLoadAction] Loading scene '{sceneName}' via GameSceneManager.", this);
+            }
+
+            GameSceneManager.Instance.LoadScene(sceneName);
             return;
         }
 

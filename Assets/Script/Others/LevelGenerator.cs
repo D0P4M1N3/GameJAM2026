@@ -57,6 +57,11 @@ public class LevelGenerator : MonoBehaviour
         EnsureNavMeshSurfaceReference();
     }
 
+    public void SetLevelBalanceData(LevelBalanceData balanceData)
+    {
+        levelBalanceData = balanceData;
+    }
+
     [ContextMenu("Generate Level")]
     public void Generate()
     {

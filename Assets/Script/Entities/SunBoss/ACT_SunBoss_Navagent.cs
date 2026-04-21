@@ -18,6 +18,13 @@ public class ACT_SunBoss_Navagent : MonoBehaviour
 
     void Awake()
     {
+        EnsureAgentReference();
+    }
+
+    private void OnEnable()
+    {
+        EnsureAgentReference();
+        TryEnsureAgentOnNavMesh();
     }
 
     private void Update()
@@ -26,6 +33,12 @@ public class ACT_SunBoss_Navagent : MonoBehaviour
     }
     void LateUpdate()
     {
+        if (!CanUseAgent())
+        {
+            followThisFrameActive = false;
+            return;
+        }
+
         // If GoToThisFrame wasn't called this frame → cancel
         if (!followThisFrameActive && agent.hasPath)
         {
@@ -49,6 +62,11 @@ public class ACT_SunBoss_Navagent : MonoBehaviour
     //}
     public void GoToThisFrame(Vector3 worldPos)
     {
+        if (!CanUseAgent())
+        {
+            return;
+        }
+
         if (intrREGIS.isInterrupted)
         {
             CancelPath();
@@ -72,6 +90,11 @@ public class ACT_SunBoss_Navagent : MonoBehaviour
 
     public void CancelPath()
     {
+        if (!CanUseAgent())
+        {
+            return;
+        }
+
         agent.isStopped = true;
         agent.ResetPath();
     }
@@ -82,11 +105,21 @@ public class ACT_SunBoss_Navagent : MonoBehaviour
 
     public bool HasPath()
     {
+        if (!CanUseAgent())
+        {
+            return false;
+        }
+
         return agent.hasPath;
     }
 
     public bool ReachedDestination(float threshold = 0.2f)
     {
+        if (!CanUseAgent())
+        {
+            return false;
+        }
+
         if (!agent.hasPath) return false;
         return agent.remainingDistance <= threshold;
     }
@@ -96,13 +129,18 @@ public class ACT_SunBoss_Navagent : MonoBehaviour
     // INTERNAL ////////////////////////////////////////////
     void STATS_UPDATE()
     {
+        if (!CanUseAgent() || BB_Sunboss_Master == null)
+        {
+            return;
+        }
+
         agent.speed = BB_Sunboss_Master.CharacterStats.finalSpeed;
         agent.angularSpeed = BB_Sunboss_Master.BB_SunbossCTX_Move.TurnSpeed;
     }
 
     private void ApplyFacingMovementConstraint()
     {
-        if (agent == null || BB_Sunboss_Master == null)
+        if (!CanUseAgent() || BB_Sunboss_Master == null)
         {
             return;
         }
@@ -138,5 +176,48 @@ public class ACT_SunBoss_Navagent : MonoBehaviour
         float angleToPath = Vector3.Angle(forward.normalized, desiredDirection.normalized);
         float maxMoveAngle = Mathf.Max(0f, BB_Sunboss_Master.BB_SunbossCTX_Move.MaxMoveAngleFromFacing);
         agent.speed = angleToPath <= maxMoveAngle ? baseSpeed : 0f;
+    }
+
+    private bool CanUseAgent()
+    {
+        if (agent == null || !agent.isActiveAndEnabled)
+        {
+            return false;
+        }
+
+        if (agent.isOnNavMesh)
+        {
+            return true;
+        }
+
+        return TryEnsureAgentOnNavMesh();
+    }
+
+    private void EnsureAgentReference()
+    {
+        if (agent == null)
+        {
+            agent = GetComponent<NavMeshAgent>();
+        }
+    }
+
+    private bool TryEnsureAgentOnNavMesh()
+    {
+        if (agent == null || !agent.isActiveAndEnabled)
+        {
+            return false;
+        }
+
+        if (agent.isOnNavMesh)
+        {
+            return true;
+        }
+
+        if (!NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 4f, agent.areaMask))
+        {
+            return false;
+        }
+
+        return agent.Warp(hit.position);
     }
 }

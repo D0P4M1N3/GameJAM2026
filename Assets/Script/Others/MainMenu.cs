@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour
 {
     [SerializeField] private Button playButton;
-    [SerializeField] private string sceneName = "GameScene";
+    [SerializeField] private string sceneName = "ItemPrepare";
 
     private void Start()
     {
@@ -17,6 +17,15 @@ public class MainMenu : MonoBehaviour
 
     private void OnPlayClicked()
     {
-        GameSceneManager.Instance.LoadScene(sceneName);
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.LoadScene(sceneName);
+            return;
+        }
+
+        if (GameSceneManager.Instance != null)
+        {
+            GameSceneManager.Instance.LoadScene(sceneName);
+        }
     }
 }

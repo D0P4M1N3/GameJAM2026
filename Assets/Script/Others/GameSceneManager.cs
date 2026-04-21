@@ -25,6 +25,12 @@ public class GameSceneManager : MonoBehaviour
             return;
         }
 
+        if (GameManager.Instance != null && GameManager.Instance != this)
+        {
+            GameManager.Instance.LoadScene(sceneName);
+            return;
+        }
+
         Time.timeScale = 1f; // Ensure time scale is reset when loading a new scene
 
         if (!isActiveAndEnabled)
