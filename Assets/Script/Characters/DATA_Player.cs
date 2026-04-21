@@ -16,6 +16,7 @@ public class DATA_Player : MonoBehaviour
         }
 
         Instance = this;
+        CharacterStats?.RefreshInspectorFinals();
         CacheInitialStats();
 
         // Optional: persist across scenes
@@ -35,6 +36,13 @@ public class DATA_Player : MonoBehaviour
         {
             CharacterStats.HP = CharacterStats.finalMaxHP;
         }
+
+        CharacterStats.RefreshInspectorFinals();
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.ResetProgression();
+        }
     }
 
     private void CacheInitialStats()
@@ -44,10 +52,16 @@ public class DATA_Player : MonoBehaviour
             return;
         }
 
+        CharacterStats.RefreshInspectorFinals();
         initialCharacterStats = CharacterStats.Clone();
         if (float.IsPositiveInfinity(initialCharacterStats.HP) || initialCharacterStats.HP <= 0f)
         {
             initialCharacterStats.HP = initialCharacterStats.finalMaxHP;
         }
+    }
+
+    private void OnValidate()
+    {
+        CharacterStats?.RefreshInspectorFinals();
     }
 }

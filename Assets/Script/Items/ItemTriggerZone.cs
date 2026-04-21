@@ -1,11 +1,20 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
-public class InventoryTriggerZone : MonoBehaviour
+public class ItemTriggerZone : MonoBehaviour
 {
-    [SerializeField] private InventoryData inventoryData;
-    [SerializeField] private StashData stashData;
+    public enum ZoneMode
+    {
+        Inventory = 0,
+        CollectBox = 1
+    }
+
+    [SerializeField] private ZoneMode zoneMode = ZoneMode.Inventory;
+    [SerializeField] private CollectingItemSpawner collectingItemSpawner;
     [SerializeField] private Color boundsColor = new(0.15f, 0.9f, 0.95f, 0.8f);
+
+    public ZoneMode CurrentMode => zoneMode;
+    public bool CollectBoxExitRemovalEnabled { get; private set; } = true;
 
     private void Reset()
     {
@@ -15,12 +24,40 @@ public class InventoryTriggerZone : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (zoneMode == ZoneMode.CollectBox)
+        {
+            SetItemCollectBoxMembership(other, shouldBeInCollectBox: true);
+            return;
+        }
+
         SetItemInventoryMembership(other, shouldBeInInventory: true);
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
+        if (zoneMode == ZoneMode.CollectBox)
+        {
+            SetItemCollectBoxMembership(other, shouldBeInCollectBox: false);
+            return;
+        }
+
+        if (zoneMode != ZoneMode.Inventory)
+        {
+            return;
+        }
+
         SetItemInventoryMembership(other, shouldBeInInventory: false);
+    }
+
+    public void SetCollectBoxSpawner(CollectingItemSpawner spawner)
+    {
+        zoneMode = ZoneMode.CollectBox;
+        collectingItemSpawner = spawner;
+    }
+
+    public void SetCollectBoxExitRemovalEnabled(bool isEnabled)
+    {
+        CollectBoxExitRemovalEnabled = isEnabled;
     }
 
     private void OnDrawGizmos()
@@ -53,6 +90,9 @@ public class InventoryTriggerZone : MonoBehaviour
 
     private void SetItemInventoryMembership(Collider2D itemCollider, bool shouldBeInInventory)
     {
+        InventoryData inventoryData = GameManager.Instance != null ? GameManager.Instance.InventoryData : null;
+        StashData stashData = GameManager.Instance != null ? GameManager.Instance.StashData : null;
+
         ItemWorldObject itemWorldObject = itemCollider != null ? itemCollider.GetComponentInParent<ItemWorldObject>() : null;
         if (itemWorldObject == null || itemWorldObject.ItemData == null || itemWorldObject.IsInInventory == shouldBeInInventory)
         {
@@ -87,5 +127,35 @@ public class InventoryTriggerZone : MonoBehaviour
         }
 
         itemWorldObject.SetInventoryState(shouldBeInInventory);
+    }
+
+    private void SetItemCollectBoxMembership(Collider2D itemCollider, bool shouldBeInCollectBox)
+    {
+        CollectBoxData collectBoxData = GameManager.Instance != null ? GameManager.Instance.CollectBoxData : null;
+        ItemWorldObject itemWorldObject = itemCollider != null ? itemCollider.GetComponentInParent<ItemWorldObject>() : null;
+        if (itemWorldObject == null || itemWorldObject.ItemData == null)
+        {
+            return;
+        }
+
+        if (shouldBeInCollectBox)
+        {
+            bool wasCollectedNow = collectingItemSpawner != null &&
+                collectingItemSpawner.TryCollectSpawnedItem(itemWorldObject, transform);
+
+            if (!wasCollectedNow && collectBoxData != null)
+            {
+                collectBoxData.AddItem(itemWorldObject.ItemData);
+            }
+
+            return;
+        }
+
+        if (!CollectBoxExitRemovalEnabled)
+        {
+            return;
+        }
+
+        collectBoxData?.RemoveItem(itemWorldObject.ItemData);
     }
 }

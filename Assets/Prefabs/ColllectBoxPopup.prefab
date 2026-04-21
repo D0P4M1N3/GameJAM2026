@@ -88,11 +88,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1752926458397700827}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c2413033a135a34c8b9d74af14e16fe, type: 3}
+  m_Script: {fileID: 11500000, guid: 5dfafbc1453040ed862553ea338ea07f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CollectBoxDropZone
+  m_EditorClassIdentifier: Assembly-CSharp::ItemTriggerZone
+  zoneMode: 1
   collectingItemSpawner: {fileID: 4743032634078284495}
-  triggerCollider: {fileID: 2626966736644477115}
+  boundsColor: {r: 0.15, g: 0.9, b: 0.95, a: 0.8}
 --- !u!1 &1927023098079912969
 GameObject:
   m_ObjectHideFlags: 0
@@ -1081,7 +1082,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.32444, y: 0, z: -7.80246}
-  m_LocalScale: {x: 0.80554, y: 0.80554, z: 0.80554}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8151335601389909125}

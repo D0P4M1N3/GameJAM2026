@@ -29,9 +29,28 @@ public class CharacterStats
     public float finalDamage => (Damage / 100f) * mDamage + Damage;
     public float finalStorage => (Storage / 100f) * mStorage + Storage;
 
+    [Header("Inspector Finals")]
+    [SerializeField] private float inspectorFinalSpeed;
+    [SerializeField] private float inspectorFinalMaxHP;
+    [SerializeField] private float inspectorFinalDamage;
+    [SerializeField] private float inspectorFinalStorage;
+
+    public float InspectorFinalSpeed => inspectorFinalSpeed;
+    public float InspectorFinalMaxHP => inspectorFinalMaxHP;
+    public float InspectorFinalDamage => inspectorFinalDamage;
+    public float InspectorFinalStorage => inspectorFinalStorage;
+
+    public void RefreshInspectorFinals()
+    {
+        inspectorFinalSpeed = finalSpeed;
+        inspectorFinalMaxHP = finalMaxHP;
+        inspectorFinalDamage = finalDamage;
+        inspectorFinalStorage = finalStorage;
+    }
+
     public CharacterStats Clone()
     {
-        return new CharacterStats
+        CharacterStats clone = new CharacterStats
         {
             Speed = Speed,
             MaxHP = MaxHP,
@@ -45,6 +64,9 @@ public class CharacterStats
             mDamage = mDamage,
             mStorage = mStorage,
         };
+
+        clone.RefreshInspectorFinals();
+        return clone;
     }
 
     public void CopyFrom(CharacterStats source)
@@ -65,5 +87,6 @@ public class CharacterStats
         mMaxHP = source.mMaxHP;
         mDamage = source.mDamage;
         mStorage = source.mStorage;
+        RefreshInspectorFinals();
     }
 }

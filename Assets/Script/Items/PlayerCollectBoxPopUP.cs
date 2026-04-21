@@ -10,7 +10,7 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
     [SerializeField] private CameraController cameraController;
 
     private CollectingItemSpawner collectingItemSpawner;
-    private CollectBoxDropZone collectBoxDropZone;
+    private ItemTriggerZone collectBoxTriggerZone;
 
     private void Awake()
     {
@@ -44,6 +44,11 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
     {
         EnsureReferences();
 
+        if (collectBoxTriggerZone != null)
+        {
+            collectBoxTriggerZone.SetCollectBoxExitRemovalEnabled(true);
+        }
+
         if (collectBoxPopupUi != null)
         {
             collectBoxPopupUi.SetActive(true);
@@ -68,6 +73,11 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
     public void ClosePopUp()
     {
         EnsureReferences();
+        if (collectBoxTriggerZone != null)
+        {
+            collectBoxTriggerZone.SetCollectBoxExitRemovalEnabled(false);
+        }
+
         collectingItemSpawner?.CancelPendingItem();
 
         if (collectingPopup != null)
@@ -123,27 +133,25 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
             }
         }
 
-        if (collectBoxDropZone == null)
-        {
-            collectBoxDropZone = FindFirstObjectByType<CollectBoxDropZone>(FindObjectsInactive.Include);
-        }
-
-        if (collectBoxDropZone == null && collectingPopup != null)
+        if (collectBoxTriggerZone == null && collectingPopup != null)
         {
             Transform collectBoxTransform = collectingPopup.transform.Find("CollectBox");
             if (collectBoxTransform != null)
             {
-                collectBoxDropZone = collectBoxTransform.GetComponent<CollectBoxDropZone>();
-                if (collectBoxDropZone == null)
+                Transform detectionZoneTransform = collectBoxTransform.Find("DetectionZone");
+                Transform triggerRoot = detectionZoneTransform != null ? detectionZoneTransform : collectBoxTransform;
+
+                collectBoxTriggerZone = triggerRoot.GetComponent<ItemTriggerZone>();
+                if (collectBoxTriggerZone == null)
                 {
-                    collectBoxDropZone = collectBoxTransform.gameObject.AddComponent<CollectBoxDropZone>();
+                    collectBoxTriggerZone = triggerRoot.gameObject.AddComponent<ItemTriggerZone>();
                 }
             }
         }
 
-        if (collectBoxDropZone != null && collectingItemSpawner != null)
+        if (collectBoxTriggerZone != null && collectingItemSpawner != null)
         {
-            collectBoxDropZone.SetSpawner(collectingItemSpawner);
+            collectBoxTriggerZone.SetCollectBoxSpawner(collectingItemSpawner);
         }
 
         if (cameraController == null)

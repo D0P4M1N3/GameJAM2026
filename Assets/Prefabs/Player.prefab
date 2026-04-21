@@ -1028,9 +1028,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c2413033a135a34c8b9d74af14e16fe, type: 3}
+  m_Script: {fileID: 11500000, guid: 5dfafbc1453040ed862553ea338ea07f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CollectBoxDropZone
+  m_EditorClassIdentifier: Assembly-CSharp::ItemTriggerZone
 --- !u!4 &3580521233258818388 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6179268057829890630, guid: 63b309067083619478cd067c76920163, type: 3}

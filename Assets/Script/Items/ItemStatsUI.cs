@@ -10,8 +10,6 @@ public class ItemStatsUI : MonoBehaviour
     }
 
     [SerializeField] private DataSourceType dataSourceType = DataSourceType.Stash;
-    [SerializeField] private StashData stashData;
-    [SerializeField] private InventoryData inventoryData;
     [SerializeField] private TMP_Text speedText;
     [SerializeField] private TMP_Text healthText;
     [SerializeField] private TMP_Text attackText;
@@ -22,6 +20,7 @@ public class ItemStatsUI : MonoBehaviour
     [SerializeField] private string valuePrefix = "Value: ";
     private void OnEnable()
     {
+        ResolveDataSources();
         Subscribe();
         Refresh();
     }
@@ -44,6 +43,11 @@ public class ItemStatsUI : MonoBehaviour
 
     private void Subscribe()
     {
+        ResolveDataSources();
+
+        StashData stashData = GameManager.Instance != null ? GameManager.Instance.StashData : null;
+        InventoryData inventoryData = GameManager.Instance != null ? GameManager.Instance.InventoryData : null;
+
         if (stashData != null)
         {
             stashData.Changed += Refresh;
@@ -57,6 +61,9 @@ public class ItemStatsUI : MonoBehaviour
 
     private void Unsubscribe()
     {
+        StashData stashData = GameManager.Instance != null ? GameManager.Instance.StashData : null;
+        InventoryData inventoryData = GameManager.Instance != null ? GameManager.Instance.InventoryData : null;
+
         if (stashData != null)
         {
             stashData.Changed -= Refresh;
@@ -70,12 +77,20 @@ public class ItemStatsUI : MonoBehaviour
 
     private ItemStats GetStats()
     {
+        StashData stashData = GameManager.Instance != null ? GameManager.Instance.StashData : null;
+        InventoryData inventoryData = GameManager.Instance != null ? GameManager.Instance.InventoryData : null;
+
         return dataSourceType switch
         {
             DataSourceType.Inventory when inventoryData != null => inventoryData.TotalStats,
             DataSourceType.Stash when stashData != null => stashData.TotalStats,
             _ => ItemStats.Zero,
         };
+    }
+
+    private void ResolveDataSources()
+    {
+        // Intentionally uses GameManager as the single source of truth.
     }
 
     private static void SetText(TMP_Text target, string prefix, float value, bool includePercentSuffix)

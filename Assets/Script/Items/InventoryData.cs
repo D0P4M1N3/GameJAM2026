@@ -131,64 +131,6 @@ public class InventoryData : MonoBehaviour
     }
 
 
-
-
-
-
-
-
-
-
-
-    public void ApplyStats_Player()
-    {
-        if (IsOverflowing)
-        {
-            Debug.LogWarning($"Cannot apply inventory stats while overflowing. {totalItemCount}/{Capacity} items.");
-            return;
-        }
-
-        CharacterStats targetCharacterStats = DATA_Player.Instance.CharacterStats;
-        ItemStats appliedStats = totalStats;
-
-        //Modifiers
-        targetCharacterStats.mMaxHP += appliedStats.Health;
-        targetCharacterStats.mDamage += appliedStats.Attack;
-        targetCharacterStats.mSpeed += appliedStats.Speed * 0.01f;
-        targetCharacterStats.HP = targetCharacterStats.finalMaxHP;
-
-        //Once
-        targetCharacterStats.CharacterColor = mixedColor;
-
-        DestroyInventoryWorldObjects();
-        items.Clear();
-        RecalculateSummary();
-    }
-
-    private void DestroyInventoryWorldObjects()
-    {
-        ItemWorldObject[] inventoryWorldObjects = FindObjectsByType<ItemWorldObject>(FindObjectsSortMode.None);
-        for (int i = 0; i < inventoryWorldObjects.Length; i++)
-        {
-            ItemWorldObject itemWorldObject = inventoryWorldObjects[i];
-            if (itemWorldObject == null || !itemWorldObject.IsInInventory)
-            {
-                continue;
-            }
-
-            itemWorldObject.SetInventoryState(false);
-
-            if (Application.isPlaying)
-            {
-                Destroy(itemWorldObject.gameObject);
-            }
-            else
-            {
-                DestroyImmediate(itemWorldObject.gameObject);
-            }
-        }
-    }
-
     private int GetCapacity()
     {
         if (DATA_Player.Instance == null || DATA_Player.Instance.CharacterStats == null)

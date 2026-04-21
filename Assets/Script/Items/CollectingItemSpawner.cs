@@ -71,11 +71,11 @@ public class CollectingItemSpawner : MonoBehaviour
         return true;
     }
 
-    public void TryCollectSpawnedItem(ItemWorldObject itemWorldObject, Transform collectBoxTransform)
+    public bool TryCollectSpawnedItem(ItemWorldObject itemWorldObject, Transform collectBoxTransform)
     {
         if (pendingPickup == null || itemWorldObject == null || itemWorldObject != spawnedUiItem)
         {
-            return;
+            return false;
         }
 
         pendingPickup.FinalizeCollection();
@@ -95,6 +95,7 @@ public class CollectingItemSpawner : MonoBehaviour
         pendingPickup = null;
         ownerPopup?.NotifyItemCollected();
         ownerPopup = null;
+        return true;
     }
 
     public void CancelPendingItem()

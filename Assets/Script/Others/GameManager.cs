@@ -5,9 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private const string ItemPrepareSceneName = "ItemPrepare";
-    private const string LevelSceneName = "Level";
-
     public static GameManager Instance { get; private set; }
 
     public int CurrentProgression => currentProgression;
@@ -30,7 +27,6 @@ public class GameManager : MonoBehaviour
 
     private bool isApplyingSceneData;
     private bool hasInitializedRuntimeData;
-    private string lastLoadedSceneName;
 
     private void Awake()
     {
@@ -44,9 +40,8 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         SceneManager.sceneLoaded += HandleSceneLoaded;
-        lastLoadedSceneName = SceneManager.GetActiveScene().name;
 
-        RebindSceneData();
+        SubscribeToSceneData();
         InitializeRuntimeDataFromScene();
         UpdatePlayerCurrencyFromRuntimeStash();
     }
@@ -108,12 +103,8 @@ public class GameManager : MonoBehaviour
 
     private void HandleSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
-        bool refreshStashSpawn = HandleCompletedLevelReturn(scene.name);
-
-        RebindSceneData();
         InitializeRuntimeDataFromScene();
-        ApplyRuntimeDataToScene(refreshStashSpawn);
-        lastLoadedSceneName = scene.name;
+        ApplyRuntimeDataToScene();
     }
 
     public void AddItemsToInventory(IEnumerable<ItemData> items)
@@ -211,6 +202,187 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
+    public void MoveCollectBoxToStash()
+    {
+        List<ItemData> itemsToMove = new();
+
+        if (collectBoxData != null)
+        {
+            IReadOnlyList<InventoryEntry> collectBoxEntries = collectBoxData.Items;
+            for (int i = 0; i < collectBoxEntries.Count; i++)
+            {
+                InventoryEntry entry = collectBoxEntries[i];
+                if (!entry.IsValid)
+                {
+                    continue;
+                }
+
+                itemsToMove.Add(entry.Item);
+            }
+        }
+        else
+        {
+            itemsToMove.AddRange(runtimeCollectBoxItems);
+        }
+
+        Debug.Log($"GameManager.MoveCollectBoxToStash called. CollectBox item count={itemsToMove.Count}", this);
+
+        if (itemsToMove.Count == 0)
+        {
+            ApplyRuntimeDataToScene(refreshStashSpawn: true);
+            return;
+        }
+
+        for (int i = 0; i < itemsToMove.Count; i++)
+        {
+            AddRuntimeStashItem(itemsToMove[i]);
+        }
+
+        runtimeCollectBoxItems.Clear();
+        ApplyRuntimeDataToScene(refreshStashSpawn: true);
+    }
+
+    public void IncrementProgression()
+    {
+        currentProgression = Mathf.Max(1, currentProgression + 1);
+    }
+
+    public void MoveCollectBoxToStashIncrementProgressionAndLoadScene(string sceneName)
+    {
+        Debug.Log(
+            $"GameManager.MoveCollectBoxToStashIncrementProgressionAndLoadScene called. Scene='{sceneName}' CurrentProgression={currentProgression}",
+            this);
+
+        MoveCollectBoxToStash();
+        IncrementProgression();
+
+        if (string.IsNullOrWhiteSpace(sceneName))
+        {
+            return;
+        }
+
+        if (GameSceneManager.Instance != null)
+        {
+            GameSceneManager.Instance.LoadScene(sceneName);
+            return;
+        }
+
+        LoadScene(sceneName);
+    }
+
+    public void ResetProgression()
+    {
+        currentProgression = 1;
+    }
+
+    public void ResetCharacterStats()
+    {
+        if (DATA_Player.Instance != null)
+        {
+            DATA_Player.Instance.ResetCharacterStats();
+        }
+    }
+
+    public void ApplyInventoryStatsToPlayer()
+    {
+        Debug.Log(
+            $"GameManager.ApplyInventoryStatsToPlayer called. " +
+            $"HasInventoryData={(inventoryData != null)} " +
+            $"HasDATA_Player={(DATA_Player.Instance != null)} " +
+            $"HasCharacterStats={(DATA_Player.Instance != null && DATA_Player.Instance.CharacterStats != null)}",
+            this);
+
+        if (inventoryData == null)
+        {
+            Debug.LogWarning("ApplyInventoryStatsToPlayer aborted because inventoryData is null.", this);
+            return;
+        }
+
+        if (inventoryData.IsOverflowing)
+        {
+            Debug.LogWarning($"Cannot apply inventory stats while overflowing. {inventoryData.TotalItemCount}/{inventoryData.Capacity} items.");
+            return;
+        }
+
+        if (DATA_Player.Instance == null || DATA_Player.Instance.CharacterStats == null)
+        {
+            Debug.LogWarning("ApplyInventoryStatsToPlayer aborted because DATA_Player.Instance or CharacterStats is null.", this);
+            return;
+        }
+
+        CharacterStats targetCharacterStats = DATA_Player.Instance.CharacterStats;
+        ItemStats appliedStats = inventoryData.TotalStats;
+        float baseSpeed = targetCharacterStats.Speed;
+        float baseMaxHp = targetCharacterStats.MaxHP;
+        float baseDamage = targetCharacterStats.Damage;
+        float previousModifierSpeed = targetCharacterStats.mSpeed;
+        float previousModifierMaxHp = targetCharacterStats.mMaxHP;
+        float previousModifierDamage = targetCharacterStats.mDamage;
+        float speedModifierDelta = appliedStats.Speed;
+        float maxHpModifierDelta = appliedStats.Health;
+        float damageModifierDelta = appliedStats.Attack;
+
+        targetCharacterStats.mMaxHP += maxHpModifierDelta;
+        targetCharacterStats.mDamage += damageModifierDelta;
+        targetCharacterStats.mSpeed += speedModifierDelta;
+        targetCharacterStats.HP = targetCharacterStats.finalMaxHP;
+        targetCharacterStats.CharacterColor = inventoryData.MixedColor;
+        targetCharacterStats.RefreshInspectorFinals();
+
+        Debug.Log(
+            "Applied inventory stats to player modifiers.\n" +
+            $"Base Stats: Speed={baseSpeed:0.##}, MaxHP={baseMaxHp:0.##}, Damage={baseDamage:0.##}\n" +
+            $"Previous Modifiers: mSpeed={previousModifierSpeed:0.####}, mMaxHP={previousModifierMaxHp:0.##}, mDamage={previousModifierDamage:0.##}\n" +
+            $"Inventory Modifiers Applied: SpeedDelta={speedModifierDelta:0.####}, MaxHPDelta={maxHpModifierDelta:0.##}, DamageDelta={damageModifierDelta:0.##}\n" +
+            $"New Modifiers: mSpeed={targetCharacterStats.mSpeed:0.####}, mMaxHP={targetCharacterStats.mMaxHP:0.##}, mDamage={targetCharacterStats.mDamage:0.##}\n" +
+            $"New Finals: finalSpeed={targetCharacterStats.finalSpeed:0.##}, finalMaxHP={targetCharacterStats.finalMaxHP:0.##}, finalDamage={targetCharacterStats.finalDamage:0.##}, HP={targetCharacterStats.HP:0.##}",
+            this);
+    }
+
+    public void DeleteInventoryItems()
+    {
+        runtimeInventoryItems.Clear();
+        ApplyRuntimeDataToScene();
+        DestroyInventoryWorldObjects();
+    }
+
+    public void ApplyInventoryStatsAndDeleteInventoryItems()
+    {
+        Debug.Log("ApplyInventoryStatsAndDeleteInventoryItems step 1: start", this);
+
+        if (inventoryData == null)
+        {
+            Debug.LogWarning("ApplyInventoryStatsAndDeleteInventoryItems aborted: inventoryData is null.", this);
+            return;
+        }
+
+        if (DATA_Player.Instance == null || DATA_Player.Instance.CharacterStats == null)
+        {
+            Debug.LogWarning("ApplyInventoryStatsAndDeleteInventoryItems aborted: DATA_Player.Instance or CharacterStats is null.", this);
+            return;
+        }
+
+        ItemStats inventoryTotals = inventoryData.TotalStats;
+        Debug.Log(
+            $"ApplyInventoryStatsAndDeleteInventoryItems step 2: inventory totals Speed={inventoryTotals.Speed:0.##}, Health={inventoryTotals.Health:0.##}, Attack={inventoryTotals.Attack:0.##}, Value={inventoryTotals.Value:0.##}",
+            this);
+
+        CharacterStats targetCharacterStats = DATA_Player.Instance.CharacterStats;
+        targetCharacterStats.mSpeed += inventoryTotals.Speed;
+        targetCharacterStats.mMaxHP += inventoryTotals.Health;
+        targetCharacterStats.mDamage += inventoryTotals.Attack;
+        targetCharacterStats.HP = targetCharacterStats.finalMaxHP;
+        targetCharacterStats.CharacterColor = inventoryData.MixedColor;
+        targetCharacterStats.RefreshInspectorFinals();
+
+        Debug.Log(
+            $"ApplyInventoryStatsAndDeleteInventoryItems step 3: applied modifiers mSpeed={targetCharacterStats.mSpeed:0.##}, mMaxHP={targetCharacterStats.mMaxHP:0.##}, mDamage={targetCharacterStats.mDamage:0.##}, finalSpeed={targetCharacterStats.finalSpeed:0.##}, finalMaxHP={targetCharacterStats.finalMaxHP:0.##}, finalDamage={targetCharacterStats.finalDamage:0.##}",
+            this);
+
+        DeleteInventoryItems();
+        Debug.Log("ApplyInventoryStatsAndDeleteInventoryItems step 4: deleted inventory items", this);
+    }
+
     private void InitializeRuntimeDataFromScene()
     {
         if (hasInitializedRuntimeData)
@@ -267,17 +439,6 @@ public class GameManager : MonoBehaviour
         {
             RefreshSceneStashSpawn();
         }
-    }
-
-    private void RebindSceneData()
-    {
-        UnsubscribeFromSceneData();
-
-        stashData = FindFirstObjectByType<StashData>();
-        inventoryData = FindFirstObjectByType<InventoryData>();
-        collectBoxData = FindFirstObjectByType<CollectBoxData>();
-
-        SubscribeToSceneData();
     }
 
     private void SubscribeToSceneData()
@@ -403,31 +564,101 @@ public class GameManager : MonoBehaviour
         runtimeStashEntries.Add(new StashEntry(item, 1));
     }
 
-    private void MoveCollectBoxToStash()
+    private void DestroyInventoryWorldObjects()
     {
-        if (runtimeCollectBoxItems.Count == 0)
+        ItemTriggerZone[] itemTriggerZones = FindObjectsByType<ItemTriggerZone>(FindObjectsSortMode.None);
+        ItemWorldObject[] inventoryWorldObjects = FindObjectsByType<ItemWorldObject>(FindObjectsSortMode.None);
+        for (int i = 0; i < inventoryWorldObjects.Length; i++)
         {
-            return;
-        }
+            ItemWorldObject itemWorldObject = inventoryWorldObjects[i];
+            if (itemWorldObject == null)
+            {
+                continue;
+            }
 
-        for (int i = 0; i < runtimeCollectBoxItems.Count; i++)
-        {
-            AddRuntimeStashItem(runtimeCollectBoxItems[i]);
-        }
+            bool shouldDestroy = itemWorldObject.IsInInventory || IsInsideInventoryZone(itemWorldObject, itemTriggerZones);
+            if (!shouldDestroy)
+            {
+                continue;
+            }
 
-        runtimeCollectBoxItems.Clear();
+            itemWorldObject.SetInventoryState(false);
+
+            Collider2D[] colliders = itemWorldObject.GetComponentsInChildren<Collider2D>(true);
+            for (int colliderIndex = 0; colliderIndex < colliders.Length; colliderIndex++)
+            {
+                if (colliders[colliderIndex] != null)
+                {
+                    colliders[colliderIndex].enabled = false;
+                }
+            }
+
+            Rigidbody2D[] rigidbodies2D = itemWorldObject.GetComponentsInChildren<Rigidbody2D>(true);
+            for (int bodyIndex = 0; bodyIndex < rigidbodies2D.Length; bodyIndex++)
+            {
+                if (rigidbodies2D[bodyIndex] != null)
+                {
+                    rigidbodies2D[bodyIndex].simulated = false;
+                }
+            }
+
+            itemWorldObject.gameObject.SetActive(false);
+
+            if (Application.isPlaying)
+            {
+                Destroy(itemWorldObject.gameObject);
+            }
+            else
+            {
+                DestroyImmediate(itemWorldObject.gameObject);
+            }
+        }
     }
 
-    private bool HandleCompletedLevelReturn(string loadedSceneName)
+    private static bool IsInsideInventoryZone(ItemWorldObject itemWorldObject, ItemTriggerZone[] triggerZones)
     {
-        if (loadedSceneName != ItemPrepareSceneName || lastLoadedSceneName != LevelSceneName)
+        if (itemWorldObject == null || triggerZones == null)
         {
             return false;
         }
 
-        currentProgression = Mathf.Max(1, currentProgression + 1);
-        MoveCollectBoxToStash();
-        return true;
+        Collider2D[] itemColliders = itemWorldObject.GetComponentsInChildren<Collider2D>(true);
+        if (itemColliders == null || itemColliders.Length == 0)
+        {
+            return false;
+        }
+
+        for (int zoneIndex = 0; zoneIndex < triggerZones.Length; zoneIndex++)
+        {
+            ItemTriggerZone triggerZone = triggerZones[zoneIndex];
+            if (triggerZone == null || triggerZone.CurrentMode != ItemTriggerZone.ZoneMode.Inventory)
+            {
+                continue;
+            }
+
+            Collider2D zoneCollider = triggerZone.GetComponent<Collider2D>();
+            if (zoneCollider == null)
+            {
+                continue;
+            }
+
+            Bounds zoneBounds = zoneCollider.bounds;
+            for (int itemColliderIndex = 0; itemColliderIndex < itemColliders.Length; itemColliderIndex++)
+            {
+                Collider2D itemCollider = itemColliders[itemColliderIndex];
+                if (itemCollider == null || !itemCollider.enabled)
+                {
+                    continue;
+                }
+
+                if (zoneBounds.Intersects(itemCollider.bounds))
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     private void UpdatePlayerCurrencyFromRuntimeStash()

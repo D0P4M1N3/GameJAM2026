@@ -1,14 +1,16 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 public class StashSpawner : MonoBehaviour
 {
-    [SerializeField] private StashData stashData;
     [SerializeField] private float spawnRadius = 1.5f;
     [SerializeField] private bool spawnOnStart = true;
     [SerializeField] private bool clearExistingChildrenOnSpawn = true;
+    [SerializeField] [Min(0f)] private float spawnDelaySeconds = 0.08f;
 
     private readonly List<ItemWorldObject> spawnedItems = new();
+    private Coroutine spawnRoutine;
 
     private void Start()
     {
@@ -26,6 +28,7 @@ public class StashSpawner : MonoBehaviour
 
     private void SpawnItems(bool clearExisting)
     {
+        StashData stashData = GameManager.Instance != null ? GameManager.Instance.StashData : null;
         if (stashData == null)
         {
             return;
@@ -33,11 +36,24 @@ public class StashSpawner : MonoBehaviour
 
         Transform parent = transform;
 
+        StopSpawnRoutine();
+
         if (clearExisting)
         {
             ClearSpawnedItems(parent);
         }
 
+        if (!Application.isPlaying || spawnDelaySeconds <= 0f)
+        {
+            SpawnItemsImmediately(parent, stashData);
+            return;
+        }
+
+        spawnRoutine = StartCoroutine(SpawnItemsRoutine(parent, stashData));
+    }
+
+    private void SpawnItemsImmediately(Transform parent, StashData stashData)
+    {
         int spawnIndex = 0;
         for (int entryIndex = 0; entryIndex < stashData.Entries.Count; entryIndex++)
         {
@@ -50,29 +66,45 @@ public class StashSpawner : MonoBehaviour
 
             for (int quantityIndex = 0; quantityIndex < entry.Quantity; quantityIndex++)
             {
-                Vector3 spawnPosition = GetSpawnPosition(parent, spawnIndex);
-                Quaternion spawnRotation = GetSpawnRotation(parent, spawnIndex);
-                GameObject instance = Instantiate(itemPrefab, spawnPosition, spawnRotation, parent);
-
-                ItemWorldObject itemWorldObject = instance.GetComponent<ItemWorldObject>();
-                if (itemWorldObject != null)
-                {
-                    itemWorldObject.Initialize(entry.Item, this);
-                    spawnedItems.Add(itemWorldObject);
-                }
+                SpawnSingleItem(parent, entry.Item, itemPrefab, spawnIndex);
                 spawnIndex++;
             }
         }
     }
 
+    private IEnumerator SpawnItemsRoutine(Transform parent, StashData stashData)
+    {
+        int spawnIndex = 0;
+        for (int entryIndex = 0; entryIndex < stashData.Entries.Count; entryIndex++)
+        {
+            StashEntry entry = stashData.Entries[entryIndex];
+            GameObject itemPrefab = ResolveItemPrefab(entry.Item);
+            if (!entry.IsValid || itemPrefab == null)
+            {
+                continue;
+            }
+
+            for (int quantityIndex = 0; quantityIndex < entry.Quantity; quantityIndex++)
+            {
+                SpawnSingleItem(parent, entry.Item, itemPrefab, spawnIndex);
+                spawnIndex++;
+                yield return new WaitForSeconds(spawnDelaySeconds);
+            }
+        }
+
+        spawnRoutine = null;
+    }
+
     [ContextMenu("Reset Stash")]
     public void ResetStash()
     {
+        StashData stashData = GameManager.Instance != null ? GameManager.Instance.StashData : null;
         if (stashData == null)
         {
             return;
         }
 
+        StopSpawnRoutine();
         DestroyNonInventorySpawnedItems();
         SpawnItems(false);
     }
@@ -95,6 +127,8 @@ public class StashSpawner : MonoBehaviour
 
     private void ClearSpawnedItems(Transform parent)
     {
+        StopSpawnRoutine();
+
         for (int i = spawnedItems.Count - 1; i >= 0; i--)
         {
             if (spawnedItems[i] != null)
@@ -114,6 +148,31 @@ public class StashSpawner : MonoBehaviour
         {
             DestroyTrackedObject(parent.GetChild(i).gameObject);
         }
+    }
+
+    private void SpawnSingleItem(Transform parent, ItemData itemData, GameObject itemPrefab, int spawnIndex)
+    {
+        Vector3 spawnPosition = GetSpawnPosition(parent, spawnIndex);
+        Quaternion spawnRotation = GetSpawnRotation(parent, spawnIndex);
+        GameObject instance = Instantiate(itemPrefab, spawnPosition, spawnRotation, parent);
+
+        ItemWorldObject itemWorldObject = instance.GetComponent<ItemWorldObject>();
+        if (itemWorldObject != null)
+        {
+            itemWorldObject.Initialize(itemData, this);
+            spawnedItems.Add(itemWorldObject);
+        }
+    }
+
+    private void StopSpawnRoutine()
+    {
+        if (spawnRoutine == null)
+        {
+            return;
+        }
+
+        StopCoroutine(spawnRoutine);
+        spawnRoutine = null;
     }
 
     private void DestroyNonInventorySpawnedItems()

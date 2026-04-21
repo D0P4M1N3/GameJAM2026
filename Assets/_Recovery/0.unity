@@ -836,7 +836,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5dfafbc1453040ed862553ea338ea07f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: GameJAM2026.Runtime::InventoryTriggerZone
+  m_EditorClassIdentifier: GameJAM2026.Runtime::ItemTriggerZone
   inventoryData: {fileID: 1001204854}
   stashData: {fileID: 1549461764}
 --- !u!1 &607502958
