@@ -10,13 +10,26 @@ public class MainMenu : MonoBehaviour
     {
         if (playButton != null)
         {
-            playButton.onClick.RemoveAllListeners();
+            playButton.onClick.RemoveListener(OnPlayClicked);
             playButton.onClick.AddListener(OnPlayClicked);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (playButton != null)
+        {
+            playButton.onClick.RemoveListener(OnPlayClicked);
         }
     }
 
     private void OnPlayClicked()
     {
+        if (string.IsNullOrWhiteSpace(sceneName))
+        {
+            return;
+        }
+
         if (GameManager.Instance != null)
         {
             GameManager.Instance.LoadScene(sceneName);

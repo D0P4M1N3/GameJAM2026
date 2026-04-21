@@ -56,6 +56,14 @@ PrefabInstance:
       propertyPath: itemData
       value: 
       objectReference: {fileID: 11400000, guid: 3f163d1a2b6789b4cac5a69f01b4271a, type: 2}
+    - target: {fileID: 1140001, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
+      propertyPath: hoverStatsUi
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1140002, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
+      propertyPath: dragCamera
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
