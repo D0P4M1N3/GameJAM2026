@@ -1127,7 +1127,7 @@ MonoBehaviour:
   CharacterStats:
     Speed: 2
     MaxHP: 20
-    Damage: 1
+    Damage: 0.2
     Storage: 10
     HP: 2.1474836e+9
     Currency: 0
@@ -1158,7 +1158,7 @@ MonoBehaviour:
     TurnSpeed: 30
     MaxMoveAngleFromFacing: 15
   BB_SunbossCTX_Combat:
-    ACT_SunBoss_Combat: {fileID: 0}
+    ACT_SunBoss_Combat: {fileID: 6256405832344378724}
   BB_SunbossCTX_Debug:
     TextUI_State: {fileID: 2294929049969548292}
     TextUI_Sight: {fileID: 4017897345384448578}

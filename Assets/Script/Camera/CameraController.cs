@@ -51,12 +51,12 @@ public class CameraController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            targetYaw += snapAngle;
+            targetYaw -= snapAngle;
         }
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            targetYaw -= snapAngle;
+            targetYaw += snapAngle;
         }
 
         float snappedYaw = Mathf.Round(targetYaw / snapAngle) * snapAngle;
