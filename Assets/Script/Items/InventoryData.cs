@@ -157,7 +157,6 @@ public class InventoryData : MonoBehaviour
         targetCharacterStats.mSpeed += appliedStats.Speed * 0.01f;
 
         //Once
-        targetCharacterStats.Currency += appliedStats.Value;
         targetCharacterStats.CharacterColor = mixedColor;
 
         DestroyInventoryWorldObjects();

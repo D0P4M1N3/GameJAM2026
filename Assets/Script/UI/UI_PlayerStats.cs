@@ -18,11 +18,11 @@ public class UI_PlayerStats : MonoBehaviour
             CharacterStats stats = DATA_Player.Instance.CharacterStats;
             if (stats != null)
             {
-                speedText.text = $"Speed: {stats.finalSpeed}";
-                hpText.text = $"HP: {stats.finalMaxHP}";
-                damageText.text = $"Damage: {stats.finalDamage}";
-                storageText.text = $"Storage: {stats.finalStorage}";
-                currencyText.text = $"Currency: {stats.Currency}";
+                speedText.text = $"Speed: {stats.finalSpeed:0}";
+                hpText.text = $"HP: {stats.finalMaxHP:0}";
+                damageText.text = $"Damage: {stats.finalDamage:0}";
+                storageText.text = $"Storage: {stats.finalStorage:0}";
+                currencyText.text = $"Currency: {stats.Currency:0}";
             }
         }
 
@@ -35,11 +35,11 @@ public class UI_PlayerStats : MonoBehaviour
         CharacterStats stats = DATA_Player.Instance.CharacterStats;
         if (stats == null) return;
 
-        speedText.text = $"Speed: {stats.finalSpeed}";
-        hpText.text = $"HP: {stats.finalMaxHP}";
-        damageText.text = $"Damage: {stats.finalDamage}";
-        storageText.text = $"Storage: {stats.finalStorage}";
-        currencyText.text = $"Currency: {stats.Currency}";
+        speedText.text = $"Speed: {stats.finalSpeed:0}";
+        hpText.text = $"HP: {stats.finalMaxHP:0}";
+        damageText.text = $"Damage: {stats.finalDamage:0}";
+        storageText.text = $"Storage: {stats.finalStorage:0}";
+        currencyText.text = $"Currency: {stats.Currency:0}";
     }
 
 }

@@ -2330,6 +2330,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1386643389}
+        m_TargetAssemblyTypeName: StashSpawner, Assembly-CSharp
+        m_MethodName: ResetStash
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1001204854}
         m_TargetAssemblyTypeName: InventoryData, Assembly-CSharp
         m_MethodName: ApplyStats_Player
@@ -3012,7 +3024,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: GameJAM2026.Runtime::StashSpawner
   stashData: {fileID: 1549461764}
-  spawnRadius: 1.5
+  spawnRadius: 4
   spawnOnStart: 1
   clearExistingChildrenOnSpawn: 1
 --- !u!212 &1386643390

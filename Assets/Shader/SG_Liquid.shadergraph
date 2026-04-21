@@ -174,7 +174,11 @@
             "m_Id": "780991b1c67c49578e67707a15bcf5e4"
         }
     ],
-    "m_StickyNoteDatas": [],
+    "m_StickyNoteDatas": [
+        {
+            "m_Id": "87738c9081b547ab84b7daaab35dd1df"
+        }
+    ],
     "m_Edges": [
         {
             "m_OutputSlot": {
@@ -997,7 +1001,7 @@
     "m_ShaderOutputName": "OutMinMax",
     "m_StageCapability": 3,
     "m_Value": {
-        "x": 0.0,
+        "x": -0.5,
         "y": 1.0
     },
     "m_DefaultValue": {
@@ -1117,7 +1121,7 @@
     "m_Title": "Wobbles",
     "m_Position": {
         "x": -2857.0,
-        "y": -832.9998779296875
+        "y": -832.9998168945313
     }
 }
 
@@ -3039,7 +3043,7 @@
     "m_ObjectId": "780991b1c67c49578e67707a15bcf5e4",
     "m_Title": "GAY",
     "m_Position": {
-        "x": -2840.000244140625,
+        "x": -2840.0,
         "y": -1719.9998779296875
     }
 }
@@ -3449,6 +3453,26 @@
         "y": 0.0,
         "z": 0.0,
         "w": 0.0
+    }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.StickyNoteData",
+    "m_ObjectId": "87738c9081b547ab84b7daaab35dd1df",
+    "m_Title": "New Note",
+    "m_Content": "-0.4\n",
+    "m_TextSize": 0,
+    "m_Theme": 0,
+    "m_Position": {
+        "serializedVersion": "2",
+        "x": -833.0,
+        "y": 706.0,
+        "width": 200.0,
+        "height": 160.0
+    },
+    "m_Group": {
+        "m_Id": ""
     }
 }
 
@@ -4376,7 +4400,7 @@
     "m_ShaderOutputName": "InMinMax",
     "m_StageCapability": 3,
     "m_Value": {
-        "x": -0.4449999928474426,
+        "x": 0.0,
         "y": 1.0
     },
     "m_DefaultValue": {

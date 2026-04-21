@@ -4,19 +4,41 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour
 {
     [SerializeField] private Button playButton;
-    [SerializeField] private string sceneName = "GameScene";
+    [SerializeField] private string sceneName = "ItemPrepare";
 
     private void Start()
     {
         if (playButton != null)
         {
-            playButton.onClick.RemoveAllListeners();
+            playButton.onClick.RemoveListener(OnPlayClicked);
             playButton.onClick.AddListener(OnPlayClicked);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (playButton != null)
+        {
+            playButton.onClick.RemoveListener(OnPlayClicked);
         }
     }
 
     private void OnPlayClicked()
     {
-        GameSceneManager.Instance.LoadScene(sceneName);
+        if (string.IsNullOrWhiteSpace(sceneName))
+        {
+            return;
+        }
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.LoadScene(sceneName);
+            return;
+        }
+
+        if (GameSceneManager.Instance != null)
+        {
+            GameSceneManager.Instance.LoadScene(sceneName);
+        }
     }
 }

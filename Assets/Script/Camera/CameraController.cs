@@ -26,6 +26,8 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
+        target = FindAnyObjectByType<TopDownController>().transform;
+
         currentZoom = Mathf.Clamp(currentZoom, minZoom, maxZoom);
         targetYaw = yaw;
     }
@@ -45,6 +47,16 @@ public class CameraController : MonoBehaviour
         {
             float mouseX = Input.GetAxis("Mouse X");
             targetYaw += mouseX * rotationSpeed * 100f * Time.deltaTime;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            targetYaw += snapAngle;
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            targetYaw -= snapAngle;
         }
 
         float snappedYaw = Mathf.Round(targetYaw / snapAngle) * snapAngle;

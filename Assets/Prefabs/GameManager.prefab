@@ -63,6 +63,10 @@ MonoBehaviour:
   inventoryData: {fileID: 0}
   collectBoxData: {fileID: 0}
   hasGrantedStarterPack: 0
+  currentProgression: 1
+  levelBalanceSequence:
+  - {fileID: 11400000, guid: 84f1baf272924405b0407e3c33881042, type: 2}
+  - {fileID: 11400000, guid: b3d4d35678f14c268f0340ef8ac12780, type: 2}
 --- !u!1 &2348742958620319778
 GameObject:
   m_ObjectHideFlags: 0

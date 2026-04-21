@@ -6,14 +6,21 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     private const string ItemPrepareSceneName = "ItemPrepare";
+    private const string LevelSceneName = "Level";
 
     public static GameManager Instance { get; private set; }
+
+    public int CurrentProgression => currentProgression;
+    public int CurrentLevelIndex => ResolveLevelIndex();
     
     [Header("Runtime Data")]
     [SerializeField] private StashData stashData;
     [SerializeField] private InventoryData inventoryData;
     [SerializeField] private CollectBoxData collectBoxData;
     [SerializeField] private bool hasGrantedStarterPack;
+    [SerializeField] [Min(1)] private int currentProgression = 1;
+    [Header("Level Progression")]
+    [SerializeField] private List<LevelBalanceData> levelBalanceSequence = new();
 
     private readonly List<ItemData> runtimeInventoryItems = new();
     private readonly List<StashEntry> runtimeStashEntries = new();
@@ -21,6 +28,7 @@ public class GameManager : MonoBehaviour
 
     private bool isApplyingSceneData;
     private bool hasInitializedRuntimeData;
+    private string lastLoadedSceneName;
 
     private void Awake()
     {
@@ -34,9 +42,11 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         SceneManager.sceneLoaded += HandleSceneLoaded;
+        lastLoadedSceneName = SceneManager.GetActiveScene().name;
 
         RebindSceneData();
         InitializeRuntimeDataFromScene();
+        UpdatePlayerCurrencyFromRuntimeStash();
     }
 
     private void OnDestroy()
@@ -92,15 +102,13 @@ public class GameManager : MonoBehaviour
 
     private void HandleSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
+        bool refreshStashSpawn = HandleCompletedLevelReturn(scene.name);
+
         RebindSceneData();
         InitializeRuntimeDataFromScene();
-
-        if (scene.name == ItemPrepareSceneName)
-        {
-            MoveCollectBoxToStash();
-        }
-
-        ApplyRuntimeDataToScene();
+        ApplyCurrentLevelData(scene.name);
+        ApplyRuntimeDataToScene(refreshStashSpawn);
+        lastLoadedSceneName = scene.name;
     }
 
     public void AddItemsToInventory(IEnumerable<ItemData> items)
@@ -248,6 +256,7 @@ public class GameManager : MonoBehaviour
         }
 
         isApplyingSceneData = false;
+        UpdatePlayerCurrencyFromRuntimeStash();
 
         if (refreshStashSpawn)
         {
@@ -342,6 +351,8 @@ public class GameManager : MonoBehaviour
 
             runtimeStashEntries.Add(new StashEntry(entry.Item, entry.Quantity));
         }
+
+        UpdatePlayerCurrencyFromRuntimeStash();
     }
 
     private void HandleCollectBoxChanged()
@@ -400,6 +411,88 @@ public class GameManager : MonoBehaviour
         }
 
         runtimeCollectBoxItems.Clear();
+    }
+
+    private bool HandleCompletedLevelReturn(string loadedSceneName)
+    {
+        if (loadedSceneName != ItemPrepareSceneName || lastLoadedSceneName != LevelSceneName)
+        {
+            return false;
+        }
+
+        currentProgression = Mathf.Max(1, currentProgression + 1);
+        MoveCollectBoxToStash();
+        return true;
+    }
+
+    private void ApplyCurrentLevelData(string loadedSceneName)
+    {
+        if (loadedSceneName != LevelSceneName)
+        {
+            return;
+        }
+
+        LevelGenerator levelGenerator = FindFirstObjectByType<LevelGenerator>();
+        if (levelGenerator == null)
+        {
+            return;
+        }
+
+        LevelBalanceData balanceData = GetCurrentLevelBalanceData();
+        if (balanceData == null)
+        {
+            return;
+        }
+
+        levelGenerator.SetLevelBalanceData(balanceData);
+    }
+
+    private LevelBalanceData GetCurrentLevelBalanceData()
+    {
+        if (levelBalanceSequence == null || levelBalanceSequence.Count == 0)
+        {
+            return null;
+        }
+
+        int levelIndex = ResolveLevelIndex() - 1;
+        if (levelIndex < 0)
+        {
+            levelIndex = 0;
+        }
+
+        if (levelIndex >= levelBalanceSequence.Count)
+        {
+            levelIndex = levelBalanceSequence.Count - 1;
+        }
+
+        return levelBalanceSequence[levelIndex];
+    }
+
+    private int ResolveLevelIndex()
+    {
+        return Mathf.Max(1, currentProgression);
+    }
+
+    private void UpdatePlayerCurrencyFromRuntimeStash()
+    {
+        if (DATA_Player.Instance == null || DATA_Player.Instance.CharacterStats == null)
+        {
+            return;
+        }
+
+        float totalCurrency = 0f;
+        for (int i = 0; i < runtimeStashEntries.Count; i++)
+        {
+            StashEntry entry = runtimeStashEntries[i];
+            if (!entry.IsValid || entry.Item == null)
+            {
+                continue;
+            }
+
+            totalCurrency += entry.Item.Stats.Value * entry.Quantity;
+        }
+
+        DATA_Player.Instance.CharacterStats.Currency = totalCurrency;
     }
 
     private void RefreshSceneStashSpawn()

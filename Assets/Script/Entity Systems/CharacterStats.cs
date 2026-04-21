@@ -28,4 +28,42 @@ public class CharacterStats
     public float finalMaxHP => (MaxHP / 100f) * mMaxHP + MaxHP;
     public float finalDamage => (Damage / 100f) * mDamage + Damage;
     public float finalStorage => (Storage / 100f) * mStorage + Storage;
+
+    public CharacterStats Clone()
+    {
+        return new CharacterStats
+        {
+            Speed = Speed,
+            MaxHP = MaxHP,
+            Damage = Damage,
+            Storage = Storage,
+            HP = HP,
+            Currency = Currency,
+            CharacterColor = CharacterColor,
+            mSpeed = mSpeed,
+            mMaxHP = mMaxHP,
+            mDamage = mDamage,
+            mStorage = mStorage,
+        };
+    }
+
+    public void CopyFrom(CharacterStats source)
+    {
+        if (source == null)
+        {
+            return;
+        }
+
+        Speed = source.Speed;
+        MaxHP = source.MaxHP;
+        Damage = source.Damage;
+        Storage = source.Storage;
+        HP = source.HP;
+        Currency = source.Currency;
+        CharacterColor = source.CharacterColor;
+        mSpeed = source.mSpeed;
+        mMaxHP = source.mMaxHP;
+        mDamage = source.mDamage;
+        mStorage = source.mStorage;
+    }
 }
