@@ -16,9 +16,6 @@ public class GameManager : MonoBehaviour
     public CollectBoxData CollectBoxData => collectBoxData;
     
 
-    [Header("Sunboss AIs")]
-    [Range(0f, 1f)]
-    public float TimeoutPredictionAccuracy = 0.8f;
 
     [Header("Runtime Data")]
     [SerializeField] private StashData stashData;
@@ -56,7 +53,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        UI_Timer.Instance.AddTimeOutListener(TimeOut);
+       
     }
     private void OnDestroy()
     {
@@ -469,13 +466,5 @@ public class GameManager : MonoBehaviour
 
 
 
-    void TimeOut()
-    {
-        BB_Sunboss_Master[] BSMs = FindObjectsOfType<BB_Sunboss_Master>();
 
-        foreach(BB_Sunboss_Master BSM in BSMs)
-        {
-            BSM.BB_SunbossCTX_Brain.PredictionAccuracy = TimeoutPredictionAccuracy;
-        }
-    }
 }

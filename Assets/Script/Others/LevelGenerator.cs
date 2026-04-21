@@ -60,6 +60,7 @@ public class LevelGenerator : MonoBehaviour
     public void SetLevelBalanceData(LevelBalanceData balanceData)
     {
         levelBalanceData = balanceData;
+        levelBalanceData.Begin();
     }
 
     [ContextMenu("Generate Level")]

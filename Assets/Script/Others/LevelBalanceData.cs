@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "LevelBalanceData", menuName = "Gameplay/Level Balance Data")]
@@ -12,6 +13,11 @@ public class LevelBalanceData : ScriptableObject
     [SerializeField] [Min(0)] private int maxEnemies = 5;
     [SerializeField] private AnimationCurve minEnemiesProgressionCurve = AnimationCurve.Linear(0f, 1f, 1f, 1f);
     [SerializeField] private AnimationCurve maxEnemiesProgressionCurve = AnimationCurve.Linear(0f, 1f, 1f, 1f);
+
+    [Header("Sunboss AIs")]
+    [Range(0f, 1f)]
+    public float TimeoutPredictionAccuracy = 0.8f;
+
 
     public LevelLootTable LootTable => lootTable;
     public int MinBuildings => minBuildings;
@@ -52,6 +58,11 @@ public class LevelBalanceData : ScriptableObject
         }
     }
 
+    public void Begin()
+    {
+        UI_Timer.Instance.AddTimeOutListener(TimeOut);
+    }
+
     private static int EvaluateCount(int baseValue, AnimationCurve progressionCurve, int progression)
     {
         float normalizedProgression = GetNormalizedProgression(progression);
@@ -66,5 +77,15 @@ public class LevelBalanceData : ScriptableObject
     {
         float depth = Mathf.Max(0f, progression - 1);
         return 1f - Mathf.Exp(-0.12f * depth);
+    }
+
+    public void TimeOut()
+    {
+        BB_Sunboss_Master[] BSMs = FindObjectsOfType<BB_Sunboss_Master>();
+
+        foreach (BB_Sunboss_Master BSM in BSMs)
+        {
+            BSM.BB_SunbossCTX_Brain.PredictionAccuracy = TimeoutPredictionAccuracy;
+        }
     }
 }
