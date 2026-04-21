@@ -26,6 +26,8 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
+        target = FindAnyObjectByType<TopDownController>().transform;
+
         currentZoom = Mathf.Clamp(currentZoom, minZoom, maxZoom);
         targetYaw = yaw;
     }

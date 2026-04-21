@@ -12,6 +12,12 @@ public class CameraObstructionFade : MonoBehaviour
     private Dictionary<Renderer, Material[]> originalMats = new Dictionary<Renderer, Material[]>();
     private List<Renderer> currentObstructions = new List<Renderer>();
 
+
+    private void Awake()
+    {
+        target = FindAnyObjectByType<TopDownController>().transform;
+
+    }
     void Update()
     {
         FadeObjects();
