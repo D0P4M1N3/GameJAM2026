@@ -874,6 +874,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2397150311703773538, guid: d09a84e8bf35d2343bcdc606dcc662e5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2146797725736378763}
+    - targetCorrespondingSourceObject: {fileID: 2397150311703773538, guid: d09a84e8bf35d2343bcdc606dcc662e5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1832447772297167782}
   m_SourcePrefab: {fileID: 100100000, guid: d09a84e8bf35d2343bcdc606dcc662e5, type: 3}
 --- !u!1 &638292800216507555 stripped
 GameObject:
@@ -897,6 +900,31 @@ MonoBehaviour:
   Recovery: 1
   maxSpeed: 10
   wobbleInfluence: 0.5
+--- !u!114 &1832447772297167782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 638292800216507555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3941c7d4f60762f4fb33466d6ef1bbb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChangeLiquidColor
+  characterStats:
+    Speed: 1
+    MaxHP: 5
+    Damage: 1
+    Storage: 10
+    HP: 5
+    Currency: 0
+    CharacterColor: {r: 1, g: 1, b: 1, a: 1}
+    mSpeed: 0
+    mMaxHP: 0
+    mDamage: 0
+    mStorage: 0
+  liquidMaterial: {fileID: 2100000, guid: 0e0b1c2aad463234995306a4d7f80f83, type: 2}
 --- !u!4 &3320684635254899242 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d09a84e8bf35d2343bcdc606dcc662e5, type: 3}

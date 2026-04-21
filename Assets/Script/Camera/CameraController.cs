@@ -47,6 +47,16 @@ public class CameraController : MonoBehaviour
             targetYaw += mouseX * rotationSpeed * 100f * Time.deltaTime;
         }
 
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            targetYaw += snapAngle;
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            targetYaw -= snapAngle;
+        }
+
         float snappedYaw = Mathf.Round(targetYaw / snapAngle) * snapAngle;
         yaw = Mathf.LerpAngle(yaw, snappedYaw, Time.deltaTime * 10f);
     }
