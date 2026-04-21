@@ -20,10 +20,10 @@ MonoBehaviour:
   icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   itemPrefab: {fileID: 8987215672089618286, guid: 7deaa2b32abaded419e47007cc9f4fc2, type: 3}
   stats:
-    <Speed>k__BackingField: 2
+    <Speed>k__BackingField: 20
     <Health>k__BackingField: 0
-    <Attack>k__BackingField: 3
-    <Value>k__BackingField: 5
+    <Attack>k__BackingField: 30
+    <Value>k__BackingField: 50
   collisionClip: {fileID: 8300000, guid: da2d0bb30d6c9bc44a1d6e2d8b76288e, type: 3}
   collisionVolume: 1
   pickupClip: {fileID: 8300000, guid: 8102627573414084a812048286bff4fb, type: 3}

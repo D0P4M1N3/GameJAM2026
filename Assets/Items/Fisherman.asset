@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fisherman
   m_EditorClassIdentifier: GameJAM2026.Runtime::ItemData
   itemId: 21
-  displayName: Fisherman
+  displayName: Ratcherman Friend
   description: 
   itemColor: {r: 1, g: 1, b: 1, a: 1}
   sizeValue: 1
@@ -21,9 +21,9 @@ MonoBehaviour:
   itemPrefab: {fileID: 2736271296588698879, guid: ca5ab428d16e85845a317e09ae801ef6, type: 3}
   stats:
     <Speed>k__BackingField: 0
-    <Health>k__BackingField: 2
+    <Health>k__BackingField: 20
     <Attack>k__BackingField: 0
-    <Value>k__BackingField: 2
+    <Value>k__BackingField: 20
   collisionClip: {fileID: 8300000, guid: da2d0bb30d6c9bc44a1d6e2d8b76288e, type: 3}
   collisionVolume: 1
   pickupClip: {fileID: 8300000, guid: 8102627573414084a812048286bff4fb, type: 3}
