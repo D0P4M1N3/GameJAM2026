@@ -64,9 +64,6 @@ MonoBehaviour:
   collectBoxData: {fileID: 0}
   hasGrantedStarterPack: 0
   currentProgression: 1
-  levelBalanceSequence:
-  - {fileID: 11400000, guid: 84f1baf272924405b0407e3c33881042, type: 2}
-  - {fileID: 11400000, guid: b3d4d35678f14c268f0340ef8ac12780, type: 2}
 --- !u!1 &2348742958620319778
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,14 +212,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DATA_Player
   CharacterStats:
     Speed: 5
-    MaxHP: 20
+    MaxHP: 100
     Damage: 1
-    Storage: 10
-    HP: 2.1474836e+9
+    Storage: 0
+    HP: 100
     Currency: 0
-    mSpeed: 1
-    mMaxHP: 1
-    mDamage: 1
+    CharacterColor: {r: 1, g: 1, b: 1, a: 1}
+    mSpeed: 0
+    mMaxHP: 0
+    mDamage: 0
     mStorage: 0
 --- !u!1 &6503738693461115391
 GameObject:

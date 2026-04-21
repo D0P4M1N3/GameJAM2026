@@ -1,12 +1,21 @@
 using UnityEngine.Serialization;
 using UnityEngine;
 
+public enum ItemRarity
+{
+    Common,
+    Uncommon,
+    Rare,
+    Epic,
+}
+
 [CreateAssetMenu(fileName = "ItemData", menuName = "Inventory/Item Data")]
 public class ItemData : ScriptableObject
 {
     [SerializeField] private string itemId;
     [SerializeField] private string displayName;
     [SerializeField] [TextArea] private string description;
+    [SerializeField] private ItemRarity rarity = ItemRarity.Common;
     [SerializeField] private Color itemColor = Color.white;
     [SerializeField] [Min(0f)] private float sizeValue = 1f;
     [SerializeField] private Sprite icon;
@@ -22,6 +31,7 @@ public class ItemData : ScriptableObject
     public string ItemId => itemId;
     public string DisplayName => string.IsNullOrWhiteSpace(displayName) ? name : displayName;
     public string Description => description;
+    public ItemRarity Rarity => rarity;
     public Color ItemColor => itemColor;
     public float SizeValue => sizeValue;
     public Sprite Icon => icon;

@@ -1158,7 +1158,7 @@ MonoBehaviour:
     TurnSpeed: 30
     MaxMoveAngleFromFacing: 15
   BB_SunbossCTX_Combat:
-    ACT_SunBoss_Combat: {fileID: 0}
+    ACT_SunBoss_Combat: {fileID: 6256405832344378724}
   BB_SunbossCTX_Debug:
     TextUI_State: {fileID: 2294929049969548292}
     TextUI_Sight: {fileID: 4017897345384448578}

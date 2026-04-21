@@ -1,0 +1,152 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c6b5bf341b34d54b8cfc4eb28d1ab01, type: 3}
+  m_Name: LootTable
+  m_EditorClassIdentifier: 
+  minDrops: 6
+  maxDrops: 24
+  rarityRules:
+  - rarity: 0
+    spawnRate: 1.8
+    progressionCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1.2
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0.2
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  - rarity: 1
+    spawnRate: 1
+    progressionCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.9
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1.1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  - rarity: 2
+    spawnRate: 0.45
+    progressionCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.35
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1.7
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  - rarity: 3
+    spawnRate: 0.15
+    progressionCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 2.2
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  autoDiscoveredItems:
+  - {fileID: 11400000, guid: 1c69a43b7579be244bfb2f738d6c9cf4, type: 2}
+  - {fileID: 11400000, guid: 05271c0ffb26b8745ba14bf402184ebe, type: 2}
+  - {fileID: 11400000, guid: 3f8b3e98052b58d49ad0154bf9bc9f28, type: 2}
+  - {fileID: 11400000, guid: 258ee84056b7c934bae98fccad4eed4b, type: 2}
+  - {fileID: 11400000, guid: cc9983dd59b77b34e8102b4482dc07c5, type: 2}
+  - {fileID: 11400000, guid: 1cc609d3d7fc46b45887189be2947595, type: 2}
+  - {fileID: 11400000, guid: bfdba622486346a4a9a45604ee3a04b3, type: 2}
+  - {fileID: 11400000, guid: 1b578b54332b5bc4981b3402dc20d7d5, type: 2}
+  - {fileID: 11400000, guid: 882369ba77e2bcf4789fa5d0522c8452, type: 2}
+  - {fileID: 11400000, guid: 3f163d1a2b6789b4cac5a69f01b4271a, type: 2}
+  - {fileID: 11400000, guid: 78708c19e841a5c4984bcf150a43b095, type: 2}
+  - {fileID: 11400000, guid: 0d8019dd4c59bc741af129d618abadca, type: 2}
+  - {fileID: 11400000, guid: e93402ccdf105af439cec057c1061a24, type: 2}
+  - {fileID: 11400000, guid: a3324139f0606ed458e427f6775efa1c, type: 2}
+  - {fileID: 11400000, guid: fac8b46cf2827e64e83bea4cb121666c, type: 2}
+  - {fileID: 11400000, guid: 41efac3ecf908aa4099593744fa26c8b, type: 2}
+  - {fileID: 11400000, guid: e46231dec6777894e8c3b0f7dff5b8a5, type: 2}
+  - {fileID: 11400000, guid: 581cbda859272ce41b6c199a9fb51d4d, type: 2}
+  - {fileID: 11400000, guid: af1daaa6f803e224598289ddc3343b75, type: 2}
+  - {fileID: 11400000, guid: e40e8e1b4c11d344088e71a26e272b85, type: 2}
+  - {fileID: 11400000, guid: b0b1b37ed25750e4d9d190d2c5664fc9, type: 2}
+  - {fileID: 11400000, guid: 45a4e4a1b6733f2428532ec62ba085a3, type: 2}
+  - {fileID: 11400000, guid: 99e18501065ef1345aaf127eab6023d5, type: 2}
+  - {fileID: 11400000, guid: 034a87466cb8d674c8de0b3510b69a55, type: 2}
+  - {fileID: 11400000, guid: 3c92467d8d70fee4bbabf9d18caa381d, type: 2}
+  - {fileID: 11400000, guid: da2ce4e6dd7d8594993d7e5131bc5421, type: 2}
+  - {fileID: 11400000, guid: 9e4dd21559ef3934eaa1372e8978e0d8, type: 2}
+  - {fileID: 11400000, guid: 673f436f0c99ccd488a63d0581c195fe, type: 2}
+  - {fileID: 11400000, guid: 7832d7486285e0c4681d54d90e074515, type: 2}
+  - {fileID: 11400000, guid: 8839fda05162fba4e92e2560757da32b, type: 2}

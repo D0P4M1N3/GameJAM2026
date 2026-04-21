@@ -3,6 +3,8 @@
 public class CameraController : MonoBehaviour
 {
     [SerializeField] private Transform target;
+    public bool isFocusTarget = true;
+
 
     [Header("Offset")]
     [SerializeField] private Vector3 targetOffset = new Vector3(0, 1.5f, 0); 
@@ -51,12 +53,12 @@ public class CameraController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            targetYaw += snapAngle;
+            targetYaw -= snapAngle;
         }
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            targetYaw -= snapAngle;
+            targetYaw += snapAngle;
         }
 
         float snappedYaw = Mathf.Round(targetYaw / snapAngle) * snapAngle;
@@ -76,19 +78,29 @@ public class CameraController : MonoBehaviour
 
     private void UpdateCameraPosition()
     {
-        Vector3 focusPoint = target.position + targetOffset;
 
-        Quaternion rotation = Quaternion.Euler(pitch, yaw, 0f);
-        Vector3 direction = rotation * Vector3.forward;
+        if (!isFocusTarget)
+        {
+            transform.position = Vector3.zero;
+            return;
+        }
 
-        Vector3 desiredPosition = focusPoint - direction * currentZoom;
+        else
+        {
+            Vector3 focusPoint = target.position + targetOffset;
 
-        transform.position = Vector3.Lerp(
-            transform.position,
-            desiredPosition,
-            followSpeed * Time.deltaTime
-        );
+            Quaternion rotation = Quaternion.Euler(pitch, yaw, 0f);
+            Vector3 direction = rotation * Vector3.forward;
 
-        transform.LookAt(focusPoint);
+            Vector3 desiredPosition = focusPoint - direction * currentZoom;
+
+            transform.position = Vector3.Lerp(
+                transform.position,
+                desiredPosition,
+                followSpeed * Time.deltaTime
+            );
+
+            transform.LookAt(focusPoint);
+        }
     }
 }

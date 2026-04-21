@@ -155,6 +155,7 @@ public class InventoryData : MonoBehaviour
         targetCharacterStats.mMaxHP += appliedStats.Health;
         targetCharacterStats.mDamage += appliedStats.Attack;
         targetCharacterStats.mSpeed += appliedStats.Speed * 0.01f;
+        targetCharacterStats.HP = targetCharacterStats.finalMaxHP;
 
         //Once
         targetCharacterStats.CharacterColor = mixedColor;

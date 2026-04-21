@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public int CurrentProgression => currentProgression;
-    public int CurrentLevelIndex => ResolveLevelIndex();
     
     [Header("Runtime Data")]
     [SerializeField] private StashData stashData;
@@ -19,8 +18,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CollectBoxData collectBoxData;
     [SerializeField] private bool hasGrantedStarterPack;
     [SerializeField] [Min(1)] private int currentProgression = 1;
-    [Header("Level Progression")]
-    [SerializeField] private List<LevelBalanceData> levelBalanceSequence = new();
 
     private readonly List<ItemData> runtimeInventoryItems = new();
     private readonly List<StashEntry> runtimeStashEntries = new();
@@ -106,7 +103,6 @@ public class GameManager : MonoBehaviour
 
         RebindSceneData();
         InitializeRuntimeDataFromScene();
-        ApplyCurrentLevelData(scene.name);
         ApplyRuntimeDataToScene(refreshStashSpawn);
         lastLoadedSceneName = scene.name;
     }
@@ -423,54 +419,6 @@ public class GameManager : MonoBehaviour
         currentProgression = Mathf.Max(1, currentProgression + 1);
         MoveCollectBoxToStash();
         return true;
-    }
-
-    private void ApplyCurrentLevelData(string loadedSceneName)
-    {
-        if (loadedSceneName != LevelSceneName)
-        {
-            return;
-        }
-
-        LevelGenerator levelGenerator = FindFirstObjectByType<LevelGenerator>();
-        if (levelGenerator == null)
-        {
-            return;
-        }
-
-        LevelBalanceData balanceData = GetCurrentLevelBalanceData();
-        if (balanceData == null)
-        {
-            return;
-        }
-
-        levelGenerator.SetLevelBalanceData(balanceData);
-    }
-
-    private LevelBalanceData GetCurrentLevelBalanceData()
-    {
-        if (levelBalanceSequence == null || levelBalanceSequence.Count == 0)
-        {
-            return null;
-        }
-
-        int levelIndex = ResolveLevelIndex() - 1;
-        if (levelIndex < 0)
-        {
-            levelIndex = 0;
-        }
-
-        if (levelIndex >= levelBalanceSequence.Count)
-        {
-            levelIndex = levelBalanceSequence.Count - 1;
-        }
-
-        return levelBalanceSequence[levelIndex];
-    }
-
-    private int ResolveLevelIndex()
-    {
-        return Mathf.Max(1, currentProgression);
     }
 
     private void UpdatePlayerCurrencyFromRuntimeStash()

@@ -6,7 +6,7 @@ using UnityEngine;
 public class CharacterStats
 {
     [Header("Base")]
-    public float Speed = 1f;
+    public float Speed = 10f;
     public float MaxHP = 5f;
     public float Damage = 1f;
     public float Storage = 0f;

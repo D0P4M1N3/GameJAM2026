@@ -241,7 +241,8 @@ public class LevelGenerator : MonoBehaviour
             return;
         }
 
-        List<ItemData> rolledItems = activeLootTable.RollDrops();
+        int progression = GameManager.Instance != null ? GameManager.Instance.CurrentProgression : 1;
+        List<ItemData> rolledItems = activeLootTable.RollDrops(progression);
         Transform itemsParent = GetOrCreateGeneratedCategoryRoot("Items", ref generatedItemsRoot);
         for (int i = 0; i < rolledItems.Count; i++)
         {
@@ -763,8 +764,9 @@ public class LevelGenerator : MonoBehaviour
     {
         if (levelBalanceData != null)
         {
-            minCount = levelBalanceData.MinBuildings;
-            maxCount = levelBalanceData.MaxBuildings;
+            int progression = GameManager.Instance != null ? GameManager.Instance.CurrentProgression : 1;
+            minCount = levelBalanceData.EvaluateMinBuildings(progression);
+            maxCount = levelBalanceData.EvaluateMaxBuildings(progression);
             return true;
         }
 
@@ -782,8 +784,9 @@ public class LevelGenerator : MonoBehaviour
             return false;
         }
 
-        minCount = levelBalanceData.MinEnemies;
-        maxCount = levelBalanceData.MaxEnemies;
+        int progression = GameManager.Instance != null ? GameManager.Instance.CurrentProgression : 1;
+        minCount = levelBalanceData.EvaluateMinEnemies(progression);
+        maxCount = levelBalanceData.EvaluateMaxEnemies(progression);
         return maxCount >= minCount;
     }
 
