@@ -1,13 +1,23 @@
-﻿using UnityEngine;
+using UnityEngine;
+
+public enum CameraMode
+{
+    Target,
+    TransformTo,
+}
 
 public class CameraController : MonoBehaviour
 {
     [SerializeField] private Transform target;
+    [SerializeField] private Transform transformTarget;
+    [SerializeField] private CameraMode mode = CameraMode.Target;
     public bool isFocusTarget = true;
 
+    private Transform defaultTarget;
+    private CameraMode defaultMode = CameraMode.Target;
 
     [Header("Offset")]
-    [SerializeField] private Vector3 targetOffset = new Vector3(0, 1.5f, 0); 
+    [SerializeField] private Vector3 targetOffset = new(0f, 1.5f, 0f);
 
     [Header("Zoom")]
     [SerializeField] private float zoomSpeed = 5f;
@@ -16,7 +26,7 @@ public class CameraController : MonoBehaviour
     private float currentZoom = 10f;
 
     [Header("Rotation")]
-    private float yaw = 0f;
+    private float yaw;
     [SerializeField] private float pitch = 45f;
     [SerializeField] private float rotationSpeed = 5f;
     [SerializeField] private float snapAngle = 45f;
@@ -28,18 +38,77 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
-        target = FindAnyObjectByType<TopDownController>().transform;
+        if (target == null)
+        {
+            TopDownController playerController = FindAnyObjectByType<TopDownController>();
+            if (playerController != null)
+            {
+                target = playerController.transform;
+            }
+        }
 
+        defaultTarget = target;
+        defaultMode = CameraMode.Target;
         currentZoom = Mathf.Clamp(currentZoom, minZoom, maxZoom);
         targetYaw = yaw;
     }
 
+    public void SetTargetMode()
+    {
+        if (defaultTarget == null)
+        {
+            TopDownController playerController = FindAnyObjectByType<TopDownController>();
+            if (playerController != null)
+            {
+                defaultTarget = playerController.transform;
+            }
+        }
+
+        target = defaultTarget;
+        mode = defaultMode;
+        isFocusTarget = target != null;
+    }
+
+    public void SetTransformToMode()
+    {
+        if (transformTarget == null)
+        {
+            return;
+        }
+
+        mode = CameraMode.TransformTo;
+        isFocusTarget = true;
+    }
+
+    public void SetTarget(Transform targetTransform)
+    {
+        target = targetTransform;
+        isFocusTarget = target != null;
+    }
+
     private void LateUpdate()
     {
-        if (target == null) return;
+        if (!isFocusTarget)
+        {
+            transform.position = Vector3.zero;
+            return;
+        }
 
-        HandleZoom();
-        HandleRotation();
+        if (mode == CameraMode.Target)
+        {
+            if (target == null)
+            {
+                return;
+            }
+
+            HandleZoom();
+            HandleRotation();
+        }
+        else if (transformTarget == null)
+        {
+            return;
+        }
+
         UpdateCameraPosition();
     }
 
@@ -78,29 +147,33 @@ public class CameraController : MonoBehaviour
 
     private void UpdateCameraPosition()
     {
-
-        if (!isFocusTarget)
+        if (mode == CameraMode.TransformTo)
         {
-            transform.position = Vector3.zero;
-            return;
-        }
-
-        else
-        {
-            Vector3 focusPoint = target.position + targetOffset;
-
-            Quaternion rotation = Quaternion.Euler(pitch, yaw, 0f);
-            Vector3 direction = rotation * Vector3.forward;
-
-            Vector3 desiredPosition = focusPoint - direction * currentZoom;
-
             transform.position = Vector3.Lerp(
                 transform.position,
-                desiredPosition,
+                transformTarget.position,
                 followSpeed * Time.deltaTime
             );
 
-            transform.LookAt(focusPoint);
+            transform.rotation = Quaternion.Slerp(
+                transform.rotation,
+                transformTarget.rotation,
+                followSpeed * Time.deltaTime
+            );
+            return;
         }
+
+        Vector3 focusPoint = target.position + targetOffset;
+        Quaternion rotation = Quaternion.Euler(pitch, yaw, 0f);
+        Vector3 direction = rotation * Vector3.forward;
+        Vector3 desiredPosition = focusPoint - direction * currentZoom;
+
+        transform.position = Vector3.Lerp(
+            transform.position,
+            desiredPosition,
+            followSpeed * Time.deltaTime
+        );
+
+        transform.LookAt(focusPoint);
     }
 }

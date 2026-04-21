@@ -7,6 +7,7 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
     [SerializeField] private GameObject collectBoxPopupUi;
     [SerializeField] private GameObject collectingPopup;
     [SerializeField] private ChangeCamProjection changeCamProjection;
+    [SerializeField] private CameraController cameraController;
 
     private CollectingItemSpawner collectingItemSpawner;
     private CollectBoxDropZone collectBoxDropZone;
@@ -57,6 +58,11 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
         {
             changeCamProjection.SetProjectionType(ChangeCamProjection.ProjectionType.Orthographic);
         }
+
+        if (cameraController != null)
+        {
+            cameraController.SetTransformToMode();
+        }
     }
 
     public void ClosePopUp()
@@ -78,11 +84,15 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
         {
             changeCamProjection.SetProjectionType(ChangeCamProjection.ProjectionType.Perspective);
         }
+
+        if (cameraController != null)
+        {
+            cameraController.SetTargetMode();
+        }
     }
 
     public void NotifyItemCollected()
     {
-        
     }
 
     private void EnsureReferences()
@@ -134,6 +144,11 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
         if (collectBoxDropZone != null && collectingItemSpawner != null)
         {
             collectBoxDropZone.SetSpawner(collectingItemSpawner);
+        }
+
+        if (cameraController == null)
+        {
+            cameraController = FindFirstObjectByType<CameraController>(FindObjectsInactive.Include);
         }
     }
 

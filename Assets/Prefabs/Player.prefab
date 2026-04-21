@@ -366,7 +366,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9fccb79e7beb4d4f8fcc386c5786274, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCollectBoxPopUP
-  collectBoxPopUp: {fileID: 0}
+  collectBoxPopupUi: {fileID: 0}
+  collectingPopup: {fileID: 4181300676359856058}
+  changeCamProjection: {fileID: 0}
+  cameraController: {fileID: 0}
 --- !u!1 &2680091645408326104
 GameObject:
   m_ObjectHideFlags: 0
@@ -712,6 +715,37 @@ MonoBehaviour:
   Recovery: 1
   maxSpeed: 10
   wobbleInfluence: 0.5
+--- !u!1 &5560002680171362110
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5777744995937308363}
+  m_Layer: 0
+  m_Name: CollectingCameraTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5777744995937308363
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5560002680171362110}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 5.05, z: -1.5799999}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1345481311484397410}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6657033605025860922
 GameObject:
   m_ObjectHideFlags: 0
@@ -743,6 +777,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6161299359824271258}
+  - {fileID: 5777744995937308363}
+  - {fileID: 3580521233258818388}
   - {fileID: 6333468312314339205}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -918,4 +954,90 @@ MonoBehaviour:
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d09a84e8bf35d2343bcdc606dcc662e5, type: 3}
   m_PrefabInstance: {fileID: 2999336232326669761}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &7237771240004186386
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1345481311484397410}
+    m_Modifications:
+    - target: {fileID: 4743032634078284495, guid: 63b309067083619478cd067c76920163, type: 3}
+      propertyPath: collectBoxDropZone
+      value: 
+      objectReference: {fileID: 398524899144629552}
+    - target: {fileID: 6179268057829890630, guid: 63b309067083619478cd067c76920163, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.3000002
+      objectReference: {fileID: 0}
+    - target: {fileID: 6179268057829890630, guid: 63b309067083619478cd067c76920163, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.8199997
+      objectReference: {fileID: 0}
+    - target: {fileID: 6179268057829890630, guid: 63b309067083619478cd067c76920163, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6179268057829890630, guid: 63b309067083619478cd067c76920163, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6179268057829890630, guid: 63b309067083619478cd067c76920163, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6179268057829890630, guid: 63b309067083619478cd067c76920163, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6179268057829890630, guid: 63b309067083619478cd067c76920163, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6179268057829890630, guid: 63b309067083619478cd067c76920163, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6179268057829890630, guid: 63b309067083619478cd067c76920163, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6179268057829890630, guid: 63b309067083619478cd067c76920163, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6806993301099212456, guid: 63b309067083619478cd067c76920163, type: 3}
+      propertyPath: m_Name
+      value: ColllectBoxPopup
+      objectReference: {fileID: 0}
+    - target: {fileID: 6806993301099212456, guid: 63b309067083619478cd067c76920163, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 63b309067083619478cd067c76920163, type: 3}
+--- !u!114 &398524899144629552 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7058938114300251170, guid: 63b309067083619478cd067c76920163, type: 3}
+  m_PrefabInstance: {fileID: 7237771240004186386}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c2413033a135a34c8b9d74af14e16fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CollectBoxDropZone
+--- !u!4 &3580521233258818388 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6179268057829890630, guid: 63b309067083619478cd067c76920163, type: 3}
+  m_PrefabInstance: {fileID: 7237771240004186386}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4181300676359856058 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6806993301099212456, guid: 63b309067083619478cd067c76920163, type: 3}
+  m_PrefabInstance: {fileID: 7237771240004186386}
   m_PrefabAsset: {fileID: 0}
