@@ -8,9 +8,9 @@ public class ACT_Player_Combat : MonoBehaviour
 
     [Header("Configs")]
     public GameObject ProjectilePrefab;
-    public float projectileSpeed = 10f;
-    public float turnSpeed = 5f;
-    public float Lifetime = 2f;
+    public float projectileSpeed => BB_Player_Master.BB_PlayerCTX_Combat.projectileSpeed;
+    public float turnSpeed => BB_Player_Master.BB_PlayerCTX_Combat.turnSpeed;
+    public float Lifetime => BB_Player_Master.BB_PlayerCTX_Combat.BulletLifetime;
 
     public Transform firePoint;
 
