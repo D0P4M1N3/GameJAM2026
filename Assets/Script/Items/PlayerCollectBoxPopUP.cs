@@ -25,4 +25,6 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
         collectBoxPopUp.SetActive(false);
         Time.timeScale = 1f;
     }
+
+    
 }
