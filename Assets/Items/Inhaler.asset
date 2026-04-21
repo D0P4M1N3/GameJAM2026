@@ -16,6 +16,7 @@ MonoBehaviour:
   displayName: Grandma's Inhaler
   description: Boss is superior GDP, he discover how to goon 24/7 non stop speed
     run
+  rarity: 3
   itemColor: {r: 0.62564474, g: 0.7735849, b: 0.30286577, a: 1}
   sizeValue: 4
   icon: {fileID: 21300000, guid: 0309266c04067c74d9cb38403ce17fe7, type: 3}

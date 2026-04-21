@@ -16,6 +16,7 @@ MonoBehaviour:
   displayName: Kluy
   description: Boss is superior GDP, he discover how to goon 24/7 non stop speed
     run
+  rarity: 2
   itemColor: {r: 1, g: 0.9206585, b: 0.7028302, a: 1}
   sizeValue: 5
   icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}

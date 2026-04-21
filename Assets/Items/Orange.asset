@@ -15,6 +15,7 @@ MonoBehaviour:
   itemId: 10
   displayName: Orange
   description: 
+  rarity: 1
   itemColor: {r: 1, g: 1, b: 1, a: 1}
   sizeValue: 1
   icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
