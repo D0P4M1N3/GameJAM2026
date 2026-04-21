@@ -11,7 +11,7 @@ public class ACT_SunBoss_Combat : MonoBehaviour
 
     private void Update()
     {
-        bool reached = BB_Sunboss_Master.BB_SunbossCTX_Sense.ConeBox.Data.ReachedTarget;
+        bool reached = BB_Sunboss_Master.BB_SunbossCTX_Sense.ConeBox.ReachedTarget;
 
         // --- ENTER (false -> true) ---
         if (reached && !wasReachedLastFrame)
