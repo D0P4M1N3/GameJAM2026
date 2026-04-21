@@ -1138,7 +1138,7 @@ MonoBehaviour:
     mStorage: 0
   BB_SunbossCTX_Brain:
     ACT_SunBoss_Brain: {fileID: 377267718066385339}
-    UncertainInPrediction_Reduction: 0.95
+    UncertainInPrediction_Reduction: 0.2
     MinPredictionError_Position: 5
     MaxPredictionError_Position: 10
     Rotation: 1

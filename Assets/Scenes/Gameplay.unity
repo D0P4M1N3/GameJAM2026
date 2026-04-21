@@ -1003,7 +1003,7 @@ MonoBehaviour:
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 72
   m_UseGeometry: 0
   m_DefaultArea: 0
   m_GenerateLinks: 0
@@ -1661,7 +1661,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7868574379826556882, guid: 60854ad8846874f4d9a3c8c6c77dd51a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7970373808131415435, guid: 60854ad8846874f4d9a3c8c6c77dd51a, type: 3}
       propertyPath: BB_SunbossCTX_Brain.PlayerOBJ
@@ -2811,6 +2811,10 @@ PrefabInstance:
     - target: {fileID: 5675770054591524759, guid: 9ca0ccaded7f4d8418be88de59ab018c, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6422212030098128612, guid: 9ca0ccaded7f4d8418be88de59ab018c, type: 3}
+      propertyPath: useCountdown
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7314414184107572460, guid: 9ca0ccaded7f4d8418be88de59ab018c, type: 3}
       propertyPath: m_AnchorMax.y

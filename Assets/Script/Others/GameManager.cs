@@ -11,7 +11,11 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public int CurrentProgression => currentProgression;
-    
+
+    [Header("Sunboss AIs")]
+    [Range(0f, 1f)]
+    public float TimeoutPredictionAccuracy = 0.8f;
+
     [Header("Runtime Data")]
     [SerializeField] private StashData stashData;
     [SerializeField] private InventoryData inventoryData;
@@ -46,6 +50,10 @@ public class GameManager : MonoBehaviour
         UpdatePlayerCurrencyFromRuntimeStash();
     }
 
+    private void Start()
+    {
+        UI_Timer.Instance.AddTimeOutListener(TimeOut);
+    }
     private void OnDestroy()
     {
         if (Instance != this)
@@ -452,5 +460,18 @@ public class GameManager : MonoBehaviour
         }
 
         stashSpawner.ResetStash();
+    }
+
+
+
+
+    void TimeOut()
+    {
+        BB_Sunboss_Master[] BSMs = FindObjectsOfType<BB_Sunboss_Master>();
+
+        foreach(BB_Sunboss_Master BSM in BSMs)
+        {
+            BSM.BB_SunbossCTX_Brain.PredictionAccuracy = TimeoutPredictionAccuracy;
+        }
     }
 }
