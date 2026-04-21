@@ -31,14 +31,14 @@ namespace SunBoss
                 "\nUncertain: " + BB_Sunboss_Master.BB_SunbossCTX_Brain.UncertainInPrediction;
                 ;
 
-            BB_Sunboss_Master.BB_SunbossCTX_Sense.ConeBox.Ray.Target = BB_Sunboss_Master.BB_SunbossCTX_Brain.PlayerOBJ.transform;
+            BB_Sunboss_Master.BB_SunbossCTX_Sense.ConeBox.Data.Ray.Target = BB_Sunboss_Master.BB_SunbossCTX_Brain.PlayerOBJ.transform;
             BB_Sunboss_Master.BB_SunbossCTX_Debug.TextUI_Sight.text =
-                "Target Seen: " + BB_Sunboss_Master.BB_SunbossCTX_Sense.ConeBox.ReachedTarget.ToString();
+                "Target Seen: " + BB_Sunboss_Master.BB_SunbossCTX_Sense.ConeBox.Data.ReachedTarget.ToString();
 
 
             BB_Sunboss_Master.BB_SunbossCTX_Brain.ActualPlayerPosition_NavmeshProjected = B_NavMeshUtil.Project( BB_Sunboss_Master.BB_SunbossCTX_Brain.PlayerOBJ.transform.position);
 
-			if (BB_Sunboss_Master.BB_SunbossCTX_Sense.ConeBox.ReachedTarget)
+			if (BB_Sunboss_Master.BB_SunbossCTX_Sense.ConeBox.Data.ReachedTarget)
             {
                 BB_Sunboss_Master.BB_SunbossCTX_Brain.PlayerPosition_LastestKnown = BB_Sunboss_Master.BB_SunbossCTX_Brain.ActualPlayerPosition_NavmeshProjected;
             }
@@ -84,7 +84,7 @@ namespace SunBoss
             PickNewPatrolPoint();
 
             // --- TRANSITION: SEE PLAYER ---
-            if (sense.ReachedTarget)
+            if (sense.Data.ReachedTarget)
             {
                 stateMachine.SetState<STATE_CHASE>();
                 return;
@@ -155,7 +155,7 @@ namespace SunBoss
                         bb.BB_SunbossCTX_Brain.ActualPlayerPosition_NavmeshProjected);
 
 
-            if (sense.ReachedTarget)
+            if (sense.Data.ReachedTarget)
             {
                 GoSeekTimer = BB.BB_SunbossCTX_Brain.ForgetTime;
 
@@ -207,7 +207,7 @@ namespace SunBoss
             var sense = bb.BB_SunbossCTX_Sense.ConeBox;
 
             // Found player again
-            if (sense.ReachedTarget)
+            if (sense.Data.ReachedTarget)
             {
                 stateMachine.SetState<STATE_CHASE>();
                 return;
@@ -245,7 +245,7 @@ namespace SunBoss
             var sense = BB.BB_SunbossCTX_Sense.ConeBox;
 
             // Transition → CHASE
-            if (sense.ReachedTarget)
+            if (sense.Data.ReachedTarget)
             {
                 stateMachine.SetState<STATE_CHASE>();
                 return;

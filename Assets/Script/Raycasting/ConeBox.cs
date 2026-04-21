@@ -1,11 +1,15 @@
 using UnityEngine;
 
-public class ConeBox : MonoBehaviour
+
+using UnityEngine;
+
+[System.Serializable]
+public class ConeBoxData
 {
     [Header("Cone Settings")]
     public float Angle = 60f;
     public float Radius = 5f;
-    public Vector3 PlaneNormal = Vector3.up; // defines the flat cone plane
+    public Vector3 PlaneNormal = Vector3.up;
 
     [Header("References")]
     public Rayshooter Ray;
@@ -17,100 +21,110 @@ public class ConeBox : MonoBehaviour
     [Header("Result")]
     public bool InsideCone;
     public bool ReachedTarget;
+}
+
+
+
+public class ConeBox : MonoBehaviour
+{
+    public ConeBoxData Data = new ConeBoxData();
+
+    private void Start()
+    {
+        if (!Data.Ray.Shooter)
+        {
+            Data.Ray.Shooter = transform;
+        }
+    }
 
     private void Update()
     {
-        if (Ray == null || Ray.Target == null || Ray.Shooter == null)
+        if (Data.Ray == null || Data.Ray.Target == null || Data.Ray.Shooter == null)
         {
-            InsideCone = false;
-            ReachedTarget = false;
+            Data.InsideCone = false;
+            Data.ReachedTarget = false;
             return;
         }
 
-        InsideCone = CheckInsideCone();
+        Data.InsideCone = CheckInsideCone();
 
-        Ray.CheckObstruction();
+        Data.Ray.CheckObstruction();
 
-        ReachedTarget = !Ray.IsObstructed && InsideCone;
+        Data.ReachedTarget = !Data.Ray.IsObstructed && Data.InsideCone;
     }
 
     bool CheckInsideCone()
     {
-        Vector3 origin = Ray.Shooter.position;
-        Vector3 toTarget = Ray.Target.position - origin;
+        Vector3 origin = Data.Ray.Shooter.position;
+        Vector3 toTarget = Data.Ray.Target.position - origin;
 
         float distance = toTarget.magnitude;
 
-        // Radius check
-        if (distance > Radius)
+        if (distance > Data.Radius)
             return false;
 
-        // Flatten onto plane
-        Vector3 forward = Vector3.ProjectOnPlane(Ray.Shooter.forward, PlaneNormal).normalized;
-        Vector3 dirToTarget = Vector3.ProjectOnPlane(toTarget, PlaneNormal).normalized;
+        Vector3 forward = Vector3.ProjectOnPlane(Data.Ray.Shooter.forward, Data.PlaneNormal).normalized;
+        Vector3 dirToTarget = Vector3.ProjectOnPlane(toTarget, Data.PlaneNormal).normalized;
 
-        // If projection collapses (edge case)
         if (forward == Vector3.zero || dirToTarget == Vector3.zero)
             return false;
 
         float dot = Vector3.Dot(forward, dirToTarget);
         float angleToTarget = Mathf.Acos(dot) * Mathf.Rad2Deg;
 
-        return angleToTarget <= Angle * 0.5f;
+        return angleToTarget <= Data.Angle * 0.5f;
     }
 
     private void OnDrawGizmos()
     {
-        if (!DrawGizmo || Ray == null || Ray.Shooter == null)
+        if (!Data.DrawGizmo || Data.Ray == null || Data.Ray.Shooter == null)
             return;
 
         DrawFlatCone();
 
-        if (Ray.DrawGizmo)
-            Ray.DrawGizmos();
+        if (Data.Ray.DrawGizmo)
+            Data.Ray.DrawGizmos();
     }
 
     void DrawFlatCone()
     {
-        Vector3 origin = Ray.Shooter.position;
-        Vector3 forward = Vector3.ProjectOnPlane(Ray.Shooter.forward, PlaneNormal).normalized;
+        Vector3 origin = Data.Ray.Shooter.position;
+        Vector3 forward = Vector3.ProjectOnPlane(Data.Ray.Shooter.forward, Data.PlaneNormal).normalized;
 
         if (forward == Vector3.zero)
             return;
 
-        float halfAngle = Angle * 0.5f;
+        float halfAngle = Data.Angle * 0.5f;
 
         Gizmos.color = Color.yellow;
 
-        Quaternion startRot = Quaternion.AngleAxis(-halfAngle, PlaneNormal);
+        Quaternion startRot = Quaternion.AngleAxis(-halfAngle, Data.PlaneNormal);
         Vector3 prevDir = startRot * forward;
-        Vector3 prevPoint = origin + prevDir * Radius;
+        Vector3 prevPoint = origin + prevDir * Data.Radius;
 
-        for (int i = 1; i <= Segments; i++)
+        for (int i = 1; i <= Data.Segments; i++)
         {
-            float step = Angle / Segments;
-            Quaternion rot = Quaternion.AngleAxis(-halfAngle + step * i, PlaneNormal);
+            float step = Data.Angle / Data.Segments;
+            Quaternion rot = Quaternion.AngleAxis(-halfAngle + step * i, Data.PlaneNormal);
             Vector3 nextDir = rot * forward;
-            Vector3 nextPoint = origin + nextDir * Radius;
+            Vector3 nextPoint = origin + nextDir * Data.Radius;
 
             Gizmos.DrawLine(prevPoint, nextPoint);
             prevPoint = nextPoint;
         }
 
-        // Draw sides
-        Vector3 left = Quaternion.AngleAxis(-halfAngle, PlaneNormal) * forward;
-        Vector3 right = Quaternion.AngleAxis(halfAngle, PlaneNormal) * forward;
+        Vector3 left = Quaternion.AngleAxis(-halfAngle, Data.PlaneNormal) * forward;
+        Vector3 right = Quaternion.AngleAxis(halfAngle, Data.PlaneNormal) * forward;
 
-        Gizmos.DrawLine(origin, origin + left * Radius);
-        Gizmos.DrawLine(origin, origin + right * Radius);
+        Gizmos.DrawLine(origin, origin + left * Data.Radius);
+        Gizmos.DrawLine(origin, origin + right * Data.Radius);
 
-        // Color feedback
-        if (Ray != null && Ray.Target != null)
+        if (Data.Ray != null && Data.Ray.Target != null)
         {
-            Gizmos.color = ReachedTarget ? Color.green :
-                           InsideCone ? Color.yellow : Color.red;
+            Gizmos.color = Data.ReachedTarget ? Color.green :
+                           Data.InsideCone ? Color.yellow : Color.red;
 
-            Gizmos.DrawSphere(Ray.Target.position, 0.15f);
+            Gizmos.DrawSphere(Data.Ray.Target.position, 0.15f);
         }
     }
 }

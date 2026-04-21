@@ -26,6 +26,12 @@ public class BB_Sunboss_Master : MonoBehaviour
 
     [Header("\n\n---- Debug")]
     public BB_SunbossCTX_Debug BB_SunbossCTX_Debug;
+
+    private void Update()
+    {
+        ///Var Sync
+        BB_SunbossCTX_Sense.ConeBox.Data = BB_SunbossCTX_Sense.ConeBoxData;
+    }
 }
 
 
@@ -67,7 +73,10 @@ public class BB_SunbossCTX_Body
 [Serializable]
 public class BB_SunbossCTX_Sense
 {
+    [Header("ConeBox 1")]
     public ConeBox ConeBox;
+    [Header("ConeBox 1 - Settings")]
+    public ConeBoxData ConeBoxData;
 }
 
 [Serializable]

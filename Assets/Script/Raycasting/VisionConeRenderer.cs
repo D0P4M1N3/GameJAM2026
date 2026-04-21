@@ -30,8 +30,8 @@ public class VisionConeRenderer : MonoBehaviour
 
     private void GenerateCone()
     {
-        float startAngle = -coneBox.Angle / 2f;
-        float angleStep = coneBox.Angle / rayCount;
+        float startAngle = -coneBox.Data.Angle / 2f;
+        float angleStep = coneBox.Data.Angle / rayCount;
 
         List<Vector3> vertices = new List<Vector3>();
         List<int> triangles = new List<int>();
@@ -46,9 +46,9 @@ public class VisionConeRenderer : MonoBehaviour
 
             Vector3 dir = Quaternion.Euler(0, currentAngle, 0) * transform.forward;
 
-            float dist = coneBox.Radius;
+            float dist = coneBox.Data.Radius;
 
-            if (Physics.Raycast(transform.position, dir, out RaycastHit hit, coneBox.Radius, obstacleMask))
+            if (Physics.Raycast(transform.position, dir, out RaycastHit hit, coneBox.Data.Radius, obstacleMask))
             {
                 dist = hit.distance;
             }
