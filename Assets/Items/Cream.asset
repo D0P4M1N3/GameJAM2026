@@ -21,9 +21,9 @@ MonoBehaviour:
   itemPrefab: {fileID: 1449623923909595790, guid: 4c30ae60a693f81418f8c3118d5869b8, type: 3}
   stats:
     <Speed>k__BackingField: 0
-    <Health>k__BackingField: 2
-    <Attack>k__BackingField: 2
-    <Value>k__BackingField: 4
+    <Health>k__BackingField: 20
+    <Attack>k__BackingField: 20
+    <Value>k__BackingField: 40
   collisionClip: {fileID: 8300000, guid: da2d0bb30d6c9bc44a1d6e2d8b76288e, type: 3}
   collisionVolume: 1
   pickupClip: {fileID: 8300000, guid: 8102627573414084a812048286bff4fb, type: 3}
