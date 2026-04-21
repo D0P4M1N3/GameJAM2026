@@ -1127,7 +1127,7 @@ MonoBehaviour:
   CharacterStats:
     Speed: 2
     MaxHP: 20
-    Damage: 0.2
+    Damage: 1
     Storage: 10
     HP: 2.1474836e+9
     Currency: 0

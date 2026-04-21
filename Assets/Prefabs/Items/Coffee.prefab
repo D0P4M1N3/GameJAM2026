@@ -80,6 +80,14 @@ PrefabInstance:
       propertyPath: itemData
       value: 
       objectReference: {fileID: 11400000, guid: bfdba622486346a4a9a45604ee3a04b3, type: 2}
+    - target: {fileID: 1140001, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
+      propertyPath: hoverStatsUi
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1140002, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
+      propertyPath: dragCamera
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2120002, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
       propertyPath: m_Color.b
       value: 0.08497676

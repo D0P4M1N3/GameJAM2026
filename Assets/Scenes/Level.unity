@@ -251,6 +251,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6161299359824271258, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
   m_PrefabInstance: {fileID: 3762316955707977069}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &463406094 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1596760876158550351, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
+  m_PrefabInstance: {fileID: 3762316955707977069}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9fccb79e7beb4d4f8fcc386c5786274, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCollectBoxPopUP
 --- !u!1001 &533269904
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -543,6 +554,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: In-Game Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 2572684417192084364, guid: 9ca0ccaded7f4d8418be88de59ab018c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2631353006775750431, guid: 9ca0ccaded7f4d8418be88de59ab018c, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -559,6 +574,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4207653539129555500, guid: 9ca0ccaded7f4d8418be88de59ab018c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5675770054591524759, guid: 9ca0ccaded7f4d8418be88de59ab018c, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -574,6 +593,14 @@ PrefabInstance:
     - target: {fileID: 5675770054591524759, guid: 9ca0ccaded7f4d8418be88de59ab018c, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6857572941268368469, guid: 9ca0ccaded7f4d8418be88de59ab018c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 463406094}
+    - target: {fileID: 6857572941268368469, guid: 9ca0ccaded7f4d8418be88de59ab018c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ClosePopUp
       objectReference: {fileID: 0}
     - target: {fileID: 7314414184107572460, guid: 9ca0ccaded7f4d8418be88de59ab018c, type: 3}
       propertyPath: m_AnchorMax.y
@@ -612,6 +639,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ca0ccaded7f4d8418be88de59ab018c, type: 3}
+--- !u!1 &1874959238 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4207653539129555500, guid: 9ca0ccaded7f4d8418be88de59ab018c, type: 3}
+  m_PrefabInstance: {fileID: 1874959237}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1939026932
 GameObject:
   m_ObjectHideFlags: 0
@@ -744,6 +776,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1596760876158550351, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
+      propertyPath: collectBoxPopUp
+      value: 
+      objectReference: {fileID: 1874959238}
     - target: {fileID: 6657033605025860922, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
       propertyPath: m_Name
       value: Player
