@@ -92,7 +92,10 @@ public class CollectingItemSpawner : MonoBehaviour
 
             if (collectBoxTransform != null)
             {
-                spawnedUiItem.transform.SetParent(collectBoxTransform, true);
+                Transform targetParent = collectBoxTransform.parent != null
+                    ? collectBoxTransform.parent
+                    : collectBoxTransform;
+                spawnedUiItem.transform.SetParent(targetParent, true);
             }
         }
 
