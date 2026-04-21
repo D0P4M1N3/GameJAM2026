@@ -82,14 +82,6 @@ public class CollectingItemSpawner : MonoBehaviour
 
         if (spawnedUiItem != null)
         {
-            DraggableItem2D draggableItem = spawnedUiItem.GetComponent<DraggableItem2D>();
-            if (draggableItem == null)
-            {
-                draggableItem = spawnedUiItem.GetComponentInChildren<DraggableItem2D>(true);
-            }
-
-            draggableItem?.LockInPlace();
-
             if (collectBoxTransform != null)
             {
                 Transform targetParent = collectBoxTransform.parent != null
