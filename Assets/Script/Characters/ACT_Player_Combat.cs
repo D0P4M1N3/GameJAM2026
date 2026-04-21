@@ -1,4 +1,5 @@
 using UnityEngine;
+using VInspector.Libs;
 
 public class ACT_Player_Combat : MonoBehaviour
 {
@@ -29,36 +30,31 @@ public class ACT_Player_Combat : MonoBehaviour
             return;
         }
 
-        hp.Initialize(target, projectileSpeed, turnSpeed, BB_Player_Master.CharacterStats.Damage, Lifetime);
+        hp.Initialize(target, projectileSpeed, turnSpeed, BB_Player_Master.CharacterStats.finalDamage, Lifetime);
     }
 
     private Transform GetClosestTarget()
     {
-        BB_Sunboss_Master[] bosses = FindObjectsOfType<BB_Sunboss_Master>();
+        BB_Sunboss_Master[] BSMs = FindObjectsOfType<BB_Sunboss_Master>();
+        Transform ClosestT = null;
+        float ClosestDist = float.PositiveInfinity;
+        Vector3 CurrentPos = BB_Player_Master.BB_PlayerCTX_Body.WholeBody.transform.position;
 
-        Transform closest = null;
-        float closestDistSqr = Mathf.Infinity;
-
-        Vector3 currentPos = transform.position;
-
-        foreach (var boss in bosses)
+        foreach (var BSM in BSMs)
         {
-            if (boss == null) continue;
+            if (BSM == null) continue;
+            if (BSM.BB_SunbossCTX_Body?.WholeBody == null) continue;
 
-            Transform body = boss.BB_SunbossCTX_Body?.WholeBody;
+            float dist = Vector3.Distance(CurrentPos, BSM.BB_SunbossCTX_Body.WholeBody.position);
 
-            if (body == null) continue;
-
-            float distSqr = (body.position - currentPos).sqrMagnitude;
-
-            if (distSqr < closestDistSqr)
+            if (dist < ClosestDist)
             {
-                closestDistSqr = distSqr;
-                closest = body;
+                ClosestDist = dist;
+                ClosestT = BSM.BB_SunbossCTX_Body?.WholeBody;
             }
         }
 
-        return closest;
+        return ClosestT;
     }
 
 
