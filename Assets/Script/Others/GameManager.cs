@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public int CurrentProgression => currentProgression;
+    public StashData StashData => stashData;
+    public InventoryData InventoryData => inventoryData;
+    public CollectBoxData CollectBoxData => collectBoxData;
     
     [Header("Runtime Data")]
     [SerializeField] private StashData stashData;

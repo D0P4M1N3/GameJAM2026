@@ -13,11 +13,14 @@ public class DraggableItem2D : MonoBehaviour
     private Camera cachedCamera;
     private TargetJoint2D dragJoint;
     private ItemWorldObject itemWorldObject;
+    private SharedItemPrefabController sharedItemPrefabController;
     private Collider2D[] itemColliders;
     private Vector3 startPosition;
     private bool wasKinematic;
     private bool isDragging;
     private bool wasPointerOverItem;
+    private bool requireExplicitDragCamera;
+    private bool hasLoggedMissingDragCameraWarning;
 
     public bool IsDragging => isDragging;
 
@@ -25,29 +28,23 @@ public class DraggableItem2D : MonoBehaviour
     {
         cachedRigidbody = GetComponent<Rigidbody2D>();
         itemWorldObject = GetComponent<ItemWorldObject>();
+        sharedItemPrefabController = GetComponent<SharedItemPrefabController>();
         RefreshColliderCache();
-        if (dragCamera == null)
-        {
-            dragCamera = Camera.main;
-        }
         EnsureJointReference();
         dragJoint.enabled = false;
     }
 
     private void OnValidate()
     {
-        if (dragCamera == null)
+        if (sharedItemPrefabController == null)
         {
-            dragCamera = Camera.main;
+            sharedItemPrefabController = GetComponent<SharedItemPrefabController>();
         }
     }
 
     private void Reset()
     {
-        if (dragCamera == null)
-        {
-            dragCamera = Camera.main;
-        }
+        sharedItemPrefabController = GetComponent<SharedItemPrefabController>();
     }
 
     public void HandlePointerDown()
@@ -86,8 +83,26 @@ public class DraggableItem2D : MonoBehaviour
         isDragging = true;
     }
 
+    public void SetDragCamera(Camera camera)
+    {
+        dragCamera = camera;
+        cachedCamera = camera;
+        hasLoggedMissingDragCameraWarning = false;
+    }
+
+    public void SetRequireExplicitDragCamera(bool shouldRequireExplicitDragCamera)
+    {
+        requireExplicitDragCamera = shouldRequireExplicitDragCamera;
+        hasLoggedMissingDragCameraWarning = false;
+    }
+
     private void Update()
     {
+        if (!CanProcessPointerInput())
+        {
+            return;
+        }
+
         Camera activeCamera = ResolveCamera();
         bool isPointerOverItem = IsPointerOverItem(activeCamera);
 
@@ -131,6 +146,20 @@ public class DraggableItem2D : MonoBehaviour
     public void HandlePointerUp()
     {
         StopDragging();
+    }
+
+    public void LockInPlace()
+    {
+        StopDragging();
+
+        if (cachedRigidbody != null)
+        {
+            cachedRigidbody.linearVelocity = Vector2.zero;
+            cachedRigidbody.angularVelocity = 0f;
+            cachedRigidbody.bodyType = RigidbodyType2D.Kinematic;
+        }
+
+        enabled = false;
     }
 
     private void OnDisable()
@@ -181,9 +210,20 @@ public class DraggableItem2D : MonoBehaviour
 
     private Camera ResolveCamera()
     {
+        if (!CanProcessPointerInput())
+        {
+            return null;
+        }
+
         if (dragCamera != null)
         {
             return dragCamera;
+        }
+
+        if (requireExplicitDragCamera)
+        {
+            LogMissingDragCameraWarning();
+            return null;
         }
 
         if (cachedCamera == null)
@@ -240,5 +280,26 @@ public class DraggableItem2D : MonoBehaviour
     private void RefreshColliderCache()
     {
         itemColliders = GetComponentsInChildren<Collider2D>(true);
+    }
+
+    private bool CanProcessPointerInput()
+    {
+        if (sharedItemPrefabController == null)
+        {
+            sharedItemPrefabController = GetComponent<SharedItemPrefabController>();
+        }
+
+        return sharedItemPrefabController == null || sharedItemPrefabController.IsUiModeActive;
+    }
+
+    private void LogMissingDragCameraWarning()
+    {
+        if (hasLoggedMissingDragCameraWarning)
+        {
+            return;
+        }
+
+        hasLoggedMissingDragCameraWarning = true;
+        Debug.LogWarning($"No popup drag camera assigned for item '{name}'. Drag input is disabled until a camera is injected.", this);
     }
 }

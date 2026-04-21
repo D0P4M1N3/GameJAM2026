@@ -15,6 +15,7 @@ public class GameplayItemPickup : MonoBehaviour
     [SerializeField] [Min(0f)] private float spriteScale = 1f;
 
     private bool hasCollected;
+    private bool isAwaitingUiCollection;
     private Camera cachedCamera;
     private SharedItemPrefabController sharedPrefabController;
 
@@ -69,7 +70,7 @@ public class GameplayItemPickup : MonoBehaviour
 
     public void HandleTriggerEnter(Collider other)
     {
-        if (hasCollected || itemData == null || other == null)
+        if (hasCollected || isAwaitingUiCollection || itemData == null || other == null)
         {
             return;
         }
@@ -79,7 +80,7 @@ public class GameplayItemPickup : MonoBehaviour
             return;
         }
 
-        Collect();
+        Collect(other);
     }
 
     public void Initialize(ItemData data)
@@ -89,14 +90,36 @@ public class GameplayItemPickup : MonoBehaviour
         RefreshVisuals();
     }
 
-    private void Collect()
+    private void Collect(Collider other)
     {
-        if (GameManager.Instance == null)
+        if (destination == GameplayPickupDestination.CollectBox)
+        {
+            PlayerCollectBoxPopUP collectBoxPopup = other.GetComponentInParent<PlayerCollectBoxPopUP>();
+            if (collectBoxPopup != null && collectBoxPopup.TryBeginCollecting(this))
+            {
+                isAwaitingUiCollection = true;
+
+                if (itemData.PickupClip != null)
+                {
+                    AudioSource.PlayClipAtPoint(itemData.PickupClip, transform.position, itemData.PickupVolume);
+                }
+            }
+
+            return;
+        }
+
+        FinalizeCollection();
+    }
+
+    public void FinalizeCollection()
+    {
+        if (hasCollected || itemData == null || GameManager.Instance == null)
         {
             return;
         }
 
         hasCollected = true;
+        isAwaitingUiCollection = false;
 
         switch (destination)
         {
@@ -117,6 +140,16 @@ public class GameplayItemPickup : MonoBehaviour
         }
 
         Destroy(gameObject);
+    }
+
+    public void CancelPendingCollection()
+    {
+        if (hasCollected)
+        {
+            return;
+        }
+
+        isAwaitingUiCollection = false;
     }
 
     private void EnsureReferences()

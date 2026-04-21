@@ -416,6 +416,7 @@ MonoBehaviour:
   dataSourceType: 1
   stashData: {fileID: 0}
   inventoryData: {fileID: 1001204854}
+  collectBoxData: {fileID: 0}
   contentRoot: {fileID: 215443165}
   itemUiPrefab: {fileID: 4729629219871673021, guid: 9f902515744d0a744aef179a5d9788dc, type: 3}
   stackInventoryItems: 1
@@ -620,57 +621,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 252073511}
   m_CullTransparentMesh: 1
---- !u!1 &280559720
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 280559722}
-  - component: {fileID: 280559721}
-  m_Layer: 0
-  m_Name: CollectBoxData
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &280559721
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 280559720}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a8e8b58d9684e6599ee7bc2d2e4ea10, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CollectBoxData
-  items: []
-  totalItemCount: 0
-  totalStats:
-    <Speed>k__BackingField: 0
-    <Health>k__BackingField: 0
-    <Attack>k__BackingField: 0
-    <Value>k__BackingField: 0
---- !u!4 &280559722
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 280559720}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 855.3952, y: 474.58118, z: -11.45799}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2001433878}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &290068811
 GameObject:
   m_ObjectHideFlags: 0
@@ -2194,59 +2144,17 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!1 &1001204853
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1001204855}
-  - component: {fileID: 1001204854}
-  m_Layer: 0
-  m_Name: InventoryData
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1001204854
+--- !u!114 &1001204854 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 2664079155552061428, guid: 608b39c81b71c4548b7271dda358ff9e, type: 3}
+  m_PrefabInstance: {fileID: 1174153686}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1001204853}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 52b32c8ebf4145a59234cd1f1d59d7ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: GameJAM2026.Runtime::InventoryData
-  items: []
-  totalItemCount: 0
-  totalStats:
-    <Speed>k__BackingField: 0
-    <Health>k__BackingField: 0
-    <Attack>k__BackingField: 0
-    <Value>k__BackingField: 0
-  mixedColor: {r: 0, g: 0, b: 0, a: 0}
-  totalColorWeight: 0
---- !u!4 &1001204855
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1001204853}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 972.8786, y: 540, z: -11.45799}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2001433878}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1021687071
 GameObject:
   m_ObjectHideFlags: 0
@@ -2993,117 +2901,11 @@ MonoBehaviour:
   dataSourceType: 0
   stashData: {fileID: 1549461764}
   inventoryData: {fileID: 0}
+  collectBoxData: {fileID: 0}
   contentRoot: {fileID: 1188080729}
   itemUiPrefab: {fileID: 4729629219871673021, guid: 9f902515744d0a744aef179a5d9788dc, type: 3}
   stackInventoryItems: 1
   hoverStatsUi: {fileID: 111341749}
---- !u!1 &1386643388
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1386643391}
-  - component: {fileID: 1386643390}
-  - component: {fileID: 1386643389}
-  m_Layer: 0
-  m_Name: StashSpawner
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1386643389
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1386643388}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad01fd9189524684b5efa852707e8e4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: GameJAM2026.Runtime::StashSpawner
-  stashData: {fileID: 1549461764}
-  spawnRadius: 4
-  spawnOnStart: 1
-  clearExistingChildrenOnSpawn: 1
---- !u!212 &1386643390
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1386643388}
-  m_Enabled: 0
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 0.16, y: 0.16}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
---- !u!4 &1386643391
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1386643388}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.61, y: 5.601858, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1392279621
 GameObject:
   m_ObjectHideFlags: 0
@@ -3239,7 +3041,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1386643389}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: StashSpawner, GameJAM2026.Runtime
         m_MethodName: ResetStash
         m_Mode: 1
@@ -3546,76 +3348,17 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!1 &1549461763
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1549461765}
-  - component: {fileID: 1549461764}
-  - component: {fileID: 1549461766}
-  m_Layer: 0
-  m_Name: StashData
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1549461764
+--- !u!114 &1549461764 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 2831749554105547287, guid: 608b39c81b71c4548b7271dda358ff9e, type: 3}
+  m_PrefabInstance: {fileID: 1174153686}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1549461763}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5aeae28714ee4a5f87f4c4886f47fc79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: GameJAM2026.Runtime::StashData
-  entries: []
-  totalItemCount: 0
-  totalStats:
-    <Speed>k__BackingField: 0
-    <Health>k__BackingField: 0
-    <Attack>k__BackingField: 0
-    <Value>k__BackingField: 0
---- !u!4 &1549461765
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1549461763}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 12.87859, y: 0, z: -11.45799}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2001433878}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1549461766
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1549461763}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 956d74fa9e2649cea5c4a39bf1f64357, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::StarterPackManager
-  starterItemPool:
-  - {fileID: 11400000, guid: 3c92467d8d70fee4bbabf9d18caa381d, type: 2}
-  - {fileID: 11400000, guid: fac8b46cf2827e64e83bea4cb121666c, type: 2}
-  - {fileID: 11400000, guid: 581cbda859272ce41b6c199a9fb51d4d, type: 2}
-  - {fileID: 11400000, guid: 1c69a43b7579be244bfb2f738d6c9cf4, type: 2}
-  starterItemCount: 3
 --- !u!1 &1623290110
 GameObject:
   m_ObjectHideFlags: 0
@@ -4214,40 +3957,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1989462815}
   m_CullTransparentMesh: 1
---- !u!1 &2001433877
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2001433878}
-  m_Layer: 0
-  m_Name: ItemData
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2001433878
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2001433877}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1001204855}
-  - {fileID: 280559722}
-  - {fileID: 1549461765}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2118630879
 GameObject:
   m_ObjectHideFlags: 0
@@ -4498,7 +4207,6 @@ SceneRoots:
   - {fileID: 1087625714}
   - {fileID: 1115754637}
   - {fileID: 294852383}
-  - {fileID: 1386643391}
   - {fileID: 1671989302}
   - {fileID: 533547059}
   - {fileID: 364544235}
@@ -4507,4 +4215,3 @@ SceneRoots:
   - {fileID: 1623290111}
   - {fileID: 2135193986}
   - {fileID: 1174153686}
-  - {fileID: 2001433878}

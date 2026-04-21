@@ -7,33 +7,28 @@ public class ItemCollectionGridUI : MonoBehaviour
     {
         Stash,
         Inventory,
+        CollectBox,
     }
 
     [SerializeField] private DataSourceType dataSourceType = DataSourceType.Stash;
-    [SerializeField] private StashData stashData;
-    [SerializeField] private InventoryData inventoryData;
     [SerializeField] private Transform contentRoot;
     [SerializeField] private ItemUI itemUiPrefab;
     [SerializeField] private bool stackInventoryItems = true;
     [SerializeField] private HoveredItemStatsUI hoverStatsUi;
 
     private readonly List<ItemUI> spawnedItems = new();
+    private StashData stashData;
+    private InventoryData inventoryData;
+    private CollectBoxData collectBoxData;
 
     private void Awake()
     {
-        if (contentRoot == null)
-        {
-            contentRoot = transform;
-        }
-
-        if (hoverStatsUi == null)
-        {
-            hoverStatsUi = FindFirstObjectByType<HoveredItemStatsUI>();
-        }
+        EnsureReferences();
     }
 
     private void OnEnable()
     {
+        EnsureReferences();
         Subscribe();
         Refresh();
     }
@@ -45,6 +40,11 @@ public class ItemCollectionGridUI : MonoBehaviour
 
     private void OnValidate()
     {
+        EnsureReferences();
+    }
+
+    private void EnsureReferences()
+    {
         if (contentRoot == null)
         {
             contentRoot = transform;
@@ -54,6 +54,8 @@ public class ItemCollectionGridUI : MonoBehaviour
         {
             hoverStatsUi = FindFirstObjectByType<HoveredItemStatsUI>();
         }
+
+        ResolveDataSources();
     }
 
     [ContextMenu("Refresh UI")]
@@ -75,11 +77,17 @@ public class ItemCollectionGridUI : MonoBehaviour
             case DataSourceType.Inventory:
                 BuildInventoryItems();
                 break;
+
+            case DataSourceType.CollectBox:
+                BuildCollectBoxItems();
+                break;
         }
     }
 
     private void Subscribe()
     {
+        ResolveDataSources();
+
         if (stashData != null)
         {
             stashData.Changed += Refresh;
@@ -88,6 +96,11 @@ public class ItemCollectionGridUI : MonoBehaviour
         if (inventoryData != null)
         {
             inventoryData.Changed += Refresh;
+        }
+
+        if (collectBoxData != null)
+        {
+            collectBoxData.Changed += Refresh;
         }
     }
 
@@ -101,6 +114,44 @@ public class ItemCollectionGridUI : MonoBehaviour
         if (inventoryData != null)
         {
             inventoryData.Changed -= Refresh;
+        }
+
+        if (collectBoxData != null)
+        {
+            collectBoxData.Changed -= Refresh;
+        }
+    }
+
+    private void ResolveDataSources()
+    {
+        GameManager gameManager = GameManager.Instance;
+        if (gameManager == null)
+        {
+            stashData = null;
+            inventoryData = null;
+            collectBoxData = null;
+            return;
+        }
+
+        switch (dataSourceType)
+        {
+            case DataSourceType.Stash:
+                stashData = gameManager.StashData;
+                inventoryData = null;
+                collectBoxData = null;
+                break;
+
+            case DataSourceType.Inventory:
+                stashData = null;
+                inventoryData = gameManager.InventoryData;
+                collectBoxData = null;
+                break;
+
+            case DataSourceType.CollectBox:
+                stashData = null;
+                inventoryData = null;
+                collectBoxData = gameManager.CollectBoxData;
+                break;
         }
     }
 
@@ -131,7 +182,26 @@ public class ItemCollectionGridUI : MonoBehaviour
             return;
         }
 
-        IReadOnlyList<InventoryEntry> entries = inventoryData.Items;
+        BuildInventoryStyleItems(inventoryData.Items);
+    }
+
+    private void BuildCollectBoxItems()
+    {
+        if (collectBoxData == null)
+        {
+            return;
+        }
+
+        BuildInventoryStyleItems(collectBoxData.Items);
+    }
+
+    private void BuildInventoryStyleItems(IReadOnlyList<InventoryEntry> entries)
+    {
+        if (entries == null)
+        {
+            return;
+        }
+
         if (!stackInventoryItems)
         {
             for (int i = 0; i < entries.Count; i++)

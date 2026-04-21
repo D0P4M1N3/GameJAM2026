@@ -7,27 +7,27 @@ public class ItemStatsListUI : MonoBehaviour
     {
         Stash,
         Inventory,
+        CollectBox,
     }
 
     [SerializeField] private DataSourceType dataSourceType = DataSourceType.Stash;
-    [SerializeField] private StashData stashData;
-    [SerializeField] private InventoryData inventoryData;
     [SerializeField] private Transform contentRoot;
     [SerializeField] private StatRowUI statRowPrefab;
     [SerializeField] private bool hideZeroStats;
 
     private readonly List<StatRowUI> spawnedRows = new();
+    private StashData stashData;
+    private InventoryData inventoryData;
+    private CollectBoxData collectBoxData;
 
     private void Awake()
     {
-        if (contentRoot == null)
-        {
-            contentRoot = transform;
-        }
+        EnsureReferences();
     }
 
     private void OnEnable()
     {
+        EnsureReferences();
         Subscribe();
         Refresh();
     }
@@ -39,10 +39,17 @@ public class ItemStatsListUI : MonoBehaviour
 
     private void OnValidate()
     {
+        EnsureReferences();
+    }
+
+    private void EnsureReferences()
+    {
         if (contentRoot == null)
         {
             contentRoot = transform;
         }
+
+        ResolveDataSources();
     }
 
     [ContextMenu("Refresh Stats List UI")]
@@ -65,6 +72,8 @@ public class ItemStatsListUI : MonoBehaviour
 
     private void Subscribe()
     {
+        ResolveDataSources();
+
         if (stashData != null)
         {
             stashData.Changed += Refresh;
@@ -73,6 +82,11 @@ public class ItemStatsListUI : MonoBehaviour
         if (inventoryData != null)
         {
             inventoryData.Changed += Refresh;
+        }
+
+        if (collectBoxData != null)
+        {
+            collectBoxData.Changed += Refresh;
         }
     }
 
@@ -87,6 +101,11 @@ public class ItemStatsListUI : MonoBehaviour
         {
             inventoryData.Changed -= Refresh;
         }
+
+        if (collectBoxData != null)
+        {
+            collectBoxData.Changed -= Refresh;
+        }
     }
 
     private ItemStats GetStats()
@@ -95,8 +114,42 @@ public class ItemStatsListUI : MonoBehaviour
         {
             DataSourceType.Inventory when inventoryData != null => inventoryData.TotalStats,
             DataSourceType.Stash when stashData != null => stashData.TotalStats,
+            DataSourceType.CollectBox when collectBoxData != null => collectBoxData.TotalStats,
             _ => ItemStats.Zero,
         };
+    }
+
+    private void ResolveDataSources()
+    {
+        GameManager gameManager = GameManager.Instance;
+        if (gameManager == null)
+        {
+            stashData = null;
+            inventoryData = null;
+            collectBoxData = null;
+            return;
+        }
+
+        switch (dataSourceType)
+        {
+            case DataSourceType.Stash:
+                stashData = gameManager.StashData;
+                inventoryData = null;
+                collectBoxData = null;
+                break;
+
+            case DataSourceType.Inventory:
+                stashData = null;
+                inventoryData = gameManager.InventoryData;
+                collectBoxData = null;
+                break;
+
+            case DataSourceType.CollectBox:
+                stashData = null;
+                inventoryData = null;
+                collectBoxData = gameManager.CollectBoxData;
+                break;
+        }
     }
 
     private void TrySpawnRow(string statName, float statValue)

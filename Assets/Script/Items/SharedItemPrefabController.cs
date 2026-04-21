@@ -22,6 +22,8 @@ public class SharedItemPrefabController : MonoBehaviour
 
     private Camera cachedCamera;
     private SharedItemPrefabMode currentMode;
+    public SharedItemPrefabMode CurrentMode => currentMode;
+    public bool IsUiModeActive => currentMode == SharedItemPrefabMode.Ui;
 
     public void InitializeForUi(ItemData itemData)
     {
