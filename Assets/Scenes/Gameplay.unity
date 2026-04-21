@@ -2816,6 +2816,10 @@ PrefabInstance:
       propertyPath: useCountdown
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6422212030098128612, guid: 9ca0ccaded7f4d8418be88de59ab018c, type: 3}
+      propertyPath: countdownStartTime
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7314414184107572460, guid: 9ca0ccaded7f4d8418be88de59ab018c, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

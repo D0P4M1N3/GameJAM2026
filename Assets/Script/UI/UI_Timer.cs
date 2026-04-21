@@ -72,6 +72,7 @@ public class UI_Timer : MonoBehaviour
 
     private void TriggerTimeOut()
     {
+        Debug.Log("TIMEOUT");
         OnTimeOut?.Invoke();     // Inspector listeners
         OnTimeOutEvent?.Invoke(); // Code listeners
     }

@@ -1,7 +1,8 @@
 using System.Collections.Generic;
+using System.Threading;
+using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
-using Unity.AI.Navigation;
 using UnityEngine.Serialization;
 
 public class LevelGenerator : MonoBehaviour
@@ -43,12 +44,19 @@ public class LevelGenerator : MonoBehaviour
     private Transform generatedEnemiesRoot;
     private Transform generatedExitGateRoot;
 
+
+
+
     private void Start()
     {
+        
         if (generateOnStart)
         {
             Generate();
         }
+
+        UI_Timer.Instance.AddTimeOutListener(TimeOut);
+        Debug.Log("Bind TimeOut Event");
     }
 
     private void OnValidate()
@@ -60,7 +68,6 @@ public class LevelGenerator : MonoBehaviour
     public void SetLevelBalanceData(LevelBalanceData balanceData)
     {
         levelBalanceData = balanceData;
-        levelBalanceData.Begin();
     }
 
     [ContextMenu("Generate Level")]
@@ -919,6 +926,19 @@ public class LevelGenerator : MonoBehaviour
         else
         {
             DestroyImmediate(target);
+        }
+    }
+
+
+    public void TimeOut()
+    {
+        Debug.Log("NIGGA");
+
+        BB_Sunboss_Master[] BSMs = FindObjectsOfType<BB_Sunboss_Master>();
+
+        foreach (BB_Sunboss_Master BSM in BSMs)
+        {
+            BSM.BB_SunbossCTX_Brain.PredictionAccuracy = levelBalanceData.TimeoutPredictionAccuracy;
         }
     }
 }

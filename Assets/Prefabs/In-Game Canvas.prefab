@@ -2880,6 +2880,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI_Timer
   timerText: {fileID: 5087344995968535004}
+  useCountdown: 1
+  countdownStartTime: 10
+  OnTimeOut:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &8381571431064661391
 GameObject:
   m_ObjectHideFlags: 0

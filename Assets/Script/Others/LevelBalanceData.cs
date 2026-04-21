@@ -58,10 +58,6 @@ public class LevelBalanceData : ScriptableObject
         }
     }
 
-    public void Begin()
-    {
-        UI_Timer.Instance.AddTimeOutListener(TimeOut);
-    }
 
     private static int EvaluateCount(int baseValue, AnimationCurve progressionCurve, int progression)
     {
@@ -79,13 +75,5 @@ public class LevelBalanceData : ScriptableObject
         return 1f - Mathf.Exp(-0.12f * depth);
     }
 
-    public void TimeOut()
-    {
-        BB_Sunboss_Master[] BSMs = FindObjectsOfType<BB_Sunboss_Master>();
 
-        foreach (BB_Sunboss_Master BSM in BSMs)
-        {
-            BSM.BB_SunbossCTX_Brain.PredictionAccuracy = TimeoutPredictionAccuracy;
-        }
-    }
 }
