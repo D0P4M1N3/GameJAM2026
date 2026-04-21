@@ -173,7 +173,7 @@ namespace SunBoss
                     bb.BB_SunbossCTX_Body.WholeBody.rotation = Quaternion.RotateTowards(
                         bb.BB_SunbossCTX_Body.WholeBody.rotation,
                         targetRotation,
-                        bb.BB_SunbossCTX_Move.TurnSpeed * Time.deltaTime);
+                        bb.BB_SunbossCTX_Move.TurnSpeedChase * Time.deltaTime);
                 }
             }
             else
@@ -281,7 +281,7 @@ namespace SunBoss
         {
             BB.BB_SunbossCTX_Move.ACT_SunBoss_Navagent.agent.updateRotation = true;
 
-            BB.BB_SunbossCTX_Brain.UncertainInPrediction -= BB.BB_SunbossCTX_Brain.UncertainInPrediction_Reduction;
+            BB.BB_SunbossCTX_Brain.UncertainInPrediction -= BB.BB_SunbossCTX_Brain.PredictionAccuracy;
             BB.BB_SunbossCTX_Brain.UncertainInPrediction = Mathf.Clamp(BB.BB_SunbossCTX_Brain.UncertainInPrediction, 0, 1);
 
             Clockwise = !Clockwise;

@@ -38,7 +38,8 @@ public class BB_SunbossCTX_Brain
     //public GameObject PatrolPointOBJ;
 
     [Header("Patrol")]
-    public float UncertainInPrediction_Reduction = 0.8f;
+    [Tooltip("More PredictionAccuracy = Less Scan it takes to find the actual Target Position")]
+    public float PredictionAccuracy = 0.2f;
     public float MinPredictionError_Position = 5;
     public float MaxPredictionError_Position = 10;
 
@@ -74,6 +75,7 @@ public class BB_SunbossCTX_Sense
 public class BB_SunbossCTX_Move
 {
     public ACT_SunBoss_Navagent ACT_SunBoss_Navagent;
+    public float TurnSpeedChase = 2048;
     public float TurnSpeed = 360f;
     public float MaxMoveAngleFromFacing = 15f;
 }
