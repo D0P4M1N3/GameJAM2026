@@ -4,6 +4,9 @@ using UnityEngine;
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class VisionConeRenderer : MonoBehaviour
 {
+
+    public InterruptionRegistry IntrREGIS;
+
     [Header("Vision Settings")]
     //[SerializeField] private float radius = 5f;
     //[SerializeField] private float angle = 90f;
@@ -25,6 +28,7 @@ public class VisionConeRenderer : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (IntrREGIS.isInterrupted) { mesh.Clear(); return; }
         GenerateCone();
     }
 

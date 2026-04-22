@@ -21,10 +21,14 @@ public class ACT_SunBoss_HitBox : MonoBehaviour
         Destroy(getHomingProjectile.gameObject);
 
         BB_Sunboss_Master.BB_SunbossCTX_Move.ACT_SunBoss_Navagent.intrREGIS.Add(OtherID);
+        BB_Sunboss_Master.BB_SunbossCTX_Sense.ConeBox.IntrREGIS.Add(OtherID);
+        BB_Sunboss_Master.VisionConeRenderer.IntrREGIS.Add(OtherID);
 
         yield return new WaitForSeconds(StuntTime);
 
         BB_Sunboss_Master.BB_SunbossCTX_Move.ACT_SunBoss_Navagent.intrREGIS.Remove(OtherID);
+        BB_Sunboss_Master.BB_SunbossCTX_Sense.ConeBox.IntrREGIS.Remove(OtherID);
+        BB_Sunboss_Master.VisionConeRenderer.IntrREGIS.Remove(OtherID);
     }
 
 
