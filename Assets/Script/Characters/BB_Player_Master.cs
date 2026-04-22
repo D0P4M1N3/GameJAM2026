@@ -7,7 +7,7 @@ public class BB_Player_Master : MonoBehaviour
     public CharacterStats CharacterStats => DATA_Player.Instance.CharacterStats;
     public ProjectileShooterStats ProjectileShooterStats => DATA_Player.Instance.ProjectileShooterStats;
 
-    [Header("\n\n---- Body")]
+    [Header("\n\n---- Body & Appearance")]
     public BB_PlayerCTX_Body BB_PlayerCTX_Body;
 
     [Header("\n\n---- Movement")]

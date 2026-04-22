@@ -9,6 +9,7 @@ public class ConeBox : MonoBehaviour
 
     [Header("References")]
     public Rayshooter Ray;
+    public InterruptionRegistry IntrREGIS;
 
     [Header("Debug")]
     public bool DrawGizmo = true;
@@ -20,6 +21,8 @@ public class ConeBox : MonoBehaviour
 
     private void Update()
     {
+        if (IntrREGIS.isInterrupted) { return;  }
+
         if (Ray == null || Ray.Target == null || Ray.Shooter == null)
         {
             InsideCone = false;

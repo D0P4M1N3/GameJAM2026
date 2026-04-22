@@ -207,6 +207,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e98ab00dfbb1e1b4a8423cab88d55229, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VisionConeRenderer
+  IntrREGIS:
+    activeKeys: []
+    OnInterruptGoing: 0
+    OnInterruptGoing_Prev: 0
+    OnInterruptEnter: 0
+    OnInterruptExit: 0
   rayCount: 150
   obstacleMask:
     serializedVersion: 2
@@ -774,6 +780,12 @@ MonoBehaviour:
     Target: {fileID: 0}
     Shooter: {fileID: 50122643273546919}
     DrawGizmo: 0
+  IntrREGIS:
+    activeKeys: []
+    OnInterruptGoing: 0
+    OnInterruptGoing_Prev: 0
+    OnInterruptEnter: 0
+    OnInterruptExit: 0
   DrawGizmo: 1
   Segments: 30
   InsideCone: 0
@@ -1155,6 +1167,7 @@ MonoBehaviour:
   BB_SunbossCTX_Body:
     WholeBody: {fileID: 50122643273546919}
     CharacterVisual: {fileID: 3542344378740080104}
+  VisionConeRenderer: {fileID: 5647434270613764794}
   BB_SunbossCTX_Sense:
     ConeBox: {fileID: 726050064575403084}
   BB_SunbossCTX_Move:
