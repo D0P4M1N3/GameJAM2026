@@ -121,7 +121,6 @@ public class LevelGenerator : MonoBehaviour
         }
 
         SpawnBuildings(buildingZones, baseLevelRoot.transform);
-        Physics.SyncTransforms();
         RebuildNavMesh();
         PositionPlayer(playerZones);
         SpawnItems(itemZones, baseLevelRoot.transform);

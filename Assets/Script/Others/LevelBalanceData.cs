@@ -71,6 +71,12 @@ public class LevelBalanceData : ScriptableObject
         {
             levelSizeStart = 0f;
         }
+
+        EnsureCurveStartsAtValue(ref minBuildingsProgressionCurve, minBuildings);
+        EnsureCurveStartsAtValue(ref maxBuildingsProgressionCurve, maxBuildings);
+        EnsureCurveStartsAtValue(ref minEnemiesProgressionCurve, minEnemies);
+        EnsureCurveStartsAtValue(ref maxEnemiesProgressionCurve, maxEnemies);
+        EnsureCurveStartsAtValue(ref levelSizeProgressionCurve, levelSizeStart);
     }
 
 
@@ -111,5 +117,34 @@ public class LevelBalanceData : ScriptableObject
         }
 
         return curve.Evaluate(level);
+    }
+
+    private static void EnsureCurveStartsAtValue(ref AnimationCurve curve, float startValue)
+    {
+        if (curve == null || curve.length == 0)
+        {
+            curve = new AnimationCurve(new Keyframe(1f, startValue));
+            return;
+        }
+
+        Keyframe[] keys = curve.keys;
+        int firstIndex = 0;
+        float earliestTime = keys[0].time;
+        for (int i = 1; i < keys.Length; i++)
+        {
+            if (keys[i].time >= earliestTime)
+            {
+                continue;
+            }
+
+            earliestTime = keys[i].time;
+            firstIndex = i;
+        }
+
+        Keyframe firstKey = keys[firstIndex];
+        firstKey.time = 1f;
+        firstKey.value = startValue;
+        keys[firstIndex] = firstKey;
+        curve.keys = keys;
     }
 }
