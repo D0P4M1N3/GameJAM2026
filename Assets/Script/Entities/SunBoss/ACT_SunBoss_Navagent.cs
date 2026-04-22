@@ -25,43 +25,43 @@ public class ACT_SunBoss_Navagent : MonoBehaviour
     {
         EnsureAgentReference();
         TryEnsureAgentOnNavMesh();
+
+        Pause3D.OnPauseChanged += HandlePause;
+
     }
 
     private void Update()
     {
+        if (paused) return;
+
         ApplyFacingMovementConstraint();
     }
     void LateUpdate()
     {
+        if (paused)
+        {
+            followThisFrameActive = false;
+            return;
+        }
+
         if (!CanUseAgent())
         {
             followThisFrameActive = false;
             return;
         }
 
-        // If GoToThisFrame wasn't called this frame → cancel
         if (!followThisFrameActive && agent.hasPath)
         {
             CancelPath();
         }
 
-        // Reset per-frame flag
         followThisFrameActive = false;
     }
 
-
-
-    // Path Commands ////////////////////////////////////////////
-
-    //public void GoToOnce(Vector3 worldPos)
-    //{
-    //    STATS_UPDATE();
-    //    currentTarget = worldPos;
-    //    agent.isStopped = false;
-    //    agent.SetDestination(worldPos);
-    //}
     public void GoToThisFrame(Vector3 worldPos)
     {
+        if (paused) return;
+
         if (!CanUseAgent())
         {
             return;
@@ -75,7 +75,6 @@ public class ACT_SunBoss_Navagent : MonoBehaviour
         {
             followThisFrameActive = true;
 
-            // Avoid redundant SetDestination calls (small optimization)
             if (!agent.hasPath || Vector3.Distance(currentTarget, worldPos) > 0.05f)
             {
                 STATS_UPDATE();
@@ -84,8 +83,6 @@ public class ACT_SunBoss_Navagent : MonoBehaviour
                 agent.SetDestination(worldPos);
             }
         }
-
-        
     }
 
     public void CancelPath()
@@ -101,7 +98,6 @@ public class ACT_SunBoss_Navagent : MonoBehaviour
 
 
 
-    // Utilities ////////////////////////////////////////////
 
     public bool HasPath()
     {
@@ -219,5 +215,38 @@ public class ACT_SunBoss_Navagent : MonoBehaviour
         }
 
         return agent.Warp(hit.position);
+    }
+
+
+
+    private bool paused;
+
+
+    private void OnDisable()
+    {
+        Pause3D.OnPauseChanged -= HandlePause;
+    }
+
+    void HandlePause(bool isPaused)
+    {
+        paused = isPaused;
+
+        if (!CanUseAgent()) return;
+
+        if (paused)
+        {
+            agent.isStopped = true;
+            agent.velocity = Vector3.zero;
+
+            agent.updatePosition = false;
+            agent.updateRotation = false;
+        }
+        else
+        {
+            agent.isStopped = false;
+
+            agent.updatePosition = true;
+            agent.updateRotation = true;
+        }
     }
 }

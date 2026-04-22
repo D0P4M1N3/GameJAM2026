@@ -14,6 +14,9 @@ public class TopDownController : MonoBehaviour
     [Header("Collision")]
     [SerializeField] private LayerMask collisionMask;
 
+    private bool paused;
+
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -26,7 +29,7 @@ public class TopDownController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!IsValid()) return;
+        if (!IsValid() || paused) return;
 
         Vector2 input = inputReader.MoveInput;
 
@@ -87,5 +90,32 @@ public class TopDownController : MonoBehaviour
                cameraTransform != null &&
                BB_Player_Master != null &&
                BB_Player_Master.CharacterStats != null;
+    }
+
+    private void OnEnable()
+    {
+        Pause3D.OnPauseChanged += HandlePause;
+    }
+
+    private void OnDisable()
+    {
+        Pause3D.OnPauseChanged -= HandlePause;
+    }
+
+    private bool wasKinematic;
+
+    private void HandlePause(bool isPaused)
+    {
+        paused = isPaused;
+
+        if (paused)
+        {
+            wasKinematic = rb.isKinematic;
+            rb.isKinematic = true;
+        }
+        else
+        {
+            rb.isKinematic = wasKinematic;
+        }
     }
 }

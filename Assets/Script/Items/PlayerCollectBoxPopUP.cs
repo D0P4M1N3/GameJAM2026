@@ -42,6 +42,7 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
 
     public void OpenPopUP()
     {
+        Pause3D.Instance.SetPause(true);
         EnsureReferences();
 
         if (collectBoxTriggerZone != null)
@@ -72,6 +73,7 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
 
     public void ClosePopUp()
     {
+        Pause3D.Instance.SetPause(false);
         EnsureReferences();
         if (collectBoxTriggerZone != null)
         {

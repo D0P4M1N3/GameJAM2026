@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private bool hasGrantedStarterPack;
     [SerializeField] [Min(1)] private int currentProgression = 1;
 
+    public bool IsGameplayPaused { get; private set; }
+
     private readonly List<ItemData> runtimeInventoryItems = new();
     private readonly List<StashEntry> runtimeStashEntries = new();
     private readonly List<ItemData> runtimeCollectBoxItems = new();
