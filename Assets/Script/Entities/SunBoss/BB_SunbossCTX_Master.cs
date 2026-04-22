@@ -10,8 +10,9 @@ public class BB_Sunboss_Master : MonoBehaviour
     [Header("\n\n---- Brain")]
     public BB_SunbossCTX_Brain BB_SunbossCTX_Brain;
 
-    [Header("\n\n---- Body")]
+    [Header("\n\n---- Body & Appearance")]
     public BB_SunbossCTX_Body BB_SunbossCTX_Body;
+    public VisionConeRenderer VisionConeRenderer;
 
     [Header("\n\n---- Sense")]
     public BB_SunbossCTX_Sense BB_SunbossCTX_Sense;
