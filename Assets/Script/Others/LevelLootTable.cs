@@ -23,14 +23,32 @@ public struct LootRarityRule
         this.progressionCurve = progressionCurve;
     }
 
-    public float EvaluateProgressionMultiplier(float normalizedProgression)
+    public float EvaluateProgressionMultiplier(int progression)
     {
         if (progressionCurve == null || progressionCurve.length == 0)
         {
             return 1f;
         }
 
-        return Mathf.Max(0f, progressionCurve.Evaluate(Mathf.Clamp01(normalizedProgression)));
+        float level = Mathf.Max(1, progression);
+        Keyframe[] keys = progressionCurve.keys;
+        if (keys.Length == 0)
+        {
+            return 1f;
+        }
+
+        if (level <= keys[0].time)
+        {
+            return Mathf.Max(0f, keys[0].value);
+        }
+
+        int lastIndex = keys.Length - 1;
+        if (level >= keys[lastIndex].time)
+        {
+            return Mathf.Max(0f, keys[lastIndex].value);
+        }
+
+        return Mathf.Max(0f, progressionCurve.Evaluate(level));
     }
 }
 
@@ -200,8 +218,7 @@ public class LevelLootTable : ScriptableObject
             return 0f;
         }
 
-        float normalizedProgression = GetNormalizedProgression(progression);
-        float curveMultiplier = rule.EvaluateProgressionMultiplier(normalizedProgression);
+        float curveMultiplier = rule.EvaluateProgressionMultiplier(progression);
         return rule.SpawnRate * curveMultiplier;
     }
 
@@ -227,20 +244,37 @@ public class LevelLootTable : ScriptableObject
         return false;
     }
 
-    private static float GetNormalizedProgression(int progression)
-    {
-        float depth = Mathf.Max(0f, progression - 1);
-        return 1f - Mathf.Exp(-0.12f * depth);
-    }
-
     private static int EvaluateCount(int baseValue, AnimationCurve progressionCurve, int progression)
     {
-        float normalizedProgression = GetNormalizedProgression(progression);
-        float multiplier = progressionCurve == null || progressionCurve.length == 0
-            ? 1f
-            : Mathf.Max(0f, progressionCurve.Evaluate(normalizedProgression));
+        return Mathf.Max(0, Mathf.RoundToInt(EvaluateCurveClamped(progressionCurve, progression, baseValue)));
+    }
 
-        return Mathf.Max(0, Mathf.RoundToInt(baseValue * multiplier));
+    private static float EvaluateCurveClamped(AnimationCurve curve, int progression, float fallbackValue)
+    {
+        if (curve == null || curve.length == 0)
+        {
+            return fallbackValue;
+        }
+
+        float level = Mathf.Max(1, progression);
+        Keyframe[] keys = curve.keys;
+        if (keys.Length == 0)
+        {
+            return fallbackValue;
+        }
+
+        if (level <= keys[0].time)
+        {
+            return keys[0].value;
+        }
+
+        int lastIndex = keys.Length - 1;
+        if (level >= keys[lastIndex].time)
+        {
+            return keys[lastIndex].value;
+        }
+
+        return curve.Evaluate(level);
     }
 
     private void EnsureDefaultRarityRules()

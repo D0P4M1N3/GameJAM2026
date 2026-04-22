@@ -76,29 +76,40 @@ public class LevelBalanceData : ScriptableObject
 
     private static int EvaluateCount(int baseValue, AnimationCurve progressionCurve, int progression)
     {
-        float normalizedProgression = GetNormalizedProgression(progression);
-        float multiplier = progressionCurve == null || progressionCurve.length == 0
-            ? 1f
-            : Mathf.Max(0f, progressionCurve.Evaluate(normalizedProgression));
-
-        return Mathf.Max(0, Mathf.RoundToInt(baseValue * multiplier));
+        float curveValue = EvaluateCurveClamped(progressionCurve, progression, baseValue);
+        return Mathf.Max(0, Mathf.RoundToInt(curveValue));
     }
 
     private static float EvaluateScaledFloat(float baseValue, AnimationCurve progressionCurve, int progression)
     {
-        float normalizedProgression = GetNormalizedProgression(progression);
-        float multiplier = progressionCurve == null || progressionCurve.length == 0
-            ? 1f
-            : Mathf.Max(0f, progressionCurve.Evaluate(normalizedProgression));
-
-        return Mathf.Max(0f, baseValue * multiplier);
+        return Mathf.Max(0f, EvaluateCurveClamped(progressionCurve, progression, baseValue));
     }
 
-    private static float GetNormalizedProgression(int progression)
+    private static float EvaluateCurveClamped(AnimationCurve curve, int progression, float fallbackValue)
     {
-        float depth = Mathf.Max(0f, progression - 1);
-        return 1f - Mathf.Exp(-0.12f * depth);
+        if (curve == null || curve.length == 0)
+        {
+            return fallbackValue;
+        }
+
+        float level = Mathf.Max(1, progression);
+        Keyframe[] keys = curve.keys;
+        if (keys.Length == 0)
+        {
+            return fallbackValue;
+        }
+
+        if (level <= keys[0].time)
+        {
+            return keys[0].value;
+        }
+
+        int lastIndex = keys.Length - 1;
+        if (level >= keys[lastIndex].time)
+        {
+            return keys[lastIndex].value;
+        }
+
+        return curve.Evaluate(level);
     }
-
-
 }

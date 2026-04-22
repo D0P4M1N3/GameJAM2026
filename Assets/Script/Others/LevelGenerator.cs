@@ -24,6 +24,9 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] [Min(1)] private int maxPlayerPlacementAttempts = 12;
     [SerializeField] [Min(1)] private int maxExitGatePlacementAttempts = 12;
     [SerializeField] [Min(0f)] private float minBuildingSpacing = 1f;
+    [SerializeField] [Min(0f)] private float minItemBuildingSpacing = 2f;
+    [SerializeField] [Min(0f)] private float minItemPlayerSpacing = 3f;
+    [SerializeField] [Min(0f)] private float minExitGateBuildingSpacing = 2f;
     [SerializeField] private float itemSpawnYOffset = 0.5f;
     [SerializeField] private bool debugEnemySpawning;
     [SerializeField] private bool randomizeBuildingYaw = true;
@@ -119,9 +122,9 @@ public class LevelGenerator : MonoBehaviour
 
         SpawnBuildings(buildingZones, baseLevelRoot.transform);
         Physics.SyncTransforms();
-        SpawnItems(itemZones, baseLevelRoot.transform);
         RebuildNavMesh();
         PositionPlayer(playerZones);
+        SpawnItems(itemZones, baseLevelRoot.transform);
         SpawnExitGate(exitGateZones, baseLevelRoot.transform);
         SpawnEnemies(enemyZones, baseLevelRoot.transform);
     }
@@ -296,11 +299,19 @@ public class LevelGenerator : MonoBehaviour
 
             if (!TryGetCombinedBounds(instanceObject, out Bounds bounds))
             {
+                if (IsTooCloseToPlayer(instanceObject.transform.position) || IsTooCloseToBuilding(instanceObject.transform.position, minItemBuildingSpacing))
+                {
+                    DiscardGeneratedCandidate(instanceObject);
+                    continue;
+                }
+
                 spawnedPickups.Add(instance);
                 return;
             }
 
-            if (!Contains(zone.GetWorldBounds(), bounds) || IntersectsPlacedBuilding(bounds))
+            if (!Contains(zone.GetWorldBounds(), bounds)
+                || IntersectsPlacedBuilding(bounds, minItemBuildingSpacing)
+                || IsTooCloseToPlayer(bounds.center))
             {
                 DiscardGeneratedCandidate(instanceObject);
                 continue;
@@ -371,7 +382,8 @@ public class LevelGenerator : MonoBehaviour
                 : exitGatePrefab.transform.rotation;
 
             GameObject instance = Instantiate(exitGatePrefab, position, rotation, exitGateParent != null ? exitGateParent : parent);
-            if (TryGetCombinedBounds(instance, out Bounds bounds) && IntersectsPlacedBuilding(bounds))
+            if (TryGetCombinedBounds(instance, out Bounds bounds) &&
+                IntersectsPlacedBuilding(bounds, minExitGateBuildingSpacing))
             {
                 DiscardGeneratedCandidate(instance);
                 continue;
@@ -828,9 +840,46 @@ public class LevelGenerator : MonoBehaviour
 
     private bool IntersectsPlacedBuilding(Bounds candidateBounds)
     {
+        return IntersectsPlacedBuilding(candidateBounds, minBuildingSpacing);
+    }
+
+    private bool IntersectsPlacedBuilding(Bounds candidateBounds, float spacing)
+    {
         for (int i = 0; i < placedBuildingBounds.Count; i++)
         {
-            if (GetExpandedXZBounds(placedBuildingBounds[i], minBuildingSpacing).Intersects(candidateBounds))
+            if (GetExpandedXZBounds(placedBuildingBounds[i], spacing).Intersects(candidateBounds))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private bool IsTooCloseToPlayer(Vector3 candidatePosition)
+    {
+        if (playerRoot == null || minItemPlayerSpacing <= 0f)
+        {
+            return false;
+        }
+
+        return GetXZDistance(candidatePosition, playerRoot.position) < minItemPlayerSpacing;
+    }
+
+    private bool IsTooCloseToBuilding(Vector3 candidatePosition, float spacing)
+    {
+        if (spacing <= 0f)
+        {
+            return false;
+        }
+
+        for (int i = 0; i < placedBuildingBounds.Count; i++)
+        {
+            Bounds expandedBounds = GetExpandedXZBounds(placedBuildingBounds[i], spacing);
+            if (candidatePosition.x >= expandedBounds.min.x
+                && candidatePosition.x <= expandedBounds.max.x
+                && candidatePosition.z >= expandedBounds.min.z
+                && candidatePosition.z <= expandedBounds.max.z)
             {
                 return true;
             }
@@ -913,6 +962,13 @@ public class LevelGenerator : MonoBehaviour
             && target.max.x <= container.max.x
             && target.min.z >= container.min.z
             && target.max.z <= container.max.z;
+    }
+
+    private static float GetXZDistance(Vector3 a, Vector3 b)
+    {
+        a.y = 0f;
+        b.y = 0f;
+        return Vector3.Distance(a, b);
     }
 
     private static bool TryGetCombinedBounds(GameObject target, out Bounds bounds)

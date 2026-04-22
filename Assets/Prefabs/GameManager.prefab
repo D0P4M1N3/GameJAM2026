@@ -229,6 +229,7 @@ MonoBehaviour:
     MaxHP: 100
     Damage: 1
     Storage: 0
+    MaxStorage: 500
     HP: 100
     Currency: 0
     CharacterColor: {r: 1, g: 1, b: 1, a: 1}
@@ -240,10 +241,14 @@ MonoBehaviour:
     inspectorFinalMaxHP: 100
     inspectorFinalDamage: 1
     inspectorFinalStorage: 0
+    inspectorMaxStorage: 500
   ProjectileShooterStats:
     ProjectileCount_Max: 5
     ProjectileCount_Current: Infinity
     Infinity: 0
+  defaultFace: 0
+  currentFaceState:
+    Variant: 0
 --- !u!1 &6503738693461115391
 GameObject:
   m_ObjectHideFlags: 0

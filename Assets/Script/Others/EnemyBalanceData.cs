@@ -33,8 +33,8 @@ public class EnemyBalanceData : ScriptableObject
             return;
         }
 
-        float normalizedProgression = GetNormalizedProgression(progression);
-        ApplyEvaluatedStats(target, normalizedProgression);
+        int resolvedProgression = Mathf.Max(1, progression);
+        ApplyEvaluatedStats(target, resolvedProgression);
     }
 
     public void ApplyTimeoutTo(BB_Sunboss_Master target, int progression)
@@ -44,39 +44,39 @@ public class EnemyBalanceData : ScriptableObject
             return;
         }
 
-        ApplyPrediction(target, GetNormalizedProgression(progression));
+        ApplyPrediction(target, Mathf.Max(1, progression));
     }
 
-    private void ApplyEvaluatedStats(BB_Sunboss_Master target, float normalizedProgression)
+    private void ApplyEvaluatedStats(BB_Sunboss_Master target, int progression)
     {
         if (target.CharacterStats != null)
         {
-            target.CharacterStats.Speed = speed.Evaluate(normalizedProgression);
-            target.CharacterStats.MaxHP = maxHP.Evaluate(normalizedProgression);
-            target.CharacterStats.Damage = damage.Evaluate(normalizedProgression);
+            target.CharacterStats.Speed = speed.Evaluate(progression);
+            target.CharacterStats.MaxHP = maxHP.Evaluate(progression);
+            target.CharacterStats.Damage = damage.Evaluate(progression);
             target.CharacterStats.RefreshInspectorFinals();
             target.CharacterStats.HP = target.CharacterStats.finalMaxHP;
         }
 
         if (target.BB_SunbossCTX_Sense != null && target.BB_SunbossCTX_Sense.ConeBox != null)
         {
-            target.BB_SunbossCTX_Sense.ConeBox.Angle = coneAngle.Evaluate(normalizedProgression);
-            target.BB_SunbossCTX_Sense.ConeBox.Radius = coneRadius.Evaluate(normalizedProgression);
+            target.BB_SunbossCTX_Sense.ConeBox.Angle = coneAngle.Evaluate(progression);
+            target.BB_SunbossCTX_Sense.ConeBox.Radius = coneRadius.Evaluate(progression);
             target.BB_SunbossCTX_Sense.ConeBox.PlaneNormal = conePlaneNormal;
         }
 
         if (target.BB_SunbossCTX_Brain != null)
         {
-            ApplyPrediction(target, normalizedProgression);
-            target.BB_SunbossCTX_Brain.ScanSpeed = scanSpeed.Evaluate(normalizedProgression);
-            target.BB_SunbossCTX_Brain.ForgetTime = forgetTime.Evaluate(normalizedProgression);
+            ApplyPrediction(target, progression);
+            target.BB_SunbossCTX_Brain.ScanSpeed = scanSpeed.Evaluate(progression);
+            target.BB_SunbossCTX_Brain.ForgetTime = forgetTime.Evaluate(progression);
         }
 
         if (target.BB_SunbossCTX_Move != null)
         {
-            target.BB_SunbossCTX_Move.TurnSpeed = turnSpeed.Evaluate(normalizedProgression);
-            target.BB_SunbossCTX_Move.TurnSpeedChase = turnSpeedChase.Evaluate(normalizedProgression);
-            target.BB_SunbossCTX_Move.MaxMoveAngleFromFacing = maxMoveAngleFromFacing.Evaluate(normalizedProgression);
+            target.BB_SunbossCTX_Move.TurnSpeed = turnSpeed.Evaluate(progression);
+            target.BB_SunbossCTX_Move.TurnSpeedChase = turnSpeedChase.Evaluate(progression);
+            target.BB_SunbossCTX_Move.MaxMoveAngleFromFacing = maxMoveAngleFromFacing.Evaluate(progression);
         }
     }
 
@@ -95,15 +95,9 @@ public class EnemyBalanceData : ScriptableObject
         maxMoveAngleFromFacing.Validate();
     }
 
-    private static float GetNormalizedProgression(int progression)
+    private void ApplyPrediction(BB_Sunboss_Master target, int progression)
     {
-        float depth = Mathf.Max(0f, progression - 1);
-        return 1f - Mathf.Exp(-0.12f * depth);
-    }
-
-    private void ApplyPrediction(BB_Sunboss_Master target, float normalizedProgression)
-    {
-        target.BB_SunbossCTX_Brain.PredictionAccuracy = Mathf.Clamp01(predictionAccuracy.Evaluate(normalizedProgression));
+        target.BB_SunbossCTX_Brain.PredictionAccuracy = Mathf.Clamp01(predictionAccuracy.Evaluate(progression));
     }
 }
 
@@ -114,14 +108,32 @@ public class EnemyBalanceStat
     [SerializeField] private float maxValue = 1f;
     [SerializeField] private AnimationCurve progressionCurve = AnimationCurve.Linear(0f, 0f, 1f, 1f);
 
-    public float Evaluate(float normalizedProgression)
+    public float Evaluate(int progression)
     {
-        float resolvedProgression = Mathf.Clamp01(normalizedProgression);
-        float curveValue = progressionCurve == null || progressionCurve.length == 0
-            ? resolvedProgression
-            : progressionCurve.Evaluate(resolvedProgression);
+        if (progressionCurve == null || progressionCurve.length == 0)
+        {
+            return minValue;
+        }
 
-        return Mathf.Lerp(minValue, maxValue, Mathf.Clamp01(curveValue));
+        float level = Mathf.Max(1, progression);
+        Keyframe[] keys = progressionCurve.keys;
+        if (keys.Length == 0)
+        {
+            return minValue;
+        }
+
+        if (level <= keys[0].time)
+        {
+            return keys[0].value;
+        }
+
+        int lastIndex = keys.Length - 1;
+        if (level >= keys[lastIndex].time)
+        {
+            return keys[lastIndex].value;
+        }
+
+        return progressionCurve.Evaluate(level);
     }
 
     public void Validate()
