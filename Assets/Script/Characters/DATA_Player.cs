@@ -3,6 +3,7 @@ using UnityEngine;
 public class DATA_Player : MonoBehaviour
 {
     public CharacterStats CharacterStats;
+    public ProjectileShooterStats ProjectileShooterStats;
     public static DATA_Player Instance { get; private set; }
 
     private CharacterStats initialCharacterStats;
