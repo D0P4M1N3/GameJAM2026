@@ -16,6 +16,8 @@ MonoBehaviour:
   displayName: IcingSugar
   description: 
   rarity: 0
+  pickupBehavior: 0
+  storagePercent: 0
   itemColor: {r: 1, g: 1, b: 1, a: 1}
   sizeValue: 1
   icon: {fileID: 1646558551, guid: 5df037affdf0c9b4ba3a67fa44aa65e8, type: 3}

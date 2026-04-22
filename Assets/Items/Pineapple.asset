@@ -16,7 +16,9 @@ MonoBehaviour:
   displayName: Pineapple
   description: 
   rarity: 2
-  itemColor: {r: 1, g: 1, b: 1, a: 1}
+  pickupBehavior: 0
+  storagePercent: 0
+  itemColor: {r: 1, g: 0.90306836, b: 0.5518868, a: 1}
   sizeValue: 1
   icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   itemPrefab: {fileID: 4142644242888990451, guid: 10f6819963becc34fa36d784aae271a3, type: 3}

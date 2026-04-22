@@ -16,7 +16,9 @@ MonoBehaviour:
   displayName: Grape
   description: 
   rarity: 2
-  itemColor: {r: 1, g: 1, b: 1, a: 1}
+  pickupBehavior: 0
+  storagePercent: 0
+  itemColor: {r: 0.33107838, g: 0, b: 0.6415094, a: 1}
   sizeValue: 1
   icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   itemPrefab: {fileID: 8987215672089618286, guid: 7deaa2b32abaded419e47007cc9f4fc2, type: 3}
