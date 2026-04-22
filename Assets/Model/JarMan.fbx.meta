@@ -3,7 +3,32 @@ guid: d09a84e8bf35d2343bcdc606dcc662e5
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: JarMan_Rig_NoIK_M_JarMan_Body
+    second: {fileID: 2100000, guid: 01b6dd7cd269c8047ab222d9c18f8ec6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: JarMan_Rig_NoIK_M_JarMan_Eyes
+    second: {fileID: 2100000, guid: 9c6d10a5d8fe2324f9ac6f257a52fbf9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: JarMan_Rig_NoIK_M_JarMan_Glass
+    second: {fileID: 2100000, guid: e9dadc75eb38bbe429920c6963ef791f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: JarMan_Rig_NoIK_M_JarMan_Liquid
+    second: {fileID: 2100000, guid: e042909d659340e499f3fd51ed043a0b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: JarMan_Rig_NoIK_M_JarMan_Mouth
+    second: {fileID: 2100000, guid: a05a81b07f4830d41bd6fdc20ead0425, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -91,7 +116,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.099999994
+    globalScale: 10
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

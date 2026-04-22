@@ -1,12 +1,42 @@
 using UnityEngine;
 
+public enum PlayerFaceVariant
+{
+    A = 0,
+    B = 1,
+    C = 2,
+    D = 3,
+    E = 4,
+    F = 5,
+    G = 6,
+    H = 7
+}
+
+[System.Serializable]
+public struct PlayerFaceState
+{
+    public PlayerFaceVariant Variant;
+
+    public PlayerFaceState(PlayerFaceVariant variant)
+    {
+        Variant = variant;
+    }
+}
+
 public class DATA_Player : MonoBehaviour
 {
     public CharacterStats CharacterStats;
     public ProjectileShooterStats ProjectileShooterStats;
     public static DATA_Player Instance { get; private set; }
+    public PlayerFaceState CurrentFaceState => currentFaceState;
+    public event System.Action<PlayerFaceState> FaceChanged;
+
+    [Header("Face")]
+    [SerializeField] private PlayerFaceVariant defaultFace = PlayerFaceVariant.A;
+    [SerializeField] private PlayerFaceState currentFaceState = new(PlayerFaceVariant.A);
 
     private CharacterStats initialCharacterStats;
+    private Coroutine resetFaceRoutine;
 
     private void Awake()
     {
@@ -20,6 +50,7 @@ public class DATA_Player : MonoBehaviour
         CharacterStats?.RefreshInspectorFinals();
         CacheInitialStats();
         PlayerStorageVisual.RefreshAll();
+        NotifyFaceChanged();
 
         // Optional: persist across scenes
         DontDestroyOnLoad(gameObject);
@@ -55,9 +86,81 @@ public class DATA_Player : MonoBehaviour
             return;
         }
 
-        CharacterStats.Storage = Mathf.Max(0f, CharacterStats.Storage + additionalPercent);
+        CharacterStats.Storage = Mathf.Clamp(
+            CharacterStats.Storage + additionalPercent,
+            0f,
+            Mathf.Max(0f, CharacterStats.MaxStorage));
         CharacterStats.RefreshInspectorFinals();
         PlayerStorageVisual.RefreshAll();
+    }
+
+    public void SetFace(PlayerFaceVariant variant)
+    {
+        CancelFaceReset();
+        ApplyFace(variant);
+    }
+
+    public void SetFaceForDuration(PlayerFaceVariant variant, float duration)
+    {
+        CancelFaceReset();
+        ApplyFace(variant);
+
+        if (duration > 0f && isActiveAndEnabled)
+        {
+            resetFaceRoutine = StartCoroutine(ResetFaceAfterDelay(duration));
+        }
+    }
+
+    public void ResetFaceToDefault()
+    {
+        CancelFaceReset();
+        ApplyFace(defaultFace);
+    }
+
+    public void SetFaceVariant(PlayerFaceVariant variant)
+    {
+        SetFace(variant);
+    }
+
+    public void SetFaceVariant(int variantIndex)
+    {
+        int clampedIndex = Mathf.Clamp(variantIndex, 0, System.Enum.GetValues(typeof(PlayerFaceVariant)).Length - 1);
+        SetFaceVariant((PlayerFaceVariant)clampedIndex);
+    }
+
+    public void SetFaceState(PlayerFaceState faceState)
+    {
+        SetFace(faceState.Variant);
+    }
+
+    private void ApplyFace(PlayerFaceVariant variant)
+    {
+        if (currentFaceState.Variant == variant)
+        {
+            return;
+        }
+
+        currentFaceState = new PlayerFaceState(variant);
+        NotifyFaceChanged();
+    }
+
+    private void CancelFaceReset()
+    {
+        if (resetFaceRoutine == null)
+        {
+            return;
+        }
+
+        StopCoroutine(resetFaceRoutine);
+        resetFaceRoutine = null;
+    }
+
+    private System.Collections.IEnumerator ResetFaceAfterDelay(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        resetFaceRoutine = null;
+        ApplyFace(defaultFace);
+
     }
 
     private void CacheInitialStats()
@@ -78,5 +181,10 @@ public class DATA_Player : MonoBehaviour
     private void OnValidate()
     {
         CharacterStats?.RefreshInspectorFinals();
+    }
+
+    private void NotifyFaceChanged()
+    {
+        FaceChanged?.Invoke(currentFaceState);
     }
 }

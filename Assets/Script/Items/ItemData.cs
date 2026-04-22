@@ -7,6 +7,7 @@ public enum ItemRarity
     Uncommon,
     Rare,
     Epic,
+    Special,
 }
 
 public enum ItemPickupBehavior

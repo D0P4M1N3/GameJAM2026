@@ -135,6 +135,7 @@ public class GameplayItemPickup : MonoBehaviour
         hasCollected = true;
         isAwaitingUiCollection = false;
         DATA_Player.Instance.AddStoragePercent(itemData.StoragePercent);
+        PlayWorldItemCollisionSound();
 
         if (itemData.PickupClip != null)
         {
@@ -153,6 +154,7 @@ public class GameplayItemPickup : MonoBehaviour
 
         hasCollected = true;
         isAwaitingUiCollection = false;
+        PlayWorldItemCollisionSound();
 
         switch (destination)
         {
@@ -236,5 +238,11 @@ public class GameplayItemPickup : MonoBehaviour
         }
 
         return cachedCamera;
+    }
+
+    private void PlayWorldItemCollisionSound()
+    {
+        ItemWorldObject itemWorldObject = GetComponent<ItemWorldObject>();
+        itemWorldObject?.PlayCollisionSound();
     }
 }

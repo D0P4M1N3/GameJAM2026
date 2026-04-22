@@ -74,6 +74,10 @@ public class ACT_Player_Combat : MonoBehaviour
                 if (BB_Player_Master.ProjectileShooterStats.ProjectileCount_Current >0)
                 {
                     Shoot(target);
+                    if (DATA_Player.Instance != null)
+                    {
+                        DATA_Player.Instance.SetFaceForDuration(PlayerFaceVariant.C, 0.5f);
+                    }
                     BB_Player_Master.ProjectileShooterStats.ProjectileCount_Current--;
                 }
             }

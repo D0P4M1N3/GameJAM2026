@@ -15,7 +15,7 @@ MonoBehaviour:
   itemId: storage_boost_01
   displayName: Storage Boost
   description: Immediately increases player storage by 10%.
-  rarity: 0
+  rarity: 4
   pickupBehavior: 1
   storagePercent: 10
   itemColor: {r: 0, g: 0, b: 0, a: 1}

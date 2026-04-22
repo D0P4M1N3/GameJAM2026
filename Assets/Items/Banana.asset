@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: Banana
   m_EditorClassIdentifier: GameJAM2026.Runtime::ItemData
   itemId: 8
-  displayName: Kluy
+  displayName: B0.5
   description: Boss is superior GDP, he discover how to goon 24/7 non stop speed
     run
   rarity: 2
+  pickupBehavior: 0
+  storagePercent: 0
   itemColor: {r: 1, g: 0.9206585, b: 0.7028302, a: 1}
   sizeValue: 5
   icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}

@@ -163,6 +163,8 @@ public class GameManager : MonoBehaviour
 
     public void AddItemsToCollectBox(IEnumerable<ItemData> items)
     {
+        bool addedAnyItem = false;
+
         if (items == null)
         {
             return;
@@ -176,9 +178,15 @@ public class GameManager : MonoBehaviour
             }
 
             runtimeCollectBoxItems.Add(item);
+            addedAnyItem = true;
         }
 
         ApplyRuntimeDataToScene();
+
+        if (addedAnyItem && DATA_Player.Instance != null)
+        {
+            DATA_Player.Instance.SetFaceForDuration(PlayerFaceVariant.B, 0.5f);
+        }
     }
 
     public void AddItemToCollectBox(ItemData item)
@@ -190,6 +198,11 @@ public class GameManager : MonoBehaviour
 
         runtimeCollectBoxItems.Add(item);
         ApplyRuntimeDataToScene();
+
+        if (DATA_Player.Instance != null)
+        {
+            DATA_Player.Instance.SetFaceForDuration(PlayerFaceVariant.B, 0.5f);
+        }
     }
 
     public bool TryGrantStarterPack(IEnumerable<ItemData> items)

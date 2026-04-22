@@ -117,6 +117,11 @@ public class LevelLootTable : ScriptableObject
                 continue;
             }
 
+            if (!IsEligibleForRandomRoll(candidate))
+            {
+                continue;
+            }
+
             totalWeight += GetEffectiveWeight(candidate, resolvedProgression);
         }
 
@@ -130,6 +135,11 @@ public class LevelLootTable : ScriptableObject
         {
             ItemData candidate = autoDiscoveredItems[i];
             if (candidate == null)
+            {
+                continue;
+            }
+
+            if (!IsEligibleForRandomRoll(candidate))
             {
                 continue;
             }
@@ -153,6 +163,31 @@ public class LevelLootTable : ScriptableObject
         return false;
     }
 
+    public bool TryRollSpecialItem(out ItemData item)
+    {
+        item = null;
+        List<ItemData> specialItems = new();
+
+        for (int i = 0; i < autoDiscoveredItems.Count; i++)
+        {
+            ItemData candidate = autoDiscoveredItems[i];
+            if (candidate == null || candidate.Rarity != ItemRarity.Special)
+            {
+                continue;
+            }
+
+            specialItems.Add(candidate);
+        }
+
+        if (specialItems.Count == 0)
+        {
+            return false;
+        }
+
+        item = specialItems[UnityEngine.Random.Range(0, specialItems.Count)];
+        return item != null;
+    }
+
     private float GetEffectiveWeight(ItemData item, int progression)
     {
         if (item == null)
@@ -168,6 +203,11 @@ public class LevelLootTable : ScriptableObject
         float normalizedProgression = GetNormalizedProgression(progression);
         float curveMultiplier = rule.EvaluateProgressionMultiplier(normalizedProgression);
         return rule.SpawnRate * curveMultiplier;
+    }
+
+    private static bool IsEligibleForRandomRoll(ItemData item)
+    {
+        return item != null && item.Rarity != ItemRarity.Special;
     }
 
     private bool TryGetRule(ItemRarity rarity, out LootRarityRule rule)
@@ -209,6 +249,7 @@ public class LevelLootTable : ScriptableObject
         EnsureRule(ItemRarity.Uncommon, 1f, AnimationCurve.EaseInOut(0f, 0.9f, 1f, 1.1f));
         EnsureRule(ItemRarity.Rare, 0.45f, AnimationCurve.EaseInOut(0f, 0.35f, 1f, 1.7f));
         EnsureRule(ItemRarity.Epic, 0.15f, AnimationCurve.EaseInOut(0f, 0.1f, 1f, 2.2f));
+        EnsureRule(ItemRarity.Special, 0f, AnimationCurve.Linear(0f, 0f, 1f, 0f));
     }
 
     private void EnsureRule(ItemRarity rarity, float spawnRate, AnimationCurve progressionCurve)

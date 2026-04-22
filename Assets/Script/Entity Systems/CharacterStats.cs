@@ -10,6 +10,7 @@ public class CharacterStats
     public float MaxHP = 5f;
     public float Damage = 1f;
     public float Storage = 0f;
+    public float MaxStorage = 100f;
 
     [Header("Current")]
     public float HP = float.PositiveInfinity;
@@ -27,25 +28,30 @@ public class CharacterStats
     public float finalSpeed => (Speed / 100f) * mSpeed + Speed;
     public float finalMaxHP => (MaxHP / 100f) * mMaxHP + MaxHP;
     public float finalDamage => (Damage / 100f) * mDamage + Damage;
-    public float finalStorage => (Storage / 100f) * mStorage + Storage;
+    public float finalStorage => Mathf.Min((Storage / 100f) * mStorage + Storage, Mathf.Max(0f, MaxStorage));
 
     [Header("Inspector Finals")]
     [SerializeField] private float inspectorFinalSpeed;
     [SerializeField] private float inspectorFinalMaxHP;
     [SerializeField] private float inspectorFinalDamage;
     [SerializeField] private float inspectorFinalStorage;
+    [SerializeField] private float inspectorMaxStorage;
 
     public float InspectorFinalSpeed => inspectorFinalSpeed;
     public float InspectorFinalMaxHP => inspectorFinalMaxHP;
     public float InspectorFinalDamage => inspectorFinalDamage;
     public float InspectorFinalStorage => inspectorFinalStorage;
+    public float InspectorMaxStorage => inspectorMaxStorage;
 
     public void RefreshInspectorFinals()
     {
+        MaxStorage = Mathf.Max(0f, MaxStorage);
+        Storage = Mathf.Clamp(Storage, 0f, MaxStorage);
         inspectorFinalSpeed = finalSpeed;
         inspectorFinalMaxHP = finalMaxHP;
         inspectorFinalDamage = finalDamage;
         inspectorFinalStorage = finalStorage;
+        inspectorMaxStorage = MaxStorage;
     }
 
     public CharacterStats Clone()
@@ -56,6 +62,7 @@ public class CharacterStats
             MaxHP = MaxHP,
             Damage = Damage,
             Storage = Storage,
+            MaxStorage = MaxStorage,
             HP = HP,
             Currency = Currency,
             CharacterColor = CharacterColor,
@@ -80,6 +87,7 @@ public class CharacterStats
         MaxHP = source.MaxHP;
         Damage = source.Damage;
         Storage = source.Storage;
+        MaxStorage = source.MaxStorage;
         HP = source.HP;
         Currency = source.Currency;
         CharacterColor = source.CharacterColor;
