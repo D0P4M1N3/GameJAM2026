@@ -15,9 +15,12 @@ MonoBehaviour:
   itemId: 21
   displayName: Ratcherman Friend
   description: 
+  rarity: 0
+  pickupBehavior: 0
+  storagePercent: 0
   itemColor: {r: 1, g: 1, b: 1, a: 1}
   sizeValue: 1
-  icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  icon: {fileID: -1741252877, guid: ae2a7ed94238dc1489121b48ab4897ae, type: 3}
   itemPrefab: {fileID: 2736271296588698879, guid: ca5ab428d16e85845a317e09ae801ef6, type: 3}
   stats:
     <Speed>k__BackingField: 0
