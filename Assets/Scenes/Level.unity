@@ -1966,7 +1966,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3580521233258818388, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 130.3
       objectReference: {fileID: 0}
     - target: {fileID: 4181300676359856058, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
       propertyPath: m_IsActive
@@ -1994,7 +1994,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5777744995937308363, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 122
       objectReference: {fileID: 0}
     - target: {fileID: 6657033605025860922, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
       propertyPath: m_Name
@@ -2090,16 +2090,36 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8766310104449798709, guid: 3efc12cc1f67f6145b16f610da3af604, type: 3}
+      propertyPath: pitch
+      value: 52.51
+      objectReference: {fileID: 0}
+    - target: {fileID: 8766310104449798709, guid: 3efc12cc1f67f6145b16f610da3af604, type: 3}
       propertyPath: target
       value: 
       objectReference: {fileID: 463406091}
+    - target: {fileID: 8766310104449798709, guid: 3efc12cc1f67f6145b16f610da3af604, type: 3}
+      propertyPath: maxZoom
+      value: 24.48
+      objectReference: {fileID: 0}
+    - target: {fileID: 8766310104449798709, guid: 3efc12cc1f67f6145b16f610da3af604, type: 3}
+      propertyPath: minZoom
+      value: 3.29
+      objectReference: {fileID: 0}
     - target: {fileID: 8766310104449798709, guid: 3efc12cc1f67f6145b16f610da3af604, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8766310104449798709, guid: 3efc12cc1f67f6145b16f610da3af604, type: 3}
+      propertyPath: currentZoom
+      value: 9.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8766310104449798709, guid: 3efc12cc1f67f6145b16f610da3af604, type: 3}
       propertyPath: isFocusTarget
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8766310104449798709, guid: 3efc12cc1f67f6145b16f610da3af604, type: 3}
+      propertyPath: targetOffset.y
+      value: 2.14
       objectReference: {fileID: 0}
     - target: {fileID: 8766310104449798709, guid: 3efc12cc1f67f6145b16f610da3af604, type: 3}
       propertyPath: transformTarget

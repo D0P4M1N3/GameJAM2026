@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: BalanceData
   m_EditorClassIdentifier: 
   lootTable: {fileID: 11400000, guid: efad36a05f41423bb1d768cbe3877303, type: 2}
+  enemyBalanceData: {fileID: 11400000, guid: 54f0bc3fdd8f40b2af0a6948d86f559f, type: 2}
   minBuildings: 12
   maxBuildings: 16
   minBuildingsProgressionCurve:
@@ -113,3 +114,4 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  TimeoutPredictionAccuracy: 0.8

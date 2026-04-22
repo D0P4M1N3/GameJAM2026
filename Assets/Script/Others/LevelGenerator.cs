@@ -402,6 +402,7 @@ public class LevelGenerator : MonoBehaviour
                 : prefab.transform.rotation;
 
             GameObject instance = Instantiate(prefab, position, rotation, parent);
+            ApplyEnemyBalance(instance);
             if (TryGetEnemyFootprintBounds(instance, out Bounds bounds) && IntersectsPlacedBuilding(bounds))
             {
                 failureReason = $"attempt {attempt + 1}: spawned '{prefab.name}' overlapped a building at {position}.";
@@ -932,13 +933,38 @@ public class LevelGenerator : MonoBehaviour
 
     public void TimeOut()
     {
-        Debug.Log("NIGGA");
+        Debug.Log("Timeout triggered.");
 
         BB_Sunboss_Master[] BSMs = FindObjectsOfType<BB_Sunboss_Master>();
+        int progression = GameManager.Instance != null ? GameManager.Instance.CurrentProgression : 1;
 
         foreach (BB_Sunboss_Master BSM in BSMs)
         {
-            BSM.BB_SunbossCTX_Brain.PredictionAccuracy = levelBalanceData.TimeoutPredictionAccuracy;
+            if (levelBalanceData != null && levelBalanceData.EnemyBalanceData != null)
+            {
+                levelBalanceData.EnemyBalanceData.ApplyTimeoutTo(BSM, progression);
+                continue;
+            }
+
+            if (levelBalanceData != null)
+            {
+                BSM.BB_SunbossCTX_Brain.PredictionAccuracy = levelBalanceData.TimeoutPredictionAccuracy;
+            }
+        }
+    }
+
+    private void ApplyEnemyBalance(GameObject enemyInstance)
+    {
+        if (enemyInstance == null || levelBalanceData == null || levelBalanceData.EnemyBalanceData == null)
+        {
+            return;
+        }
+
+        int progression = GameManager.Instance != null ? GameManager.Instance.CurrentProgression : 1;
+        BB_Sunboss_Master[] masters = enemyInstance.GetComponentsInChildren<BB_Sunboss_Master>(true);
+        for (int i = 0; i < masters.Length; i++)
+        {
+            levelBalanceData.EnemyBalanceData.ApplyTo(masters[i], progression);
         }
     }
 }

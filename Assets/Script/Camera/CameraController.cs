@@ -23,7 +23,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float zoomSpeed = 5f;
     [SerializeField] private float minZoom = 5f;
     [SerializeField] private float maxZoom = 20f;
-    private float currentZoom = 10f;
+    [SerializeField] private float currentZoom = 10f;
 
     [Header("Rotation")]
     private float yaw;
@@ -51,6 +51,16 @@ public class CameraController : MonoBehaviour
         defaultMode = CameraMode.Target;
         currentZoom = Mathf.Clamp(currentZoom, minZoom, maxZoom);
         targetYaw = yaw;
+    }
+
+    private void OnValidate()
+    {
+        if (maxZoom < minZoom)
+        {
+            maxZoom = minZoom;
+        }
+
+        currentZoom = Mathf.Clamp(currentZoom, minZoom, maxZoom);
     }
 
     public void SetTargetMode()

@@ -5,6 +5,7 @@ using UnityEngine;
 public class LevelBalanceData : ScriptableObject
 {
     [SerializeField] private LevelLootTable lootTable;
+    [SerializeField] private EnemyBalanceData enemyBalanceData;
     [SerializeField] [Min(0)] private int minBuildings = 3;
     [SerializeField] [Min(0)] private int maxBuildings = 6;
     [SerializeField] private AnimationCurve minBuildingsProgressionCurve = AnimationCurve.Linear(0f, 1f, 1f, 1f);
@@ -20,6 +21,7 @@ public class LevelBalanceData : ScriptableObject
 
 
     public LevelLootTable LootTable => lootTable;
+    public EnemyBalanceData EnemyBalanceData => enemyBalanceData;
     public int MinBuildings => minBuildings;
     public int MaxBuildings => maxBuildings;
     public int MinEnemies => minEnemies;

@@ -288,6 +288,7 @@ MonoBehaviour:
   zoomSpeed: 5
   minZoom: 7
   maxZoom: 7
+  currentZoom: 7
   pitch: 31
   rotationSpeed: 5
   snapAngle: 90
