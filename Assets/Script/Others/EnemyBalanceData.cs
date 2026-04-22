@@ -16,9 +16,6 @@ public class EnemyBalanceData : ScriptableObject
 
     [Header("Prediction")]
     [SerializeField] private EnemyBalanceStat predictionAccuracy = EnemyBalanceStat.WithDefaults(0.1f, 0.95f);
-    [SerializeField] private EnemyBalanceStat timeoutPredictionAccuracy = EnemyBalanceStat.WithDefaults(0.75f, 1f);
-    [SerializeField] private EnemyBalanceStat minPredictionErrorPosition = EnemyBalanceStat.WithDefaults(8f, 2f);
-    [SerializeField] private EnemyBalanceStat maxPredictionErrorPosition = EnemyBalanceStat.WithDefaults(16f, 4f);
 
     [Header("Brain")]
     [SerializeField] private EnemyBalanceStat scanSpeed = EnemyBalanceStat.WithDefaults(90f, 540f);
@@ -47,9 +44,7 @@ public class EnemyBalanceData : ScriptableObject
             return;
         }
 
-        float normalizedProgression = GetNormalizedProgression(progression);
-        float timeoutAccuracy = Mathf.Clamp01(timeoutPredictionAccuracy.Evaluate(normalizedProgression));
-        target.BB_SunbossCTX_Brain.PredictionAccuracy = timeoutAccuracy;
+        ApplyPrediction(target, GetNormalizedProgression(progression));
     }
 
     private void ApplyEvaluatedStats(BB_Sunboss_Master target, float normalizedProgression)
@@ -72,11 +67,7 @@ public class EnemyBalanceData : ScriptableObject
 
         if (target.BB_SunbossCTX_Brain != null)
         {
-            target.BB_SunbossCTX_Brain.PredictionAccuracy = Mathf.Clamp01(predictionAccuracy.Evaluate(normalizedProgression));
-            target.BB_SunbossCTX_Brain.MinPredictionError_Position = minPredictionErrorPosition.Evaluate(normalizedProgression);
-            target.BB_SunbossCTX_Brain.MaxPredictionError_Position = Mathf.Max(
-                target.BB_SunbossCTX_Brain.MinPredictionError_Position,
-                maxPredictionErrorPosition.Evaluate(normalizedProgression));
+            ApplyPrediction(target, normalizedProgression);
             target.BB_SunbossCTX_Brain.ScanSpeed = scanSpeed.Evaluate(normalizedProgression);
             target.BB_SunbossCTX_Brain.ForgetTime = forgetTime.Evaluate(normalizedProgression);
         }
@@ -97,9 +88,6 @@ public class EnemyBalanceData : ScriptableObject
         coneAngle.Validate();
         coneRadius.Validate();
         predictionAccuracy.Validate01();
-        timeoutPredictionAccuracy.Validate01();
-        minPredictionErrorPosition.Validate();
-        maxPredictionErrorPosition.Validate();
         scanSpeed.Validate();
         forgetTime.Validate();
         turnSpeed.Validate();
@@ -111,6 +99,11 @@ public class EnemyBalanceData : ScriptableObject
     {
         float depth = Mathf.Max(0f, progression - 1);
         return 1f - Mathf.Exp(-0.12f * depth);
+    }
+
+    private void ApplyPrediction(BB_Sunboss_Master target, float normalizedProgression)
+    {
+        target.BB_SunbossCTX_Brain.PredictionAccuracy = Mathf.Clamp01(predictionAccuracy.Evaluate(normalizedProgression));
     }
 }
 
