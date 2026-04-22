@@ -756,6 +756,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1345481311484397410}
   - component: {fileID: 5522960294862400285}
+  - component: {fileID: 7860215543156224901}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -805,6 +806,21 @@ MonoBehaviour:
     projectileSpeed: 10
     turnSpeed: 5
     BulletLifetime: 2
+--- !u!114 &7860215543156224901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6657033605025860922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1a0f9c0c4c1434ca4d9127cd7b6b201, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  storageVisual: {fileID: 8689902555078746011}
+  currentStoragePercent: 0
+  currentScaleMultiplier: 1
 --- !u!1001 &2999336232326669761
 PrefabInstance:
   m_ObjectHideFlags: 0

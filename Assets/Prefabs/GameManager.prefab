@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7484573982318285572}
   - component: {fileID: 1274560659383011013}
   - component: {fileID: 5492137316954170339}
+  - component: {fileID: 6445373186217297154}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -65,6 +66,18 @@ MonoBehaviour:
   collectBoxData: {fileID: 9093280753749698106}
   hasGrantedStarterPack: 0
   currentProgression: 1
+--- !u!114 &6445373186217297154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1043451333200621071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bdf593b880101b4e8cb70043dc4e461, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pause3D
 --- !u!1 &2348742958620319778
 GameObject:
   m_ObjectHideFlags: 0
@@ -223,6 +236,14 @@ MonoBehaviour:
     mMaxHP: 0
     mDamage: 0
     mStorage: 0
+    inspectorFinalSpeed: 4
+    inspectorFinalMaxHP: 100
+    inspectorFinalDamage: 1
+    inspectorFinalStorage: 0
+  ProjectileShooterStats:
+    ProjectileCount_Max: 5
+    ProjectileCount_Current: Infinity
+    Infinity: 0
 --- !u!1 &6503738693461115391
 GameObject:
   m_ObjectHideFlags: 0

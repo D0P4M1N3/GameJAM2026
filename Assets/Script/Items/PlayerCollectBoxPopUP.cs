@@ -11,6 +11,7 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
 
     private CollectingItemSpawner collectingItemSpawner;
     private ItemTriggerZone collectBoxTriggerZone;
+    private PendingCollectTrashZone trashTriggerZone;
 
     private void Awake()
     {
@@ -73,14 +74,17 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
 
     public void ClosePopUp()
     {
-        Pause3D.Instance.SetPause(false);
         EnsureReferences();
+        if (collectingItemSpawner != null && collectingItemSpawner.HasPendingItem)
+        {
+            return;
+        }
+
+        Pause3D.Instance.SetPause(false);
         if (collectBoxTriggerZone != null)
         {
             collectBoxTriggerZone.SetCollectBoxExitRemovalEnabled(false);
         }
-
-        collectingItemSpawner?.CancelPendingItem();
 
         if (collectingPopup != null)
         {
@@ -154,6 +158,24 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
         if (collectBoxTriggerZone != null && collectingItemSpawner != null)
         {
             collectBoxTriggerZone.SetCollectBoxSpawner(collectingItemSpawner);
+        }
+
+        if (trashTriggerZone == null && collectingPopup != null)
+        {
+            Transform trashTransform = collectingPopup.transform.Find("TrashZone");
+            if (trashTransform != null)
+            {
+                trashTriggerZone = trashTransform.GetComponent<PendingCollectTrashZone>();
+                if (trashTriggerZone == null)
+                {
+                    trashTriggerZone = trashTransform.gameObject.AddComponent<PendingCollectTrashZone>();
+                }
+            }
+        }
+
+        if (trashTriggerZone != null && collectingItemSpawner != null)
+        {
+            trashTriggerZone.SetCollectingItemSpawner(collectingItemSpawner);
         }
 
         if (cameraController == null)

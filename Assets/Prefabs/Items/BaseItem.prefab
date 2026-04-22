@@ -189,6 +189,7 @@ MonoBehaviour:
   audioSource: {fileID: 820001}
   hoverStatsUi: {fileID: 0}
   isInInventory: 0
+  isInCollectBox: 0
   collisionSoundThreshold: 1.5
   collisionSoundCooldown: 0.1
   pickupCollisionMuteDuration: 0.2

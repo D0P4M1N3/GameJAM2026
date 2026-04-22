@@ -8,6 +8,7 @@ public class ItemWorldObject : MonoBehaviour
     [SerializeField] [HideInInspector] private AudioSource audioSource;
     [SerializeField] [HideInInspector] private HoveredItemStatsUI hoverStatsUi;
     [SerializeField] private bool isInInventory;
+    [SerializeField] private bool isInCollectBox;
     [SerializeField] private float collisionSoundThreshold = 1.5f;
     [SerializeField] private float collisionSoundCooldown = 0.1f;
     [SerializeField] private float pickupCollisionMuteDuration = 0.2f;
@@ -22,6 +23,7 @@ public class ItemWorldObject : MonoBehaviour
 
     public ItemData ItemData => itemData;
     public bool IsInInventory => isInInventory;
+    public bool IsInCollectBox => isInCollectBox;
     public StashSpawner OwningSpawner => owningSpawner;
 
     private void Awake()
@@ -123,6 +125,7 @@ public class ItemWorldObject : MonoBehaviour
     {
         owningSpawner = spawner;
         isInInventory = false;
+        isInCollectBox = false;
         SetItemData(data);
         sharedPrefabController?.InitializeForUi(data);
     }
@@ -130,6 +133,11 @@ public class ItemWorldObject : MonoBehaviour
     public void SetInventoryState(bool inInventory)
     {
         isInInventory = inInventory;
+    }
+
+    public void SetCollectBoxState(bool inCollectBox)
+    {
+        isInCollectBox = inCollectBox;
     }
 
     public void SuppressCollisionSound()

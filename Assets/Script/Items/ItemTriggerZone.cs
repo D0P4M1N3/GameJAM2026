@@ -133,7 +133,7 @@ public class ItemTriggerZone : MonoBehaviour
     {
         CollectBoxData collectBoxData = GameManager.Instance != null ? GameManager.Instance.CollectBoxData : null;
         ItemWorldObject itemWorldObject = itemCollider != null ? itemCollider.GetComponentInParent<ItemWorldObject>() : null;
-        if (itemWorldObject == null || itemWorldObject.ItemData == null)
+        if (itemWorldObject == null || itemWorldObject.ItemData == null || itemWorldObject.IsInCollectBox == shouldBeInCollectBox)
         {
             return;
         }
@@ -148,6 +148,8 @@ public class ItemTriggerZone : MonoBehaviour
                 collectBoxData.AddItem(itemWorldObject.ItemData);
             }
 
+            itemWorldObject.SetCollectBoxState(true);
+
             return;
         }
 
@@ -157,5 +159,6 @@ public class ItemTriggerZone : MonoBehaviour
         }
 
         collectBoxData?.RemoveItem(itemWorldObject.ItemData);
+        itemWorldObject.SetCollectBoxState(false);
     }
 }

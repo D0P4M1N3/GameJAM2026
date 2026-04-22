@@ -19,6 +19,7 @@ public class DATA_Player : MonoBehaviour
         Instance = this;
         CharacterStats?.RefreshInspectorFinals();
         CacheInitialStats();
+        PlayerStorageVisual.RefreshAll();
 
         // Optional: persist across scenes
         DontDestroyOnLoad(gameObject);
@@ -39,11 +40,24 @@ public class DATA_Player : MonoBehaviour
         }
 
         CharacterStats.RefreshInspectorFinals();
+        PlayerStorageVisual.RefreshAll();
 
         if (GameManager.Instance != null)
         {
             GameManager.Instance.ResetProgression();
         }
+    }
+
+    public void AddStoragePercent(float additionalPercent)
+    {
+        if (CharacterStats == null)
+        {
+            return;
+        }
+
+        CharacterStats.Storage = Mathf.Max(0f, CharacterStats.Storage + additionalPercent);
+        CharacterStats.RefreshInspectorFinals();
+        PlayerStorageVisual.RefreshAll();
     }
 
     private void CacheInitialStats()

@@ -98,6 +98,32 @@ public class CollectingItemSpawner : MonoBehaviour
         return true;
     }
 
+    public bool TryDeleteSpawnedItem(ItemWorldObject itemWorldObject)
+    {
+        if (pendingPickup == null || itemWorldObject == null || itemWorldObject != spawnedUiItem)
+        {
+            return false;
+        }
+
+        pendingPickup.CancelPendingCollection();
+
+        if (pendingPickup != null)
+        {
+            Destroy(pendingPickup.gameObject);
+        }
+
+        if (spawnedUiItem != null)
+        {
+            Destroy(spawnedUiItem.gameObject);
+        }
+
+        spawnedUiItem = null;
+        pendingPickup = null;
+        ownerPopup?.NotifyItemCollected();
+        ownerPopup = null;
+        return true;
+    }
+
     public void CancelPendingItem()
     {
         if (pendingPickup != null)

@@ -3375,6 +3375,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1623290111}
+  - component: {fileID: 1623290112}
   m_Layer: 0
   m_Name: Inventory
   m_TagString: Untagged
@@ -3393,7 +3394,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.74, y: -2.34, z: 0}
   m_LocalScale: {x: 0.28633398, y: 0.28633398, z: 0.28633398}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 825800189}
   - {fileID: 2118630880}
@@ -3401,6 +3402,21 @@ Transform:
   - {fileID: 505745185}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1623290112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1623290110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1a0f9c0c4c1434ca4d9127cd7b6b201, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStorageVisual
+  storageVisual: {fileID: 1623290111}
+  currentStoragePercent: 0
+  currentScaleMultiplier: 1
 --- !u!1 &1630935090
 GameObject:
   m_ObjectHideFlags: 0

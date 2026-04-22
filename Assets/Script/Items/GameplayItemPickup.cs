@@ -86,12 +86,20 @@ public class GameplayItemPickup : MonoBehaviour
     public void Initialize(ItemData data)
     {
         itemData = data;
+        ItemWorldObject itemWorldObject = GetComponent<ItemWorldObject>();
+        itemWorldObject?.SetItemData(data);
         sharedPrefabController?.InitializeForWorld(data);
         RefreshVisuals();
     }
 
     private void Collect(Collider other)
     {
+        if (itemData.PickupBehavior == ItemPickupBehavior.ImmediateStoragePickup)
+        {
+            FinalizeImmediateStorageCollection();
+            return;
+        }
+
         if (destination == GameplayPickupDestination.CollectBox)
         {
             PlayerCollectBoxPopUP collectBoxPopup = other.GetComponentInParent<PlayerCollectBoxPopUP>();
@@ -109,6 +117,31 @@ public class GameplayItemPickup : MonoBehaviour
         }
 
         FinalizeCollection();
+    }
+
+    private void FinalizeImmediateStorageCollection()
+    {
+        if (hasCollected || itemData == null)
+        {
+            return;
+        }
+
+        if (DATA_Player.Instance == null)
+        {
+            Debug.LogWarning("Immediate storage pickup could not be applied because DATA_Player.Instance is null.", this);
+            return;
+        }
+
+        hasCollected = true;
+        isAwaitingUiCollection = false;
+        DATA_Player.Instance.AddStoragePercent(itemData.StoragePercent);
+
+        if (itemData.PickupClip != null)
+        {
+            AudioSource.PlayClipAtPoint(itemData.PickupClip, transform.position, itemData.PickupVolume);
+        }
+
+        Destroy(gameObject);
     }
 
     public void FinalizeCollection()
