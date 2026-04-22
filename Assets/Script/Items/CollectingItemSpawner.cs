@@ -93,19 +93,23 @@ public class CollectingItemSpawner : MonoBehaviour
 
         if (shouldBeInCollectBox)
         {
-            pendingPlacement = PendingPlacement.CollectBox;
-            pendingCollectBoxTransform = collectBoxTransform;
+            pendingPickup.FinalizeCollection();
             itemWorldObject.SetCollectBoxState(true);
-            ownerPopup?.RefreshAcceptButtonState();
-            return true;
-        }
-
-        if (pendingPlacement == PendingPlacement.CollectBox)
-        {
-            pendingPlacement = PendingPlacement.None;
             pendingCollectBoxTransform = null;
-            itemWorldObject.SetCollectBoxState(false);
-            ownerPopup?.RefreshAcceptButtonState();
+
+            if (collectBoxTransform != null)
+            {
+                Transform targetParent = collectBoxTransform.parent != null
+                    ? collectBoxTransform.parent
+                    : collectBoxTransform;
+                itemWorldObject.transform.SetParent(targetParent, true);
+            }
+
+            spawnedUiItem = null;
+            pendingPickup = null;
+            pendingPlacement = PendingPlacement.None;
+            ownerPopup?.NotifyItemCollected();
+            ownerPopup = null;
             return true;
         }
 

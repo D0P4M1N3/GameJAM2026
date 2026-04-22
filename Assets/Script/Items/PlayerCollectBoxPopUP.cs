@@ -15,6 +15,7 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
     private ItemTriggerZone collectBoxTriggerZone;
     private PendingCollectTrashZone trashTriggerZone;
     private ItemWorldObject pendingCollectBoxTrashItem;
+    private bool canAcceptToClosePopup;
 
     private void Awake()
     {
@@ -29,6 +30,7 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
     public bool TryBeginCollecting(GameplayItemPickup pickup)
     {
         EnsureReferences();
+        canAcceptToClosePopup = false;
 
         if (pickup == null || collectingItemSpawner == null)
         {
@@ -48,6 +50,7 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
     {
         Pause3D.Instance.SetPause(true);
         EnsureReferences();
+        canAcceptToClosePopup = false;
         SetAcceptButtonInteractable(false);
 
         if (collectBoxTriggerZone != null)
@@ -127,6 +130,14 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
             return;
         }
 
+        if (canAcceptToClosePopup)
+        {
+            canAcceptToClosePopup = false;
+            ClosePopUp();
+            RefreshAcceptButtonState();
+            return;
+        }
+
         if (pendingCollectBoxTrashItem == null)
         {
             RefreshAcceptButtonState();
@@ -143,13 +154,15 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
 
     public void NotifyItemCollected()
     {
+        canAcceptToClosePopup = true;
         RefreshAcceptButtonState();
     }
 
     public void RefreshAcceptButtonState()
     {
         bool canAccept = (collectingItemSpawner != null && collectingItemSpawner.CanAcceptPendingItem) ||
-            pendingCollectBoxTrashItem != null;
+            pendingCollectBoxTrashItem != null ||
+            canAcceptToClosePopup;
         SetAcceptButtonInteractable(canAccept);
     }
 
