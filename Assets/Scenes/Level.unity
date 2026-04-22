@@ -1743,6 +1743,10 @@ PrefabInstance:
       propertyPath: m_RaycastTarget
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6422212030098128612, guid: 9ca0ccaded7f4d8418be88de59ab018c, type: 3}
+      propertyPath: countdownStartTime
+      value: 90
+      objectReference: {fileID: 0}
     - target: {fileID: 6857572941268368469, guid: 9ca0ccaded7f4d8418be88de59ab018c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 2
@@ -2284,6 +2288,22 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1510636465109393555, guid: 44aac0b6c7743ba4d8bc785836abb3ab, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 809b501c09d5ad448a78af54e20c5350, type: 2}
+    - target: {fileID: 2541949694300472846, guid: 44aac0b6c7743ba4d8bc785836abb3ab, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 809b501c09d5ad448a78af54e20c5350, type: 2}
+    - target: {fileID: 2723674013070589677, guid: 44aac0b6c7743ba4d8bc785836abb3ab, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 809b501c09d5ad448a78af54e20c5350, type: 2}
+    - target: {fileID: 7629376118827013853, guid: 44aac0b6c7743ba4d8bc785836abb3ab, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 809b501c09d5ad448a78af54e20c5350, type: 2}
     - target: {fileID: 7844004298756833377, guid: 44aac0b6c7743ba4d8bc785836abb3ab, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.34697056

@@ -16,7 +16,9 @@ MonoBehaviour:
   displayName: GreenLeaf
   description: 
   rarity: 2
-  itemColor: {r: 1, g: 1, b: 1, a: 1}
+  pickupBehavior: 0
+  storagePercent: 0
+  itemColor: {r: 0.01600071, g: 0.4056604, b: 0, a: 1}
   sizeValue: 1
   icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   itemPrefab: {fileID: 6612837140619849711, guid: 2b2d70c80a281e84bbdffb5188ecd17c, type: 3}

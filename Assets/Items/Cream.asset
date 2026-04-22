@@ -16,7 +16,9 @@ MonoBehaviour:
   displayName: Cream
   description: 
   rarity: 1
-  itemColor: {r: 1, g: 1, b: 1, a: 1}
+  pickupBehavior: 0
+  storagePercent: 0
+  itemColor: {r: 0.958408, g: 0.9103774, b: 1, a: 1}
   sizeValue: 1
   icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   itemPrefab: {fileID: 1449623923909595790, guid: 4c30ae60a693f81418f8c3118d5869b8, type: 3}

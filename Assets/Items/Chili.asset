@@ -15,7 +15,10 @@ MonoBehaviour:
   itemId: 2
   displayName: Chili
   description: 
-  itemColor: {r: 1, g: 1, b: 1, a: 1}
+  rarity: 0
+  pickupBehavior: 0
+  storagePercent: 0
+  itemColor: {r: 0.8584906, g: 0.34484893, b: 0.11743506, a: 1}
   sizeValue: 1
   icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   itemPrefab: {fileID: 281503122209808811, guid: bd033e3f2daab07438bd2e091da722a6, type: 3}

@@ -15,7 +15,10 @@ MonoBehaviour:
   itemId: 6
   displayName: Ice
   description: 
-  itemColor: {r: 1, g: 1, b: 1, a: 1}
+  rarity: 0
+  pickupBehavior: 0
+  storagePercent: 0
+  itemColor: {r: 0.8066038, g: 0.9208576, b: 1, a: 1}
   sizeValue: 1
   icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   itemPrefab: {fileID: 6701192637437555846, guid: 40af159b92bc245488fe74bd5c9b9ed5, type: 3}

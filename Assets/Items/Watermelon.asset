@@ -16,7 +16,9 @@ MonoBehaviour:
   displayName: Watermelon
   description: 
   rarity: 2
-  itemColor: {r: 1, g: 1, b: 1, a: 1}
+  pickupBehavior: 0
+  storagePercent: 0
+  itemColor: {r: 1, g: 0.23917264, b: 0.06132078, a: 1}
   sizeValue: 1
   icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   itemPrefab: {fileID: 3309982808662011967, guid: 11dbba50f8de4e3408838fc878d8a5ef, type: 3}

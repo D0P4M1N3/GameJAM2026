@@ -16,7 +16,9 @@ MonoBehaviour:
   displayName: Poprock
   description: 
   rarity: 3
-  itemColor: {r: 1, g: 1, b: 1, a: 1}
+  pickupBehavior: 0
+  storagePercent: 0
+  itemColor: {r: 0.80388355, g: 0.504717, b: 1, a: 1}
   sizeValue: 1
   icon: {fileID: 21300000, guid: eee31f9c06a21634ba57529fe12dc0e8, type: 3}
   itemPrefab: {fileID: 7018920717686340276, guid: 7153272d76a6d39469662dbb3705ed48, type: 3}

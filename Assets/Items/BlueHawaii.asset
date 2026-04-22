@@ -16,7 +16,9 @@ MonoBehaviour:
   displayName: BlueHawaii
   description: 
   rarity: 1
-  itemColor: {r: 1, g: 1, b: 1, a: 1}
+  pickupBehavior: 0
+  storagePercent: 0
+  itemColor: {r: 0, g: 0.50858325, b: 0.735849, a: 1}
   sizeValue: 1
   icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   itemPrefab: {fileID: 4155264967883603556, guid: 282b5fce2abd2d643bde639604da2c70, type: 3}
