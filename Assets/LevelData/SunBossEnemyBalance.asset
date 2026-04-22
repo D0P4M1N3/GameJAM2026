@@ -121,7 +121,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   coneRadius:
-    minValue: 16.4
+    minValue: 11.76
     maxValue: 28
     progressionCurve:
       serializedVersion: 2

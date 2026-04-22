@@ -2,14 +2,25 @@ using UnityEngine;
 
 public class CollectingItemSpawner : MonoBehaviour
 {
+    public enum PendingPlacement
+    {
+        None = 0,
+        CollectBox = 1,
+        TrashZone = 2
+    }
+
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private Camera popupDragCamera;
 
     private GameplayItemPickup pendingPickup;
     private ItemWorldObject spawnedUiItem;
     private PlayerCollectBoxPopUP ownerPopup;
+    private PendingPlacement pendingPlacement;
+    private Transform pendingCollectBoxTransform;
 
     public bool HasPendingItem => pendingPickup != null;
+    public bool CanAcceptPendingItem => pendingPickup != null && pendingPlacement != PendingPlacement.None;
+    public PendingPlacement CurrentPendingPlacement => pendingPlacement;
 
     private void Awake()
     {
@@ -38,6 +49,8 @@ public class CollectingItemSpawner : MonoBehaviour
 
         ownerPopup = popupOwner;
         pendingPickup = pickup;
+        pendingPlacement = PendingPlacement.None;
+        pendingCollectBoxTransform = null;
 
         Transform parent = spawnPoint != null ? spawnPoint : transform;
         Vector3 spawnPosition = spawnPoint != null ? spawnPoint.position : transform.position;
@@ -71,54 +84,103 @@ public class CollectingItemSpawner : MonoBehaviour
         return true;
     }
 
-    public bool TryCollectSpawnedItem(ItemWorldObject itemWorldObject, Transform collectBoxTransform)
+    public bool TrySetSpawnedItemCollectBoxState(ItemWorldObject itemWorldObject, bool shouldBeInCollectBox, Transform collectBoxTransform)
     {
         if (pendingPickup == null || itemWorldObject == null || itemWorldObject != spawnedUiItem)
         {
             return false;
         }
 
-        pendingPickup.FinalizeCollection();
-
-        if (spawnedUiItem != null)
+        if (shouldBeInCollectBox)
         {
-            if (collectBoxTransform != null)
+            pendingPlacement = PendingPlacement.CollectBox;
+            pendingCollectBoxTransform = collectBoxTransform;
+            itemWorldObject.SetCollectBoxState(true);
+            ownerPopup?.RefreshAcceptButtonState();
+            return true;
+        }
+
+        if (pendingPlacement == PendingPlacement.CollectBox)
+        {
+            pendingPlacement = PendingPlacement.None;
+            pendingCollectBoxTransform = null;
+            itemWorldObject.SetCollectBoxState(false);
+            ownerPopup?.RefreshAcceptButtonState();
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool TrySetSpawnedItemTrashState(ItemWorldObject itemWorldObject, bool shouldBeInTrash)
+    {
+        if (pendingPickup == null || itemWorldObject == null || itemWorldObject != spawnedUiItem)
+        {
+            return false;
+        }
+
+        if (shouldBeInTrash)
+        {
+            pendingPlacement = PendingPlacement.TrashZone;
+            pendingCollectBoxTransform = null;
+            itemWorldObject.SetCollectBoxState(false);
+            ownerPopup?.RefreshAcceptButtonState();
+            return true;
+        }
+
+        if (pendingPlacement == PendingPlacement.TrashZone)
+        {
+            pendingPlacement = PendingPlacement.None;
+            ownerPopup?.RefreshAcceptButtonState();
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool AcceptPendingItem()
+    {
+        if (!CanAcceptPendingItem)
+        {
+            return false;
+        }
+
+        if (pendingPlacement == PendingPlacement.CollectBox)
+        {
+            pendingPickup.FinalizeCollection();
+
+            if (spawnedUiItem != null)
             {
-                Transform targetParent = collectBoxTransform.parent != null
-                    ? collectBoxTransform.parent
-                    : collectBoxTransform;
-                spawnedUiItem.transform.SetParent(targetParent, true);
+                spawnedUiItem.SetCollectBoxState(true);
+
+                if (pendingCollectBoxTransform != null)
+                {
+                    Transform targetParent = pendingCollectBoxTransform.parent != null
+                        ? pendingCollectBoxTransform.parent
+                        : pendingCollectBoxTransform;
+                    spawnedUiItem.transform.SetParent(targetParent, true);
+                }
+            }
+        }
+        else
+        {
+            pendingPickup.CancelPendingCollection();
+
+            if (pendingPickup != null)
+            {
+                Destroy(pendingPickup.gameObject);
+            }
+
+            if (spawnedUiItem != null)
+            {
+                Destroy(spawnedUiItem.gameObject);
             }
         }
 
         spawnedUiItem = null;
         pendingPickup = null;
-        ownerPopup?.NotifyItemCollected();
-        ownerPopup = null;
-        return true;
-    }
-
-    public bool TryDeleteSpawnedItem(ItemWorldObject itemWorldObject)
-    {
-        if (pendingPickup == null || itemWorldObject == null || itemWorldObject != spawnedUiItem)
-        {
-            return false;
-        }
-
-        pendingPickup.CancelPendingCollection();
-
-        if (pendingPickup != null)
-        {
-            Destroy(pendingPickup.gameObject);
-        }
-
-        if (spawnedUiItem != null)
-        {
-            Destroy(spawnedUiItem.gameObject);
-        }
-
-        spawnedUiItem = null;
-        pendingPickup = null;
+        pendingPlacement = PendingPlacement.None;
+        pendingCollectBoxTransform = null;
         ownerPopup?.NotifyItemCollected();
         ownerPopup = null;
         return true;
@@ -138,6 +200,8 @@ public class CollectingItemSpawner : MonoBehaviour
 
         spawnedUiItem = null;
         pendingPickup = null;
+        pendingPlacement = PendingPlacement.None;
+        pendingCollectBoxTransform = null;
         ownerPopup = null;
     }
 

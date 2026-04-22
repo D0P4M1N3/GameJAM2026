@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class PlayerCollectBoxPopUP : MonoBehaviour
 {
@@ -8,10 +9,12 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
     [SerializeField] private GameObject collectingPopup;
     [SerializeField] private ChangeCamProjection changeCamProjection;
     [SerializeField] private CameraController cameraController;
+    [SerializeField] private Button acceptButton;
 
     private CollectingItemSpawner collectingItemSpawner;
     private ItemTriggerZone collectBoxTriggerZone;
     private PendingCollectTrashZone trashTriggerZone;
+    private ItemWorldObject pendingCollectBoxTrashItem;
 
     private void Awake()
     {
@@ -45,6 +48,7 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
     {
         Pause3D.Instance.SetPause(true);
         EnsureReferences();
+        SetAcceptButtonInteractable(false);
 
         if (collectBoxTriggerZone != null)
         {
@@ -70,12 +74,16 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
         {
             cameraController.SetTransformToMode();
         }
+
+        RefreshAcceptButtonState();
     }
 
     public void ClosePopUp()
     {
         EnsureReferences();
-        if (collectingItemSpawner != null && collectingItemSpawner.HasPendingItem)
+        if (collectingItemSpawner != null &&
+            collectingItemSpawner.HasPendingItem &&
+            !collectingItemSpawner.CanAcceptPendingItem)
         {
             return;
         }
@@ -105,10 +113,77 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
         {
             cameraController.SetTargetMode();
         }
+
+        RefreshAcceptButtonState();
+    }
+
+    public void AcceptPendingItem()
+    {
+        EnsureReferences();
+
+        if (collectingItemSpawner != null && collectingItemSpawner.AcceptPendingItem())
+        {
+            RefreshAcceptButtonState();
+            return;
+        }
+
+        if (pendingCollectBoxTrashItem == null)
+        {
+            RefreshAcceptButtonState();
+            return;
+        }
+
+        CollectBoxData collectBoxData = GameManager.Instance != null ? GameManager.Instance.CollectBoxData : null;
+        collectBoxData?.RemoveItem(pendingCollectBoxTrashItem.ItemData);
+        pendingCollectBoxTrashItem.SetCollectBoxState(false);
+        Destroy(pendingCollectBoxTrashItem.gameObject);
+        pendingCollectBoxTrashItem = null;
+        RefreshAcceptButtonState();
     }
 
     public void NotifyItemCollected()
     {
+        RefreshAcceptButtonState();
+    }
+
+    public void RefreshAcceptButtonState()
+    {
+        bool canAccept = (collectingItemSpawner != null && collectingItemSpawner.CanAcceptPendingItem) ||
+            pendingCollectBoxTrashItem != null;
+        SetAcceptButtonInteractable(canAccept);
+    }
+
+    public bool TrySetCollectBoxItemTrashState(ItemWorldObject itemWorldObject, bool shouldBeInTrash)
+    {
+        EnsureReferences();
+
+        if (itemWorldObject == null || itemWorldObject.ItemData == null)
+        {
+            return false;
+        }
+
+        if (collectingItemSpawner != null &&
+            collectingItemSpawner.TrySetSpawnedItemTrashState(itemWorldObject, shouldBeInTrash))
+        {
+            RefreshAcceptButtonState();
+            return true;
+        }
+
+        if (shouldBeInTrash)
+        {
+            pendingCollectBoxTrashItem = itemWorldObject;
+            RefreshAcceptButtonState();
+            return true;
+        }
+
+        if (pendingCollectBoxTrashItem != itemWorldObject)
+        {
+            return false;
+        }
+
+        pendingCollectBoxTrashItem = null;
+        RefreshAcceptButtonState();
+        return true;
     }
 
     private void EnsureReferences()
@@ -121,6 +196,15 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
         if (collectingPopup == null)
         {
             collectingPopup = collectBoxPopupUi;
+        }
+
+        if (acceptButton == null && collectingPopup != null)
+        {
+            Transform acceptButtonTransform = collectingPopup.transform.Find("AcceptButton");
+            if (acceptButtonTransform != null)
+            {
+                acceptButton = acceptButtonTransform.GetComponent<Button>();
+            }
         }
 
         if (collectingItemSpawner == null)
@@ -178,10 +262,25 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
             trashTriggerZone.SetCollectingItemSpawner(collectingItemSpawner);
         }
 
+        if (trashTriggerZone != null)
+        {
+            trashTriggerZone.SetOwnerPopup(this);
+        }
+
         if (cameraController == null)
         {
             cameraController = FindFirstObjectByType<CameraController>(FindObjectsInactive.Include);
         }
+    }
+
+    private void SetAcceptButtonInteractable(bool isInteractable)
+    {
+        if (acceptButton == null)
+        {
+            return;
+        }
+
+        acceptButton.interactable = isInteractable;
     }
 
     private static GameObject FindPopupObject(string popupName)

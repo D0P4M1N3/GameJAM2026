@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7844004298756833377}
+  - component: {fileID: -4851578019998455791}
   m_Layer: 3
   m_Name: EmptyLevel
   m_TagString: Untagged
@@ -33,6 +34,24 @@ Transform:
   - {fileID: 8343781838960603469}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-4851578019998455791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 130390453574914705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5e95c8b35854c94bc6630fefbe41f86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LevelBalanceSizeApplier
+  levelBalanceData: {fileID: 11400000, guid: 84f1baf272924405b0407e3c33881042, type: 2}
+  targetTransform: {fileID: 7844004298756833377}
+  applyOnStart: 1
+  applyInEditMode: 1
+  previewProgression: 1
+  currentAppliedLevelSize: 1
 --- !u!1 &245091556410774639
 GameObject:
   m_ObjectHideFlags: 0
@@ -45,6 +64,7 @@ GameObject:
   - component: {fileID: 2093679532736867603}
   - component: {fileID: 7629376118827013853}
   - component: {fileID: 43083864880829566}
+  - component: {fileID: 7330373974735518244}
   m_Layer: 3
   m_Name: Wall
   m_TagString: Untagged
@@ -61,7 +81,7 @@ Transform:
   m_GameObject: {fileID: 245091556410774639}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.00001001358, y: 12.5, z: -42.5}
+  m_LocalPosition: {x: 0.00001001358, y: 0.5, z: -42.5}
   m_LocalScale: {x: 80, y: 25, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -144,6 +164,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7330373974735518244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245091556410774639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14365e15332e443f9d89c2156ff48c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LockTransformYScale
+  captureInitialYScaleOnAwake: 1
+  lockedYScale: 25
+  applyInLateUpdate: 1
 --- !u!1 &517390927898740439
 GameObject:
   m_ObjectHideFlags: 0
@@ -250,6 +285,7 @@ GameObject:
   - component: {fileID: 2411649427172617517}
   - component: {fileID: 2723674013070589677}
   - component: {fileID: 1104030941700216328}
+  - component: {fileID: 2184019591578211624}
   m_Layer: 3
   m_Name: Wall
   m_TagString: Untagged
@@ -266,7 +302,7 @@ Transform:
   m_GameObject: {fileID: 2323691682519554474}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.00001001358, y: 12.5, z: 42.5}
+  m_LocalPosition: {x: 0.00001001358, y: 0.5, z: 42.5}
   m_LocalScale: {x: 80, y: 25, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -349,6 +385,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2184019591578211624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2323691682519554474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14365e15332e443f9d89c2156ff48c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LockTransformYScale
+  captureInitialYScaleOnAwake: 1
+  lockedYScale: 25
+  applyInLateUpdate: 1
 --- !u!1 &3037129991650630932
 GameObject:
   m_ObjectHideFlags: 0
@@ -607,6 +658,7 @@ GameObject:
   - component: {fileID: 5772750884908940083}
   - component: {fileID: 2541949694300472846}
   - component: {fileID: 4785084286560779155}
+  - component: {fileID: 3991082199753798842}
   m_Layer: 3
   m_Name: Wall
   m_TagString: Untagged
@@ -623,7 +675,7 @@ Transform:
   m_GameObject: {fileID: 5804992226654078341}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -42.499992, y: 12.5, z: 0}
+  m_LocalPosition: {x: -42.499992, y: 0.5, z: 0}
   m_LocalScale: {x: 5, y: 25, z: 88.88}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -706,6 +758,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3991082199753798842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5804992226654078341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14365e15332e443f9d89c2156ff48c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LockTransformYScale
+  captureInitialYScaleOnAwake: 1
+  lockedYScale: 25
+  applyInLateUpdate: 1
 --- !u!1 &7046218747230226389
 GameObject:
   m_ObjectHideFlags: 0
@@ -765,6 +832,7 @@ GameObject:
   - component: {fileID: 8396344964608071347}
   - component: {fileID: 1510636465109393555}
   - component: {fileID: 2719558435580771063}
+  - component: {fileID: 433527853580219386}
   m_Layer: 3
   m_Name: Wall
   m_TagString: Untagged
@@ -781,7 +849,7 @@ Transform:
   m_GameObject: {fileID: 8439489126962671422}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 42.500008, y: 12.5, z: 0}
+  m_LocalPosition: {x: 42.500008, y: 0.5, z: 0}
   m_LocalScale: {x: 5, y: 25, z: 89.198456}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -864,3 +932,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &433527853580219386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8439489126962671422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14365e15332e443f9d89c2156ff48c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LockTransformYScale
+  captureInitialYScaleOnAwake: 1
+  lockedYScale: 25
+  applyInLateUpdate: 1

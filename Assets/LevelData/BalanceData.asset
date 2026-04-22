@@ -64,7 +64,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  minEnemies: 2
+  minEnemies: 1
   maxEnemies: 3
   minEnemiesProgressionCurve:
     serializedVersion: 2
@@ -103,8 +103,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 4.912266
-      value: 1.4983617
+      time: 19.60508
+      value: 10.367624
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -114,4 +114,29 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  TimeoutPredictionAccuracy: 0.8
+  levelSizeStart: 1
+  levelSizeProgressionCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 19.545609
+      value: 10.036987
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  TimeoutPredictionAccuracy: 1

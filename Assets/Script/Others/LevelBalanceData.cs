@@ -14,6 +14,8 @@ public class LevelBalanceData : ScriptableObject
     [SerializeField] [Min(0)] private int maxEnemies = 5;
     [SerializeField] private AnimationCurve minEnemiesProgressionCurve = AnimationCurve.Linear(0f, 1f, 1f, 1f);
     [SerializeField] private AnimationCurve maxEnemiesProgressionCurve = AnimationCurve.Linear(0f, 1f, 1f, 1f);
+    [SerializeField] [Min(0f)] private float levelSizeStart = 1f;
+    [SerializeField] private AnimationCurve levelSizeProgressionCurve = AnimationCurve.Linear(0f, 1f, 1f, 1f);
 
     [Header("Sunboss AIs")]
     [Range(0f, 1f)]
@@ -26,6 +28,7 @@ public class LevelBalanceData : ScriptableObject
     public int MaxBuildings => maxBuildings;
     public int MinEnemies => minEnemies;
     public int MaxEnemies => maxEnemies;
+    public float LevelSizeStart => levelSizeStart;
 
     public int EvaluateMinBuildings(int progression)
     {
@@ -47,6 +50,11 @@ public class LevelBalanceData : ScriptableObject
         return Mathf.Max(EvaluateMinEnemies(progression), EvaluateCount(maxEnemies, maxEnemiesProgressionCurve, progression));
     }
 
+    public float EvaluateLevelSize(int progression)
+    {
+        return EvaluateScaledFloat(levelSizeStart, levelSizeProgressionCurve, progression);
+    }
+
     private void OnValidate()
     {
         if (maxBuildings < minBuildings)
@@ -57,6 +65,11 @@ public class LevelBalanceData : ScriptableObject
         if (maxEnemies < minEnemies)
         {
             maxEnemies = minEnemies;
+        }
+
+        if (levelSizeStart < 0f)
+        {
+            levelSizeStart = 0f;
         }
     }
 
@@ -69,6 +82,16 @@ public class LevelBalanceData : ScriptableObject
             : Mathf.Max(0f, progressionCurve.Evaluate(normalizedProgression));
 
         return Mathf.Max(0, Mathf.RoundToInt(baseValue * multiplier));
+    }
+
+    private static float EvaluateScaledFloat(float baseValue, AnimationCurve progressionCurve, int progression)
+    {
+        float normalizedProgression = GetNormalizedProgression(progression);
+        float multiplier = progressionCurve == null || progressionCurve.length == 0
+            ? 1f
+            : Mathf.Max(0f, progressionCurve.Evaluate(normalizedProgression));
+
+        return Mathf.Max(0f, baseValue * multiplier);
     }
 
     private static float GetNormalizedProgression(int progression)

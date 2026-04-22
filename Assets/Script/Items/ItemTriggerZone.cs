@@ -140,16 +140,22 @@ public class ItemTriggerZone : MonoBehaviour
 
         if (shouldBeInCollectBox)
         {
-            bool wasCollectedNow = collectingItemSpawner != null &&
-                collectingItemSpawner.TryCollectSpawnedItem(itemWorldObject, transform);
+            bool wasPendingSpawnHandled = collectingItemSpawner != null &&
+                collectingItemSpawner.TrySetSpawnedItemCollectBoxState(itemWorldObject, true, transform);
 
-            if (!wasCollectedNow && collectBoxData != null)
+            if (!wasPendingSpawnHandled && collectBoxData != null)
             {
                 collectBoxData.AddItem(itemWorldObject.ItemData);
+                itemWorldObject.SetCollectBoxState(true);
             }
 
-            itemWorldObject.SetCollectBoxState(true);
+            return;
+        }
 
+        bool wasPendingExitHandled = collectingItemSpawner != null &&
+            collectingItemSpawner.TrySetSpawnedItemCollectBoxState(itemWorldObject, false, transform);
+        if (wasPendingExitHandled)
+        {
             return;
         }
 

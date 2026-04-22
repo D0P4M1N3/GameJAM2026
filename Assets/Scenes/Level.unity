@@ -1127,6 +1127,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1143302235}
   m_CullTransparentMesh: 1
+--- !u!114 &1150365476 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6857572941268368469, guid: 9ca0ccaded7f4d8418be88de59ab018c, type: 3}
+  m_PrefabInstance: {fileID: 1874959237}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!1 &1282653570
 GameObject:
   m_ObjectHideFlags: 0
@@ -1733,12 +1744,40 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6857572941268368469, guid: 9ca0ccaded7f4d8418be88de59ab018c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6857572941268368469, guid: 9ca0ccaded7f4d8418be88de59ab018c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6857572941268368469, guid: 9ca0ccaded7f4d8418be88de59ab018c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 463406094}
     - target: {fileID: 6857572941268368469, guid: 9ca0ccaded7f4d8418be88de59ab018c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 463406094}
+    - target: {fileID: 6857572941268368469, guid: 9ca0ccaded7f4d8418be88de59ab018c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6857572941268368469, guid: 9ca0ccaded7f4d8418be88de59ab018c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: AcceptPendingItem
+      objectReference: {fileID: 0}
+    - target: {fileID: 6857572941268368469, guid: 9ca0ccaded7f4d8418be88de59ab018c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: ClosePopUp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6857572941268368469, guid: 9ca0ccaded7f4d8418be88de59ab018c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: PlayerCollectBoxPopUP, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6857572941268368469, guid: 9ca0ccaded7f4d8418be88de59ab018c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7314414184107572460, guid: 9ca0ccaded7f4d8418be88de59ab018c, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1945,6 +1984,10 @@ PrefabInstance:
       value: 0.78
       objectReference: {fileID: 0}
     - target: {fileID: 1596760876158550351, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
+      propertyPath: acceptButton
+      value: 
+      objectReference: {fileID: 1150365476}
+    - target: {fileID: 1596760876158550351, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
       propertyPath: collectBoxPopupUi
       value: 
       objectReference: {fileID: 1874959238}
@@ -1970,19 +2013,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4181300676359856058, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917688897162805618, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.27
       objectReference: {fileID: 0}
     - target: {fileID: 5770835190778666215, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.4557719
+      value: 0.1580522
       objectReference: {fileID: 0}
     - target: {fileID: 5770835190778666215, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.4557719
+      value: 0.1580522
       objectReference: {fileID: 0}
     - target: {fileID: 5770835190778666215, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.4557719
+      value: 0.1580522
       objectReference: {fileID: 0}
     - target: {fileID: 5770835190778666215, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2007,36 +2054,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 429140761535569757, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3762316955707977072}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
---- !u!4 &3762316955707977070 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5770835190778666215, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
-  m_PrefabInstance: {fileID: 3762316955707977069}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &3762316955707977071 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 429140761535569757, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
-  m_PrefabInstance: {fileID: 3762316955707977069}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &3762316955707977072
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3762316955707977071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1a0f9c0c4c1434ca4d9127cd7b6b201, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerStorageVisual
-  storageVisual: {fileID: 3762316955707977070}
-  currentStoragePercent: 0
-  currentScaleMultiplier: 1
 --- !u!1001 &5332154754141023221
 PrefabInstance:
   m_ObjectHideFlags: 0
