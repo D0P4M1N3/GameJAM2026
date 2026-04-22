@@ -22,10 +22,14 @@ public class PendingCollectTrashZone : MonoBehaviour
 
         if (ownerPopup != null && ownerPopup.TrySetCollectBoxItemTrashState(itemWorldObject, true))
         {
+            TriggerTrashFace();
             return;
         }
 
-        collectingItemSpawner?.TrySetSpawnedItemTrashState(itemWorldObject, true);
+        if (collectingItemSpawner != null && collectingItemSpawner.TrySetSpawnedItemTrashState(itemWorldObject, true))
+        {
+            TriggerTrashFace();
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -52,5 +56,13 @@ public class PendingCollectTrashZone : MonoBehaviour
     public void SetOwnerPopup(PlayerCollectBoxPopUP popup)
     {
         ownerPopup = popup;
+    }
+
+    private static void TriggerTrashFace()
+    {
+        if (DATA_Player.Instance != null)
+        {
+            DATA_Player.Instance.SetFaceForDuration(PlayerFaceVariant.E, 0.5f);
+        }
     }
 }

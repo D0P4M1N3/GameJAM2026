@@ -118,6 +118,7 @@ public class LevelGenerator : MonoBehaviour
         }
 
         SpawnBuildings(buildingZones, baseLevelRoot.transform);
+        Physics.SyncTransforms();
         SpawnItems(itemZones, baseLevelRoot.transform);
         RebuildNavMesh();
         PositionPlayer(playerZones);
@@ -224,7 +225,7 @@ public class LevelGenerator : MonoBehaviour
 
             if (!Contains(zone.GetWorldBounds(), bounds) || IntersectsPlacedBuilding(bounds))
             {
-                DestroyGenerated(instance);
+                DiscardGeneratedCandidate(instance);
                 continue;
             }
 
@@ -252,6 +253,12 @@ public class LevelGenerator : MonoBehaviour
         int progression = GameManager.Instance != null ? GameManager.Instance.CurrentProgression : 1;
         List<ItemData> rolledItems = activeLootTable.RollDrops(progression);
         Transform itemsParent = GetOrCreateGeneratedCategoryRoot("Items", ref generatedItemsRoot);
+
+        if (activeLootTable.TryRollSpecialItem(out ItemData specialItem) && specialItem != null)
+        {
+            TrySpawnItem(itemZones, specialItem, itemsParent != null ? itemsParent : parent);
+        }
+
         for (int i = 0; i < rolledItems.Count; i++)
         {
             ItemData item = rolledItems[i];
@@ -295,7 +302,7 @@ public class LevelGenerator : MonoBehaviour
 
             if (!Contains(zone.GetWorldBounds(), bounds) || IntersectsPlacedBuilding(bounds))
             {
-                DestroyGenerated(instanceObject);
+                DiscardGeneratedCandidate(instanceObject);
                 continue;
             }
 
@@ -366,7 +373,7 @@ public class LevelGenerator : MonoBehaviour
             GameObject instance = Instantiate(exitGatePrefab, position, rotation, exitGateParent != null ? exitGateParent : parent);
             if (TryGetCombinedBounds(instance, out Bounds bounds) && IntersectsPlacedBuilding(bounds))
             {
-                DestroyGenerated(instance);
+                DiscardGeneratedCandidate(instance);
                 continue;
             }
 
@@ -406,7 +413,7 @@ public class LevelGenerator : MonoBehaviour
             if (TryGetEnemyFootprintBounds(instance, out Bounds bounds) && IntersectsPlacedBuilding(bounds))
             {
                 failureReason = $"attempt {attempt + 1}: spawned '{prefab.name}' overlapped a building at {position}.";
-                DestroyGenerated(instance);
+                DiscardGeneratedCandidate(instance);
                 continue;
             }
 
@@ -492,6 +499,7 @@ public class LevelGenerator : MonoBehaviour
 
         if (generatedRoot != null)
         {
+            ApplyGeneratedRootCompensation();
             return generatedRoot;
         }
 
@@ -499,12 +507,14 @@ public class LevelGenerator : MonoBehaviour
         if (existingRoot != null)
         {
             generatedRoot = existingRoot;
+            ApplyGeneratedRootCompensation();
             return generatedRoot;
         }
 
         GameObject rootObject = new("Generated");
         generatedRoot = rootObject.transform;
         generatedRoot.SetParent(baseLevelRoot.transform, false);
+        ApplyGeneratedRootCompensation();
         return generatedRoot;
     }
 
@@ -532,6 +542,23 @@ public class LevelGenerator : MonoBehaviour
         categoryRoot = categoryObject.transform;
         categoryRoot.SetParent(parentRoot, false);
         return categoryRoot;
+    }
+
+    private void ApplyGeneratedRootCompensation()
+    {
+        if (generatedRoot == null || baseLevelRoot == null)
+        {
+            return;
+        }
+
+        generatedRoot.localPosition = Vector3.zero;
+        generatedRoot.localRotation = Quaternion.identity;
+
+        Vector3 parentScale = baseLevelRoot.transform.lossyScale;
+        generatedRoot.localScale = new Vector3(
+            GetInverseScale(parentScale.x),
+            GetInverseScale(parentScale.y),
+            GetInverseScale(parentScale.z));
     }
 
     private void RebuildNavMesh()
@@ -951,6 +978,22 @@ public class LevelGenerator : MonoBehaviour
                 BSM.BB_SunbossCTX_Brain.PredictionAccuracy = levelBalanceData.TimeoutPredictionAccuracy;
             }
         }
+    }
+
+    private static void DiscardGeneratedCandidate(GameObject target)
+    {
+        if (target == null)
+        {
+            return;
+        }
+
+        target.SetActive(false);
+        DestroyGenerated(target);
+    }
+
+    private static float GetInverseScale(float value)
+    {
+        return Mathf.Approximately(value, 0f) ? 1f : 1f / value;
     }
 
     private void ApplyEnemyBalance(GameObject enemyInstance)

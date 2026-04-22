@@ -155,6 +155,17 @@ public class ItemWorldObject : MonoBehaviour
         PlayClipWithRandomPitch(itemData.PickupClip, itemData.PickupVolume);
     }
 
+    public void PlayCollisionSound()
+    {
+        if (itemData == null || itemData.CollisionClip == null || audioSource == null)
+        {
+            return;
+        }
+
+        lastCollisionSoundTime = Time.time;
+        PlayClipWithRandomPitch(itemData.CollisionClip, itemData.CollisionVolume);
+    }
+
     public void BeginDragHover()
     {
         keepHoverVisibleWhileDragging = true;
