@@ -16,7 +16,9 @@ MonoBehaviour:
   displayName: Rasberry
   description: 
   rarity: 0
-  itemColor: {r: 1, g: 1, b: 1, a: 1}
+  pickupBehavior: 0
+  storagePercent: 0
+  itemColor: {r: 0.9716981, g: 0.16958882, b: 0.27111772, a: 1}
   sizeValue: 1
   icon: {fileID: -413327521, guid: 5df037affdf0c9b4ba3a67fa44aa65e8, type: 3}
   itemPrefab: {fileID: 4605916408527043268, guid: 1a4af790fc7bcb54f892903572d71160, type: 3}

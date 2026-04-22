@@ -16,7 +16,9 @@ MonoBehaviour:
   displayName: Coconut
   description: 
   rarity: 1
-  itemColor: {r: 1, g: 1, b: 1, a: 1}
+  pickupBehavior: 0
+  storagePercent: 0
+  itemColor: {r: 0.98081946, g: 0.9811321, b: 0.9487362, a: 0.6509804}
   sizeValue: 1
   icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   itemPrefab: {fileID: 4936968341197715355, guid: ab4b29585724b5d4b83b66aed0d0d7a8, type: 3}

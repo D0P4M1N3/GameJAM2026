@@ -16,7 +16,9 @@ MonoBehaviour:
   displayName: Chocolate
   description: 
   rarity: 1
-  itemColor: {r: 1, g: 1, b: 1, a: 1}
+  pickupBehavior: 0
+  storagePercent: 0
+  itemColor: {r: 0.33962262, g: 0.1822929, b: 0.08170166, a: 1}
   sizeValue: 1
   icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   itemPrefab: {fileID: 8702286580003340819, guid: 1562fa88475897c43805cde3d9460a8d, type: 3}
