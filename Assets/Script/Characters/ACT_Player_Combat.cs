@@ -58,6 +58,11 @@ public class ACT_Player_Combat : MonoBehaviour
     }
 
 
+    private void Start()
+    {
+        BB_Player_Master.ProjectileShooterStats.ProjectileCount_Current = BB_Player_Master.ProjectileShooterStats.ProjectileCount_Max;
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
@@ -66,7 +71,11 @@ public class ACT_Player_Combat : MonoBehaviour
 
             if (target != null)
             {
-                Shoot(target);
+                if (BB_Player_Master.ProjectileShooterStats.ProjectileCount_Current >0)
+                {
+                    Shoot(target);
+                    BB_Player_Master.ProjectileShooterStats.ProjectileCount_Current--;
+                }
             }
         }
     }

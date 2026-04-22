@@ -5,6 +5,7 @@ public class BB_Player_Master : MonoBehaviour
 {
     [Header("\n\n---- Stats")]
     public CharacterStats CharacterStats => DATA_Player.Instance.CharacterStats;
+    public ProjectileShooterStats ProjectileShooterStats => DATA_Player.Instance.ProjectileShooterStats;
 
     [Header("\n\n---- Body")]
     public BB_PlayerCTX_Body BB_PlayerCTX_Body;
