@@ -18,7 +18,7 @@ MonoBehaviour:
   rarity: 0
   pickupBehavior: 0
   storagePercent: 0
-  itemColor: {r: 1, g: 1, b: 1, a: 1}
+  itemColor: {r: 0.31523663, g: 0.9547169, b: 0.91331595, a: 1}
   sizeValue: 1
   icon: {fileID: -1741252877, guid: ae2a7ed94238dc1489121b48ab4897ae, type: 3}
   itemPrefab: {fileID: 2736271296588698879, guid: ca5ab428d16e85845a317e09ae801ef6, type: 3}

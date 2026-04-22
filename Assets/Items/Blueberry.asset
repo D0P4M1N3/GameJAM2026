@@ -16,6 +16,8 @@ MonoBehaviour:
   displayName: Blueberry
   description: 
   rarity: 0
+  pickupBehavior: 0
+  storagePercent: 0
   itemColor: {r: 0.22191174, g: 0.1764418, b: 0.5754717, a: 1}
   sizeValue: 1
   icon: {fileID: -1238504511, guid: 5df037affdf0c9b4ba3a67fa44aa65e8, type: 3}

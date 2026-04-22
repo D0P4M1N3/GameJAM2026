@@ -16,8 +16,10 @@ MonoBehaviour:
   displayName: Lemon
   description: 
   rarity: 0
+  pickupBehavior: 0
+  storagePercent: 0
   itemColor: {r: 1, g: 0.9973313, b: 0.8254717, a: 1}
-  sizeValue: 3
+  sizeValue: 1
   icon: {fileID: -672237814, guid: 5df037affdf0c9b4ba3a67fa44aa65e8, type: 3}
   itemPrefab: {fileID: 5163960091469960266, guid: 74e6a2f5e9b10ef4292e7d1bdbe2ad73, type: 3}
   stats:
