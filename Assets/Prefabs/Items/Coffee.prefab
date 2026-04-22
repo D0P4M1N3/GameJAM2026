@@ -54,15 +54,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
       propertyPath: m_ConstrainProportionsScale
@@ -76,6 +76,38 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 0.15
       objectReference: {fileID: 0}
+    - target: {fileID: 610002, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
+      propertyPath: m_SpriteTilingProperty.border.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 610002, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
+      propertyPath: m_SpriteTilingProperty.border.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 610002, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
+      propertyPath: m_SpriteTilingProperty.border.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 610002, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
+      propertyPath: m_SpriteTilingProperty.border.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 610002, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.x
+      value: 0.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 610002, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.y
+      value: 0.34
+      objectReference: {fileID: 0}
+    - target: {fileID: 610002, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 0.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 610002, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 0.34
+      objectReference: {fileID: 0}
     - target: {fileID: 1140001, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
       propertyPath: itemData
       value: 
@@ -88,20 +120,105 @@ PrefabInstance:
       propertyPath: dragCamera
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1140004, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
+      propertyPath: 'uiColliders.Array.data[0]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2120002, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
+      propertyPath: m_Size.x
+      value: 0.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 2120002, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
+      propertyPath: m_Size.y
+      value: 0.34
+      objectReference: {fileID: 0}
+    - target: {fileID: 2120002, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1805272101, guid: bc42bb926c3082847b80f8e7db628d81, type: 3}
     - target: {fileID: 2120002, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
       propertyPath: m_Color.b
-      value: 0.08497676
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2120002, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
       propertyPath: m_Color.g
-      value: 0.3920888
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2120002, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
       propertyPath: m_Color.r
-      value: 0.81886786
+      value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 2120002, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 610002, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 100002, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 41021900566344358}
   m_SourcePrefab: {fileID: 100100000, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
+--- !u!1 &564780609311064548 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100002, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
+  m_PrefabInstance: {fileID: 564780609310967622}
+  m_PrefabAsset: {fileID: 0}
+--- !u!60 &41021900566344358
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 564780609311064548}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.32, y: 0.34}
+    newSize: {x: 0.32, y: 0.34}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.020315196, y: 0.18168335}
+      - {x: -0.13312836, y: 0.13700998}
+      - {x: -0.16579776, y: -0.004062889}
+      - {x: -0.14130665, y: -0.10677163}
+      - {x: -0.058078367, y: -0.17584164}
+      - {x: 0.07275173, y: -0.17701}
+      - {x: 0.14999999, y: -0.08}
+      - {x: 0.13714828, y: 0.07481168}
+      - {x: 0.06415834, y: 0.15598}
+  m_UseDelaunayMesh: 0

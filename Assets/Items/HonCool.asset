@@ -15,9 +15,12 @@ MonoBehaviour:
   itemId: 24
   displayName: HonCool
   description: 
+  rarity: 0
+  pickupBehavior: 0
+  storagePercent: 0
   itemColor: {r: 1, g: 1, b: 1, a: 1}
   sizeValue: 1
-  icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  icon: {fileID: -865667883, guid: bc42bb926c3082847b80f8e7db628d81, type: 3}
   itemPrefab: {fileID: 9130359454841770324, guid: f7f65a5b0375aa042827b331a6eb4ad3, type: 3}
   stats:
     <Speed>k__BackingField: 0
