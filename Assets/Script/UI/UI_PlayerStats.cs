@@ -8,6 +8,7 @@ public class UI_PlayerStats : MonoBehaviour
     public TextMeshProUGUI damageText;
     public TextMeshProUGUI storageText;
     public TextMeshProUGUI currencyText;
+    public TextMeshProUGUI bullet;
     
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -23,6 +24,8 @@ public class UI_PlayerStats : MonoBehaviour
                 damageText.text = $"Damage: {stats.finalDamage:0}";
                 storageText.text = $"Storage: {stats.finalStorage:0}";
                 currencyText.text = $"Currency: {stats.Currency:0}";
+
+                bullet.text = "Bullets: " + DATA_Player.Instance.ProjectileShooterStats.ProjectileCount_Current + "/" + DATA_Player.Instance.ProjectileShooterStats.ProjectileCount_Max;
             }
         }
 
@@ -40,6 +43,9 @@ public class UI_PlayerStats : MonoBehaviour
         damageText.text = $"Damage: {stats.finalDamage:0}";
         storageText.text = $"Storage: {stats.finalStorage:0}";
         currencyText.text = $"Currency: {stats.Currency:0}";
+
+        bullet.text = "Bullets: " + DATA_Player.Instance.ProjectileShooterStats.ProjectileCount_Current + "/" + DATA_Player.Instance.ProjectileShooterStats.ProjectileCount_Max;
+
     }
 
 }
