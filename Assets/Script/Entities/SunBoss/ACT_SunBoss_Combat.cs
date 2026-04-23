@@ -1,47 +1,51 @@
 using UnityEngine;
-using System.Collections;
 
 public class ACT_SunBoss_Combat : MonoBehaviour
 {
     public BB_Sunboss_Master BB_Sunboss_Master;
 
-    private Coroutine debugRoutine;
     private bool wasReachedLastFrame = false;
+    private bool isDamaging = false;
 
+    private float damagePerSecond;
+
+    private void Start()
+    {
+        damagePerSecond = BB_Sunboss_Master.CharacterStats.finalDamage / 0.123f;
+    }
 
     private void Update()
     {
         bool reached = BB_Sunboss_Master.BB_SunbossCTX_Sense.ConeBox.ReachedTarget;
 
-        // --- ENTER (false -> true) ---
+        // --- ENTER ---
         if (reached && !wasReachedLastFrame)
         {
-            debugRoutine = StartCoroutine(DebugSpam());
+            isDamaging = true;
         }
 
-        // --- EXIT (true -> false) ---
+        // --- EXIT ---
         if (!reached && wasReachedLastFrame)
         {
-            if (debugRoutine != null)
-            {
-                StopCoroutine(debugRoutine);
-                debugRoutine = null;
-            }
+            isDamaging = false;
+        }
+
+        // --- DAMAGE LOOP ---
+        if (isDamaging)
+        {
+            ApplyDamageOverTime();
         }
 
         wasReachedLastFrame = reached;
     }
 
-    private IEnumerator DebugSpam()
+    private void ApplyDamageOverTime()
     {
-        while (true)
-        {
-            CharacterStats targetCharacterStats = DATA_Player.Instance.CharacterStats;
-            targetCharacterStats.HP -= BB_Sunboss_Master.CharacterStats.finalDamage;
-            targetCharacterStats.HP = Mathf.Clamp(targetCharacterStats.HP, 0, targetCharacterStats.finalMaxHP);
-            yield return new WaitForSeconds(0.123f);
-        }
+        CharacterStats targetCharacterStats = DATA_Player.Instance.CharacterStats;
+
+        float damageThisFrame = damagePerSecond * Time.deltaTime;
+
+        targetCharacterStats.HP -= damageThisFrame;
+        targetCharacterStats.HP = Mathf.Clamp(targetCharacterStats.HP, 0, targetCharacterStats.finalMaxHP);
     }
-
-
 }
