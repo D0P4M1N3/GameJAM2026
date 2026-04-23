@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: GameJAM2026.Runtime::ItemData
   itemId: 27
   displayName: Watermelon
-  description: 
+  description: Nice people's favorite fruit.
   rarity: 2
   pickupBehavior: 0
   storagePercent: 0

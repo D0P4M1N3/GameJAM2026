@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: GameJAM2026.Runtime::ItemData
   itemId: 21
   displayName: Ratcherman Friend
-  description: 
+  description: Ratchanon's corporate enterprise
   rarity: 0
   pickupBehavior: 0
   storagePercent: 0

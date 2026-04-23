@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: GameJAM2026.Runtime::ItemData
   itemId: 23
   displayName: GreenLeaf
-  description: 
+  description: It cures cancer, they say..., but my neighbors pay good money for
+    it, so we should totally grow some in the backyard.
   rarity: 2
   pickupBehavior: 0
   storagePercent: 0
