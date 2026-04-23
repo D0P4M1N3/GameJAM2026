@@ -20,7 +20,7 @@ MonoBehaviour:
   storagePercent: 0
   itemColor: {r: 1, g: 0.2396226, b: 0.2396226, a: 1}
   sizeValue: 1
-  icon: {fileID: -1034199655, guid: bc42bb926c3082847b80f8e7db628d81, type: 3}
+  icon: {fileID: -376619085, guid: b89365b8516ce9945853c29a26dca210, type: 3}
   itemPrefab: {fileID: 281503122209808811, guid: bd033e3f2daab07438bd2e091da722a6, type: 3}
   stats:
     <Speed>k__BackingField: 10
