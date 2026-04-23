@@ -21,6 +21,7 @@ public class CollectingItemSpawner : MonoBehaviour
     public bool HasPendingItem => pendingPickup != null;
     public bool CanAcceptPendingItem => pendingPickup != null && pendingPlacement != PendingPlacement.None;
     public PendingPlacement CurrentPendingPlacement => pendingPlacement;
+    public ItemWorldObject SpawnedUiItem => spawnedUiItem;
 
     private void Awake()
     {
@@ -186,6 +187,25 @@ public class CollectingItemSpawner : MonoBehaviour
         pendingPlacement = PendingPlacement.None;
         pendingCollectBoxTransform = null;
         ownerPopup?.NotifyItemCollected();
+        ownerPopup = null;
+        return true;
+    }
+
+    public bool DeletePendingItem(ItemWorldObject itemWorldObject)
+    {
+        if (pendingPickup == null || spawnedUiItem == null || itemWorldObject == null || itemWorldObject != spawnedUiItem)
+        {
+            return false;
+        }
+
+        pendingPickup.CancelPendingCollection();
+        Destroy(pendingPickup.gameObject);
+        Destroy(spawnedUiItem.gameObject);
+
+        spawnedUiItem = null;
+        pendingPickup = null;
+        pendingPlacement = PendingPlacement.None;
+        pendingCollectBoxTransform = null;
         ownerPopup = null;
         return true;
     }

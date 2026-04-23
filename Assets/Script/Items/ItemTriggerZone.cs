@@ -11,6 +11,7 @@ public class ItemTriggerZone : MonoBehaviour
 
     [SerializeField] private ZoneMode zoneMode = ZoneMode.Inventory;
     [SerializeField] private CollectingItemSpawner collectingItemSpawner;
+    [SerializeField] private PlayerCollectBoxPopUP ownerPopup;
     [SerializeField] private Color boundsColor = new(0.15f, 0.9f, 0.95f, 0.8f);
 
     public ZoneMode CurrentMode => zoneMode;
@@ -49,10 +50,11 @@ public class ItemTriggerZone : MonoBehaviour
         SetItemInventoryMembership(other, shouldBeInInventory: false);
     }
 
-    public void SetCollectBoxSpawner(CollectingItemSpawner spawner)
+    public void SetCollectBoxSpawner(CollectingItemSpawner spawner, PlayerCollectBoxPopUP popupOwner = null)
     {
         zoneMode = ZoneMode.CollectBox;
         collectingItemSpawner = spawner;
+        ownerPopup = popupOwner;
     }
 
     public void SetCollectBoxExitRemovalEnabled(bool isEnabled)
@@ -145,10 +147,15 @@ public class ItemTriggerZone : MonoBehaviour
 
             if (!wasPendingSpawnHandled && collectBoxData != null)
             {
-                collectBoxData.AddItem(itemWorldObject.ItemData);
+                if (!collectBoxData.ContainsItem(itemWorldObject.ItemData))
+                {
+                    collectBoxData.AddItem(itemWorldObject.ItemData);
+                }
+
                 itemWorldObject.SetCollectBoxState(true);
             }
 
+            ownerPopup?.NotifyCollectBoxItemEntered(itemWorldObject);
             return;
         }
 
@@ -159,12 +166,13 @@ public class ItemTriggerZone : MonoBehaviour
             return;
         }
 
-        if (!CollectBoxExitRemovalEnabled)
+        itemWorldObject.SetCollectBoxState(false);
+
+        if (CollectBoxExitRemovalEnabled)
         {
-            return;
+            collectBoxData?.RemoveItem(itemWorldObject.ItemData);
         }
 
-        collectBoxData?.RemoveItem(itemWorldObject.ItemData);
-        itemWorldObject.SetCollectBoxState(false);
+        ownerPopup?.NotifyCollectBoxItemExited(itemWorldObject);
     }
 }

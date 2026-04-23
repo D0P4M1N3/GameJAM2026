@@ -6,6 +6,26 @@ public class PendingCollectTrashZone : MonoBehaviour
     [SerializeField] private CollectingItemSpawner collectingItemSpawner;
     [SerializeField] private PlayerCollectBoxPopUP ownerPopup;
 
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        ItemWorldObject itemWorldObject = other != null ? other.GetComponentInParent<ItemWorldObject>() : null;
+        if (itemWorldObject == null)
+        {
+            return;
+        }
+
+        DraggableItem2D draggableItem = itemWorldObject.GetComponent<DraggableItem2D>();
+        if (draggableItem != null && draggableItem.IsDragging)
+        {
+            return;
+        }
+
+        if (ownerPopup != null && ownerPopup.TryDeletePopupItem(itemWorldObject))
+        {
+            TriggerTrashFace();
+        }
+    }
+
     private void Reset()
     {
         Collider2D zoneCollider = GetComponent<Collider2D>();

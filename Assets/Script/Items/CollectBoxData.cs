@@ -59,6 +59,25 @@ public class CollectBoxData : MonoBehaviour
         return false;
     }
 
+    public bool ContainsItem(ItemData item)
+    {
+        if (item == null || items == null)
+        {
+            return false;
+        }
+
+        for (int i = 0; i < items.Count; i++)
+        {
+            InventoryEntry entry = items[i];
+            if (entry.Item == item)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public void SetItems(IEnumerable<ItemData> sourceItems)
     {
         items.Clear();

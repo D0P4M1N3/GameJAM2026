@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -14,8 +15,8 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
     private CollectingItemSpawner collectingItemSpawner;
     private ItemTriggerZone collectBoxTriggerZone;
     private PendingCollectTrashZone trashTriggerZone;
-    private ItemWorldObject pendingCollectBoxTrashItem;
-    private bool canAcceptToClosePopup;
+    private readonly HashSet<ItemWorldObject> popupItemsInTrash = new();
+    private readonly HashSet<ItemWorldObject> popupItemsOutsideValidZones = new();
 
     private void Awake()
     {
@@ -30,7 +31,6 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
     public bool TryBeginCollecting(GameplayItemPickup pickup)
     {
         EnsureReferences();
-        canAcceptToClosePopup = false;
 
         if (pickup == null || collectingItemSpawner == null)
         {
@@ -53,12 +53,11 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
 
         Pause3D.Instance.SetPause(true);
         EnsureReferences();
-        canAcceptToClosePopup = false;
         SetAcceptButtonInteractable(false);
 
         if (collectBoxTriggerZone != null)
         {
-            collectBoxTriggerZone.SetCollectBoxExitRemovalEnabled(true);
+            collectBoxTriggerZone.SetCollectBoxExitRemovalEnabled(false);
         }
 
         if (collectBoxPopupUi != null)
@@ -81,6 +80,7 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
             cameraController.SetTransformToMode();
         }
 
+        RebuildPopupItemState();
         RefreshAcceptButtonState();
     }
 
@@ -89,6 +89,7 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
         AudioManager.Instance?.Play("sfx_storageClose_1");
 
         EnsureReferences();
+        RebuildPopupItemState();
         if (collectingItemSpawner != null &&
             collectingItemSpawner.HasPendingItem &&
             !collectingItemSpawner.CanAcceptPendingItem)
@@ -96,10 +97,16 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
             return;
         }
 
+        if (popupItemsOutsideValidZones.Count > 0)
+        {
+            RefreshAcceptButtonState();
+            return;
+        }
+
         Pause3D.Instance.SetPause(false);
         if (collectBoxTriggerZone != null)
         {
-            collectBoxTriggerZone.SetCollectBoxExitRemovalEnabled(false);
+            collectBoxTriggerZone.SetCollectBoxExitRemovalEnabled(true);
         }
 
         if (collectingPopup != null)
@@ -128,46 +135,61 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
     public void AcceptPendingItem()
     {
         EnsureReferences();
-
-        if (collectingItemSpawner != null && collectingItemSpawner.AcceptPendingItem())
+        RebuildPopupItemState();
+        if (popupItemsOutsideValidZones.Count > 0)
         {
             RefreshAcceptButtonState();
             return;
         }
 
-        if (canAcceptToClosePopup)
+        DeleteTrashItems();
+        RebuildPopupItemState();
+
+        if (popupItemsInTrash.Count == 0)
         {
-            canAcceptToClosePopup = false;
             ClosePopUp();
-            RefreshAcceptButtonState();
-            return;
         }
 
-        if (pendingCollectBoxTrashItem == null)
-        {
-            RefreshAcceptButtonState();
-            return;
-        }
-
-        CollectBoxData collectBoxData = GameManager.Instance != null ? GameManager.Instance.CollectBoxData : null;
-        collectBoxData?.RemoveItem(pendingCollectBoxTrashItem.ItemData);
-        pendingCollectBoxTrashItem.SetCollectBoxState(false);
-        Destroy(pendingCollectBoxTrashItem.gameObject);
-        pendingCollectBoxTrashItem = null;
         RefreshAcceptButtonState();
     }
 
     public void NotifyItemCollected()
     {
-        canAcceptToClosePopup = true;
+        RebuildPopupItemState();
+        RefreshAcceptButtonState();
+    }
+
+    public void NotifyCollectBoxItemEntered(ItemWorldObject itemWorldObject)
+    {
+        if (itemWorldObject == null)
+        {
+            return;
+        }
+
+        popupItemsOutsideValidZones.Remove(itemWorldObject);
+        popupItemsInTrash.Remove(itemWorldObject);
+        RefreshAcceptButtonState();
+    }
+
+    public void NotifyCollectBoxItemExited(ItemWorldObject itemWorldObject)
+    {
+        if (itemWorldObject == null)
+        {
+            return;
+        }
+
+        if (!popupItemsInTrash.Contains(itemWorldObject))
+        {
+            popupItemsOutsideValidZones.Add(itemWorldObject);
+        }
+
         RefreshAcceptButtonState();
     }
 
     public void RefreshAcceptButtonState()
     {
-        bool canAccept = (collectingItemSpawner != null && collectingItemSpawner.CanAcceptPendingItem) ||
-            pendingCollectBoxTrashItem != null ||
-            canAcceptToClosePopup;
+        RemoveDestroyedTrackedItems();
+        bool canAccept = popupItemsOutsideValidZones.Count == 0;
         SetAcceptButtonInteractable(canAccept);
     }
 
@@ -183,25 +205,189 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
         if (collectingItemSpawner != null &&
             collectingItemSpawner.TrySetSpawnedItemTrashState(itemWorldObject, shouldBeInTrash))
         {
+            TrackItemZoneState(itemWorldObject, shouldBeInTrash ? PopupZone.Trash : PopupZone.OutsideValidZones);
             RefreshAcceptButtonState();
             return true;
         }
 
         if (shouldBeInTrash)
         {
-            pendingCollectBoxTrashItem = itemWorldObject;
+            TrackItemZoneState(itemWorldObject, PopupZone.Trash);
             RefreshAcceptButtonState();
             return true;
         }
 
-        if (pendingCollectBoxTrashItem != itemWorldObject)
+        if (!popupItemsInTrash.Remove(itemWorldObject))
         {
             return false;
         }
 
-        pendingCollectBoxTrashItem = null;
+        if (!itemWorldObject.IsInCollectBox)
+        {
+            popupItemsOutsideValidZones.Add(itemWorldObject);
+        }
+
         RefreshAcceptButtonState();
         return true;
+    }
+
+    public bool TryDeletePopupItem(ItemWorldObject itemWorldObject)
+    {
+        EnsureReferences();
+
+        if (itemWorldObject == null || itemWorldObject.ItemData == null)
+        {
+            return false;
+        }
+
+        if (collectingItemSpawner != null && collectingItemSpawner.DeletePendingItem(itemWorldObject))
+        {
+            popupItemsOutsideValidZones.Remove(itemWorldObject);
+            popupItemsInTrash.Remove(itemWorldObject);
+            RefreshAcceptButtonState();
+            return true;
+        }
+
+        CollectBoxData collectBoxData = GameManager.Instance != null ? GameManager.Instance.CollectBoxData : null;
+        collectBoxData?.RemoveItem(itemWorldObject.ItemData);
+        popupItemsOutsideValidZones.Remove(itemWorldObject);
+        popupItemsInTrash.Remove(itemWorldObject);
+        itemWorldObject.SetCollectBoxState(false);
+        Destroy(itemWorldObject.gameObject);
+        RefreshAcceptButtonState();
+        return true;
+    }
+
+    private void DeleteTrashItems()
+    {
+        CollectBoxData collectBoxData = GameManager.Instance != null ? GameManager.Instance.CollectBoxData : null;
+        List<ItemWorldObject> itemsToDelete = new(popupItemsInTrash);
+
+        for (int i = 0; i < itemsToDelete.Count; i++)
+        {
+            ItemWorldObject itemWorldObject = itemsToDelete[i];
+            if (itemWorldObject == null || itemWorldObject.ItemData == null)
+            {
+                continue;
+            }
+
+            if (collectingItemSpawner != null && collectingItemSpawner.DeletePendingItem(itemWorldObject))
+            {
+                popupItemsOutsideValidZones.Remove(itemWorldObject);
+                popupItemsInTrash.Remove(itemWorldObject);
+                continue;
+            }
+
+            collectBoxData?.RemoveItem(itemWorldObject.ItemData);
+            popupItemsOutsideValidZones.Remove(itemWorldObject);
+            popupItemsInTrash.Remove(itemWorldObject);
+            itemWorldObject.SetCollectBoxState(false);
+            Destroy(itemWorldObject.gameObject);
+        }
+    }
+
+    private void RemoveDestroyedTrackedItems()
+    {
+        popupItemsInTrash.RemoveWhere(item => item == null);
+        popupItemsOutsideValidZones.RemoveWhere(item => item == null);
+    }
+
+    private void RebuildPopupItemState()
+    {
+        popupItemsInTrash.Clear();
+        popupItemsOutsideValidZones.Clear();
+
+        if (collectingPopup == null)
+        {
+            return;
+        }
+
+        ItemWorldObject[] popupItems = collectingPopup.GetComponentsInChildren<ItemWorldObject>(true);
+        for (int i = 0; i < popupItems.Length; i++)
+        {
+            ItemWorldObject itemWorldObject = popupItems[i];
+            if (itemWorldObject == null)
+            {
+                continue;
+            }
+
+            if (!IsPopupItem(itemWorldObject))
+            {
+                continue;
+            }
+
+            if (IsItemInsideTrashZone(itemWorldObject))
+            {
+                popupItemsInTrash.Add(itemWorldObject);
+                continue;
+            }
+
+            if (!IsItemInsideCollectBoxZone(itemWorldObject))
+            {
+                popupItemsOutsideValidZones.Add(itemWorldObject);
+            }
+        }
+    }
+
+    private bool IsPopupItem(ItemWorldObject itemWorldObject)
+    {
+        return itemWorldObject != null &&
+            collectingPopup != null &&
+            itemWorldObject.transform.IsChildOf(collectingPopup.transform);
+    }
+
+    private bool IsItemInsideCollectBoxZone(ItemWorldObject itemWorldObject)
+    {
+        return IsItemInsideZone(itemWorldObject, collectBoxTriggerZone);
+    }
+
+    private bool IsItemInsideTrashZone(ItemWorldObject itemWorldObject)
+    {
+        return IsItemInsideZone(itemWorldObject, trashTriggerZone);
+    }
+
+    private static bool IsItemInsideZone(ItemWorldObject itemWorldObject, Component zoneComponent)
+    {
+        if (itemWorldObject == null || zoneComponent == null)
+        {
+            return false;
+        }
+
+        Collider2D zoneCollider = zoneComponent.GetComponent<Collider2D>();
+        Collider2D itemCollider = itemWorldObject.GetComponentInChildren<Collider2D>(true);
+        if (zoneCollider == null || itemCollider == null)
+        {
+            return false;
+        }
+
+        return zoneCollider.bounds.Intersects(itemCollider.bounds);
+    }
+
+    private void TrackItemZoneState(ItemWorldObject itemWorldObject, PopupZone zone)
+    {
+        if (itemWorldObject == null)
+        {
+            return;
+        }
+
+        popupItemsInTrash.Remove(itemWorldObject);
+        popupItemsOutsideValidZones.Remove(itemWorldObject);
+
+        if (zone == PopupZone.Trash)
+        {
+            popupItemsInTrash.Add(itemWorldObject);
+        }
+        else if (zone == PopupZone.OutsideValidZones)
+        {
+            popupItemsOutsideValidZones.Add(itemWorldObject);
+        }
+    }
+
+    private enum PopupZone
+    {
+        CollectBox,
+        Trash,
+        OutsideValidZones,
     }
 
     private void EnsureReferences()
@@ -259,7 +445,7 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
 
         if (collectBoxTriggerZone != null && collectingItemSpawner != null)
         {
-            collectBoxTriggerZone.SetCollectBoxSpawner(collectingItemSpawner);
+            collectBoxTriggerZone.SetCollectBoxSpawner(collectingItemSpawner, this);
         }
 
         if (trashTriggerZone == null && collectingPopup != null)
@@ -298,6 +484,7 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
             return;
         }
 
+        acceptButton.gameObject.SetActive(isInteractable);
         acceptButton.interactable = isInteractable;
     }
 
