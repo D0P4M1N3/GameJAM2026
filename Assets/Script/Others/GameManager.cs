@@ -327,6 +327,26 @@ public class GameManager : MonoBehaviour
         DATA_Player.Instance.SetFaceForDuration(GetEndingSellFaceVariant(totalValue), duration);
     }
 
+    public void SetPlayerFace(PlayerFaceVariant variant)
+    {
+        if (DATA_Player.Instance == null)
+        {
+            return;
+        }
+
+        DATA_Player.Instance.SetFace(variant);
+    }
+
+    public void ResetPlayerFace()
+    {
+        if (DATA_Player.Instance == null)
+        {
+            return;
+        }
+
+        DATA_Player.Instance.ResetFaceToDefault();
+    }
+
     public void HandlePlayerDefeated()
     {
         if (string.IsNullOrWhiteSpace(playerDefeatSceneName))

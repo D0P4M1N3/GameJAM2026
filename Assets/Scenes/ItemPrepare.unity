@@ -1521,6 +1521,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: GameJAM2026.Runtime::ItemTriggerZone
   zoneMode: 0
   collectingItemSpawner: {fileID: 0}
+  ownerPopup: {fileID: 0}
   boundsColor: {r: 0.15, g: 0.9, b: 0.95, a: 0.8}
 --- !u!1 &533547056
 GameObject:

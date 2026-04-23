@@ -17,6 +17,7 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
     private PendingCollectTrashZone trashTriggerZone;
     private readonly HashSet<ItemWorldObject> popupItemsInTrash = new();
     private readonly HashSet<ItemWorldObject> popupItemsOutsideValidZones = new();
+    private bool IsPopupOpen => collectBoxPopupUi != null && collectBoxPopupUi.activeSelf;
 
     private void Awake()
     {
@@ -26,6 +27,29 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
     private void OnValidate()
     {
         EnsureReferences();
+    }
+
+    private void Update()
+    {
+        if (!Input.GetKeyDown(KeyCode.Tab))
+        {
+            return;
+        }
+
+        EnsureReferences();
+
+        if (IsPopupOpen)
+        {
+            ClosePopUp();
+            return;
+        }
+
+        if (Pause3D.Instance != null && Pause3D.Instance.IsPaused)
+        {
+            return;
+        }
+
+        OpenPopUP();
     }
 
     public bool TryBeginCollecting(GameplayItemPickup pickup)

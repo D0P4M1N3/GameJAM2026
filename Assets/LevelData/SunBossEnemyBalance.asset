@@ -79,8 +79,8 @@ MonoBehaviour:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 9.887017
-        value: 24.859097
+        time: 10.034486
+        value: 27.079702
         inSlope: 1
         outSlope: 1
         tangentMode: 0
@@ -91,13 +91,13 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   coneAngle:
-    startValue: 35.2
+    startValue: 35
     progressionCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 1
-        value: 35.2
+        value: 35
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -105,8 +105,8 @@ MonoBehaviour:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 1.0366669
-        value: 35.417145
+        time: 10.033411
+        value: 40.02856
         inSlope: 1
         outSlope: 1
         tangentMode: 0
@@ -131,8 +131,8 @@ MonoBehaviour:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 4.982002
-        value: 29.48733
+        time: 10.016804
+        value: 35.454926
         inSlope: 1
         outSlope: 1
         tangentMode: 0
@@ -184,8 +184,8 @@ MonoBehaviour:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 25.60906
-        value: 89.75016
+        time: 10.001883
+        value: 69.8405
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -210,10 +210,10 @@ MonoBehaviour:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 14.955274
-        value: 4.986366
-        inSlope: 1
-        outSlope: 1
+        time: 10.025417
+        value: 3.5312958
+        inSlope: 0
+        outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
@@ -262,8 +262,8 @@ MonoBehaviour:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 20.096443
-        value: 239.38078
+        time: 10.003914
+        value: 149.12596
         inSlope: 1
         outSlope: 1
         tangentMode: 0
