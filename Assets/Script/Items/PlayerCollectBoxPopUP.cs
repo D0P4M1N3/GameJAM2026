@@ -48,6 +48,9 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
 
     public void OpenPopUP()
     {
+        AudioManager.Instance?.Play("sfx_storageOpen_1");
+
+
         Pause3D.Instance.SetPause(true);
         EnsureReferences();
         canAcceptToClosePopup = false;
@@ -83,6 +86,8 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
 
     public void ClosePopUp()
     {
+        AudioManager.Instance?.Play("sfx_storageClose_1");
+
         EnsureReferences();
         if (collectingItemSpawner != null &&
             collectingItemSpawner.HasPendingItem &&

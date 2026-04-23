@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.Audio;
-using System.Collections;
 using System.Collections.Generic;
 
 public class AudioManager : MonoBehaviour
@@ -10,23 +8,11 @@ public class AudioManager : MonoBehaviour
     [Header("Sound Library")]
     public Sound[] sounds;
 
-    [Header("Audio Mixer")]
-    [SerializeField] private AudioMixer mixer;
-    [SerializeField] private AudioMixerGroup bgmGroup;
-    [SerializeField] private AudioMixerGroup sfxGroup;
+    [Header("SFX Source")]
+    [SerializeField] private AudioSource sfxSource;
 
-    [Header("BGM")]
-    [SerializeField] private AudioSource bgmSourceA;
-    [SerializeField] private AudioSource bgmSourceB;
-    [SerializeField] private float crossfadeTime = 1.5f;
-
-    private AudioSource activeBGM;
-    private AudioSource idleBGM;
-
-    [Header("SFX Pool")]
-    [SerializeField] private int sfxPoolSize = 10;
-    private AudioSource[] sfxPool;
-    private int sfxIndex = 0;
+    [Header("Global Volume")]
+    [Range(0f, 1f)] public float sfxVolume = 1f;
 
     private Dictionary<string, Sound> soundDict;
 
@@ -44,51 +30,27 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        // Dictionary setup
+        // Setup dictionary
         soundDict = new Dictionary<string, Sound>();
+
         foreach (Sound s in sounds)
         {
             if (!soundDict.ContainsKey(s.name))
+            {
                 soundDict.Add(s.name, s);
+            }
             else
-                Debug.LogWarning("Duplicate sound: " + s.name);
+            {
+                Debug.LogWarning("Duplicate sound name: " + s.name);
+            }
         }
 
-        SetupBGMSources();
+        // Ensure AudioSource exists
+        if (sfxSource == null)
+            sfxSource = gameObject.AddComponent<AudioSource>();
 
-        SetupSFXPool();
-    }
-
-    private void SetupBGMSources()
-    {
-        if (bgmSourceA == null)
-            bgmSourceA = gameObject.AddComponent<AudioSource>();
-
-        if (bgmSourceB == null)
-            bgmSourceB = gameObject.AddComponent<AudioSource>();
-
-        bgmSourceA.outputAudioMixerGroup = bgmGroup;
-        bgmSourceB.outputAudioMixerGroup = bgmGroup;
-
-        bgmSourceA.playOnAwake = false;
-        bgmSourceB.playOnAwake = false;
-
-        activeBGM = bgmSourceA;
-        idleBGM = bgmSourceB;
-    }
-
-    private void SetupSFXPool()
-    {
-        sfxPool = new AudioSource[sfxPoolSize];
-
-        for (int i = 0; i < sfxPoolSize; i++)
-        {
-            AudioSource src = gameObject.AddComponent<AudioSource>();
-            src.outputAudioMixerGroup = sfxGroup;
-            src.playOnAwake = false;
-
-            sfxPool[i] = src;
-        }
+        sfxSource.loop = false;
+        sfxSource.playOnAwake = false;
     }
 
     public void Play(string name)
@@ -99,71 +61,12 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        if (s.type == SoundType.BGM)
-        {
-            PlayBGM(s);
-        }
-        else
-        {
-            PlaySFX(s);
-        }
+        sfxSource.pitch = s.pitch;
+        sfxSource.PlayOneShot(s.clip, s.volume * sfxVolume);
     }
 
-    private void PlaySFX(Sound s)
+    public void StopAllSFX()
     {
-        AudioSource src = sfxPool[sfxIndex];
-
-        src.pitch = s.pitch;
-        src.PlayOneShot(s.clip, s.volume);
-
-        sfxIndex = (sfxIndex + 1) % sfxPoolSize;
-    }
-
-    private void PlayBGM(Sound s)
-    {
-        if (activeBGM.clip == s.clip && activeBGM.isPlaying)
-            return;
-
-        idleBGM.clip = s.clip;
-        idleBGM.volume = 0f;
-        idleBGM.pitch = s.pitch;
-        idleBGM.loop = s.loop;
-
-        idleBGM.Play();
-
-        StopAllCoroutines();
-        StartCoroutine(CrossfadeBGM(s.volume));
-    }
-
-    private IEnumerator CrossfadeBGM(float targetVolume)
-    {
-        float time = 0f;
-
-        while (time < crossfadeTime)
-        {
-            time += Time.deltaTime;
-            float t = time / crossfadeTime;
-
-            activeBGM.volume = Mathf.Lerp(targetVolume, 0f, t);
-            idleBGM.volume = Mathf.Lerp(0f, targetVolume, t);
-
-            yield return null;
-        }
-
-        activeBGM.Stop();
-
-        AudioSource temp = activeBGM;
-        activeBGM = idleBGM;
-        idleBGM = temp;
-    }
-
-    public void SetBGMVolume(float value)
-    {
-        mixer.SetFloat("BGMVolume", Mathf.Log10(Mathf.Max(value, 0.0001f)) * 20);
-    }
-
-    public void SetSFXVolume(float value)
-    {
-        mixer.SetFloat("SFXVolume", Mathf.Log10(Mathf.Max(value, 0.0001f)) * 20);
+        sfxSource.Stop();
     }
 }

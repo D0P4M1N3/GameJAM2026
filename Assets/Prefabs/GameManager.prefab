@@ -47,17 +47,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
   sounds:
-  - name: 
-    clip: {fileID: 0}
-    volume: 0
-    pitch: 0
+  - name: sfx_blender
+    clip: {fileID: 8300000, guid: c311b34a846acc142a3f04cedc8ecbd9, type: 3}
+    volume: 0.5
+    pitch: 1
     loop: 0
     type: 0
-    source: {fileID: 0}
-  bgmSource: {fileID: 305103695588136392}
+  - name: sfx_storageClose_1
+    clip: {fileID: 8300000, guid: 62df6f218d676d44495c3a5a68147ce7, type: 3}
+    volume: 0
+    pitch: 1
+    loop: 0
+    type: 0
+  - name: sfx_storageOpen_1
+    clip: {fileID: 8300000, guid: a3dd07df80e7aae4f81c9d075940fb46, type: 3}
+    volume: 0
+    pitch: 1
+    loop: 0
+    type: 0
+  - name: sfx_storageOpen_2
+    clip: {fileID: 8300000, guid: 94f3f6adfaa479641877bdeacd06d529, type: 3}
+    volume: 0
+    pitch: 1
+    loop: 0
+    type: 0
   sfxSource: {fileID: 1942323850126279993}
   sfxVolume: 1
-  bgmVolume: 1
 --- !u!1 &1043451333200621071
 GameObject:
   m_ObjectHideFlags: 0
