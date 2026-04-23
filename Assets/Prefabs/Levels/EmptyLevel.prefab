@@ -425,7 +425,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelScatterZone
   zoneType: 0
-  size: {x: 9.59, y: 0, z: 9.32}
+  size: {x: 8.4, y: 0, z: 8.16}
   gizmoColor: {r: 0.25, g: 0.8, b: 1, a: 0.45}
 --- !u!1 &4516038823713232825
 GameObject:

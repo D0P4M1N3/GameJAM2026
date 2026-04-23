@@ -1185,6 +1185,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5777744995937308363, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
   m_PrefabInstance: {fileID: 3762316955707977069}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1129193594 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2712039530456595421, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
+  m_PrefabInstance: {fileID: 3762316955707977069}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f22e9eba42b426349913ebda96008e04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CollectingItemSpawner
 --- !u!1 &1140618611
 GameObject:
   m_ObjectHideFlags: 0
@@ -1526,6 +1537,17 @@ MonoBehaviour:
   hideZeroStats: 1
   emptyTitle: Hover Item
   emptyDescription: 
+--- !u!114 &1650783089 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4814034004405779524, guid: 44aac0b6c7743ba4d8bc785836abb3ab, type: 3}
+  m_PrefabInstance: {fileID: 7680799637819975652}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5e95c8b35854c94bc6630fefbe41f86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LevelBalanceSizeApplier
 --- !u!4 &1666747386 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1345481311484397410, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
@@ -2143,6 +2165,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 398524899144629552, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
+      propertyPath: collectingItemSpawner
+      value: 
+      objectReference: {fileID: 1129193594}
     - target: {fileID: 1345481311484397410, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
       propertyPath: m_LocalPosition.x
       value: 9.29
@@ -2488,6 +2514,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2231792147489629705, guid: 6edd0a267d22027438ff5706179444ad, type: 3}
+      propertyPath: playerRoot
+      value: 
+      objectReference: {fileID: 463406091}
+    - target: {fileID: 2231792147489629705, guid: 6edd0a267d22027438ff5706179444ad, type: 3}
       propertyPath: baseLevelRoot
       value: 
       objectReference: {fileID: 2006975210}
@@ -2495,6 +2525,22 @@ PrefabInstance:
       propertyPath: navMeshSurface
       value: 
       objectReference: {fileID: 951028994}
+    - target: {fileID: 2231792147489629705, guid: 6edd0a267d22027438ff5706179444ad, type: 3}
+      propertyPath: levelSizeApplier
+      value: 
+      objectReference: {fileID: 1650783089}
+    - target: {fileID: 2231792147489629705, guid: 6edd0a267d22027438ff5706179444ad, type: 3}
+      propertyPath: minBuildingSpacing
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2231792147489629705, guid: 6edd0a267d22027438ff5706179444ad, type: 3}
+      propertyPath: minItemPlayerSpacing
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2231792147489629705, guid: 6edd0a267d22027438ff5706179444ad, type: 3}
+      propertyPath: minItemBuildingSpacing
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2231792147489629705, guid: 6edd0a267d22027438ff5706179444ad, type: 3}
       propertyPath: minExitGateBuildingSpacing
       value: 2

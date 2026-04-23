@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c6b5bf341b34d54b8cfc4eb28d1ab01, type: 3}
   m_Name: LootTable
   m_EditorClassIdentifier: 
-  startMinDrops: 6
-  startMaxDrops: 24
+  startMinDrops: 3
+  startMaxDrops: 6
   minDropsProgressionCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 1
-      value: 6
+      value: 3
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -27,8 +27,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 9.932295
-      value: 15.039058
+      time: 19.939116
+      value: 20.131207
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -43,7 +43,7 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 1
-      value: 24
+      value: 6
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -51,8 +51,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 14.963579
-      value: 40.24421
+      time: 19.850828
+      value: 40.08114
       inSlope: 0
       outSlope: 0
       tangentMode: 0

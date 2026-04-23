@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using System.Threading;
+using System.Collections;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
@@ -12,6 +12,8 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private NavMeshSurface navMeshSurface;
     [SerializeField] [FormerlySerializedAs("gameplayPickupPrefab")] private GameplayItemPickup fallbackGameplayPickupPrefab;
     [SerializeField] private LevelBalanceData levelBalanceData;
+    [SerializeField] private LevelBalanceSizeApplier levelSizeApplier;
+    [SerializeField] private bool applyLevelSizeBeforeGeneration = true;
     [SerializeField] private LayerMask groundLayerMask = 1 << 6;
     [SerializeField] [Min(0.1f)] private float groundRaycastHeight = 50f;
     [SerializeField] [Min(0.1f)] private float groundRaycastDistance = 200f;
@@ -46,6 +48,7 @@ public class LevelGenerator : MonoBehaviour
     private Transform generatedItemsRoot;
     private Transform generatedEnemiesRoot;
     private Transform generatedExitGateRoot;
+    private Coroutine generateRoutine;
 
 
 
@@ -64,6 +67,7 @@ public class LevelGenerator : MonoBehaviour
 
     private void OnValidate()
     {
+        EnsureLevelSizeApplierReference();
         EnsurePlayerReference();
         EnsureNavMeshSurfaceReference();
     }
@@ -76,6 +80,34 @@ public class LevelGenerator : MonoBehaviour
     [ContextMenu("Generate Level")]
     public void Generate()
     {
+        if (!Application.isPlaying)
+        {
+            GenerateImmediate();
+            return;
+        }
+
+        if (generateRoutine != null)
+        {
+            StopCoroutine(generateRoutine);
+        }
+
+        generateRoutine = StartCoroutine(GenerateAfterLevelSizeApplied());
+    }
+
+    private IEnumerator GenerateAfterLevelSizeApplied()
+    {
+        ApplyLevelSizeBeforeGeneration();
+        Physics.SyncTransforms();
+        yield return null;
+        Physics.SyncTransforms();
+        GenerateImmediate();
+        generateRoutine = null;
+    }
+
+    private void GenerateImmediate()
+    {
+        ApplyLevelSizeBeforeGeneration();
+        Physics.SyncTransforms();
         ClearGenerated();
 
         if (baseLevelRoot == null)
@@ -533,6 +565,47 @@ public class LevelGenerator : MonoBehaviour
         {
             navMeshSurface = baseLevelRoot.GetComponentInChildren<NavMeshSurface>(true);
         }
+    }
+
+    private void EnsureLevelSizeApplierReference()
+    {
+        if (levelSizeApplier != null)
+        {
+            return;
+        }
+
+        levelSizeApplier = GetComponent<LevelBalanceSizeApplier>();
+        if (levelSizeApplier != null)
+        {
+            return;
+        }
+
+        if (baseLevelRoot != null)
+        {
+            levelSizeApplier = baseLevelRoot.GetComponentInChildren<LevelBalanceSizeApplier>(true);
+        }
+    }
+
+    private void ApplyLevelSizeBeforeGeneration()
+    {
+        if (!applyLevelSizeBeforeGeneration)
+        {
+            return;
+        }
+
+        EnsureLevelSizeApplierReference();
+        if (levelSizeApplier == null)
+        {
+            return;
+        }
+
+        if (levelBalanceData != null)
+        {
+            levelSizeApplier.SetLevelBalanceData(levelBalanceData);
+        }
+
+        int progression = GameManager.Instance != null ? GameManager.Instance.CurrentProgression : 1;
+        levelSizeApplier.Apply(progression);
     }
 
     private void EnsurePlayerReference()

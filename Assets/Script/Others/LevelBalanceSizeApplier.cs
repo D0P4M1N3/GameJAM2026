@@ -47,6 +47,11 @@ public class LevelBalanceSizeApplier : MonoBehaviour
         Apply(progression);
     }
 
+    public void SetLevelBalanceData(LevelBalanceData balanceData)
+    {
+        levelBalanceData = balanceData;
+    }
+
     public void Apply(int progression)
     {
         CacheOriginalScale();

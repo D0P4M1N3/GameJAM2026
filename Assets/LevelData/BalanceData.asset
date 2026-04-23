@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lootTable: {fileID: 11400000, guid: efad36a05f41423bb1d768cbe3877303, type: 2}
   enemyBalanceData: {fileID: 11400000, guid: 54f0bc3fdd8f40b2af0a6948d86f559f, type: 2}
-  startMinBuildings: 12
-  startMaxBuildings: 16
+  startMinBuildings: 3
+  startMaxBuildings: 6
   minBuildingsProgressionCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 1
-      value: 12
+      value: 3
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -45,7 +45,7 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 1
-      value: 16
+      value: 6
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -65,7 +65,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   startMinEnemies: 1
-  startMaxEnemies: 3
+  startMaxEnemies: 2
   minEnemiesProgressionCurve:
     serializedVersion: 2
     m_Curve:
@@ -95,7 +95,7 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 1
-      value: 3
+      value: 2
       inSlope: 0
       outSlope: 0
       tangentMode: 0
