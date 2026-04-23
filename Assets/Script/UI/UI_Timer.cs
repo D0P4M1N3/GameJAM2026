@@ -15,11 +15,13 @@ public class UI_Timer : MonoBehaviour
     [SerializeField] private float countdownStartTime = 60f;
 
     [Header("Events")]
-    public UnityEvent OnTimeOut;          // Inspector binding
-    public event Action OnTimeOutEvent;   // Code binding
+    public UnityEvent OnTimeOut;
+    public event Action OnTimeOutEvent;
 
     private float currentTime = 0f;
     private bool isRunning = true;
+    private bool isPaused = false;
+
 
     private void Awake()
     {
@@ -41,7 +43,7 @@ public class UI_Timer : MonoBehaviour
 
     private void Update()
     {
-        if (!isRunning) return;
+        if (!isRunning || isPaused) return;
 
         if (useCountdown)
         {
@@ -64,6 +66,8 @@ public class UI_Timer : MonoBehaviour
 
     private void UpdateDisplay()
     {
+        if (timerText == null) return;
+
         int minutes = Mathf.FloorToInt(currentTime / 60f);
         int seconds = Mathf.FloorToInt(currentTime % 60f);
 
@@ -73,11 +77,10 @@ public class UI_Timer : MonoBehaviour
     private void TriggerTimeOut()
     {
         Debug.Log("TIMEOUT");
-        OnTimeOut?.Invoke();     // Inspector listeners
-        OnTimeOutEvent?.Invoke(); // Code listeners
-    }
 
-    // -------- PUBLIC API --------
+        OnTimeOut?.Invoke();
+        OnTimeOutEvent?.Invoke();
+    }
 
     public void ResetTimer()
     {
@@ -103,12 +106,16 @@ public class UI_Timer : MonoBehaviour
         isRunning = false;
     }
 
+    public void PauseTimer(bool pause)
+    {
+        isPaused = pause;
+    }
+
     public float GetTime()
     {
         return currentTime;
     }
 
-    // -------- EVENT BIND HELPERS --------
 
     public void AddTimeOutListener(Action listener)
     {
@@ -118,5 +125,21 @@ public class UI_Timer : MonoBehaviour
     public void RemoveTimeOutListener(Action listener)
     {
         OnTimeOutEvent -= listener;
+    }
+
+
+    private void OnEnable()
+    {
+        Pause3D.OnPauseChanged += HandlePause;
+    }
+
+    private void OnDisable()
+    {
+        Pause3D.OnPauseChanged -= HandlePause;
+    }
+
+    private void HandlePause(bool pause)
+    {
+        isPaused = pause;
     }
 }
