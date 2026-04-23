@@ -41,6 +41,8 @@ public class ACT_SunBoss_Combat : MonoBehaviour
 
     private void ApplyDamageOverTime()
     {
+        if (Pause3D.Instance.IsPaused) { return; }
+
         CharacterStats targetCharacterStats = DATA_Player.Instance.CharacterStats;
 
         float damageThisFrame = damagePerSecond * Time.deltaTime;
