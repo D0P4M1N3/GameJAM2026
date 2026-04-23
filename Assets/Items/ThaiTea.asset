@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: GameJAM2026.Runtime::ItemData
   itemId: 20
   displayName: ThaiTea
-  description: 
+  description: Sugar spike and insomnia
   rarity: 1
   pickupBehavior: 0
   storagePercent: 0

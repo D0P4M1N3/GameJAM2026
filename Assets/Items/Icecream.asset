@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: GameJAM2026.Runtime::ItemData
   itemId: 7
   displayName: Icecream
-  description: 
+  description: Ice with more water
   rarity: 0
   pickupBehavior: 0
   storagePercent: 0
