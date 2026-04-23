@@ -20,13 +20,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CollectBoxData collectBoxData;
     [SerializeField] private bool hasGrantedStarterPack;
     [SerializeField] [Min(1)] private int currentProgression = 1;
+    [SerializeField] private string playerDefeatSceneName = "StashSellEnding";
 
     public bool IsGameplayPaused { get; private set; }
 
     private readonly List<ItemData> runtimeInventoryItems = new();
     private readonly List<StashEntry> runtimeStashEntries = new();
     private readonly List<ItemData> runtimeCollectBoxItems = new();
-
     private bool isApplyingSceneData;
     private bool hasInitializedRuntimeData;
 
@@ -296,6 +296,45 @@ public class GameManager : MonoBehaviour
         {
             DATA_Player.Instance.ResetCharacterStats();
         }
+    }
+
+    public void ResetAllRuntimeDataForNewGame()
+    {
+        hasGrantedStarterPack = false;
+        currentProgression = 1;
+
+        runtimeInventoryItems.Clear();
+        runtimeStashEntries.Clear();
+        runtimeCollectBoxItems.Clear();
+
+        ApplyRuntimeDataToScene(refreshStashSpawn: true);
+        DestroyInventoryWorldObjects();
+
+        if (DATA_Player.Instance != null)
+        {
+            DATA_Player.Instance.ResetCharacterStats();
+            DATA_Player.Instance.ResetFaceToDefault();
+        }
+    }
+
+    public void TriggerEndingSellFaceFromTotalValue(float totalValue, float duration = 1f)
+    {
+        if (DATA_Player.Instance == null)
+        {
+            return;
+        }
+
+        DATA_Player.Instance.SetFaceForDuration(GetEndingSellFaceVariant(totalValue), duration);
+    }
+
+    public void HandlePlayerDefeated()
+    {
+        if (string.IsNullOrWhiteSpace(playerDefeatSceneName))
+        {
+            return;
+        }
+
+        LoadScene(playerDefeatSceneName);
     }
 
     public void ApplyInventoryStatsToPlayer()
@@ -707,6 +746,36 @@ public class GameManager : MonoBehaviour
         }
 
         stashSpawner.ResetStash();
+    }
+
+    private static PlayerFaceVariant GetEndingSellFaceVariant(float totalValue)
+    {
+        if (totalValue > 1500f)
+        {
+            return PlayerFaceVariant.G;
+        }
+
+        if (totalValue > 1000f)
+        {
+            return PlayerFaceVariant.B;
+        }
+
+        if (totalValue > 500f)
+        {
+            return PlayerFaceVariant.D;
+        }
+
+        if (totalValue > 300f)
+        {
+            return PlayerFaceVariant.A;
+        }
+
+        if (totalValue > 100f)
+        {
+            return PlayerFaceVariant.E;
+        }
+
+        return PlayerFaceVariant.C;
     }
 
 

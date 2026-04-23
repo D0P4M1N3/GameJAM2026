@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Collider2D))]
 public class EndingSellZone : MonoBehaviour
@@ -19,12 +20,19 @@ public class EndingSellZone : MonoBehaviour
     [SerializeField] [Min(0f)] private float maxTextPopScale = 0.65f;
     [SerializeField] [Min(0.01f)] private float textPopDuration = 0.28f;
     [SerializeField] [Min(0f)] private float textPopOvershoot = 0.18f;
+    [Header("Completion")]
+    [SerializeField] private Button completionButton;
+    [SerializeField] [Min(1f)] private float completedTotalScaleMultiplier = 1.6f;
+    [SerializeField] [Min(0.01f)] private float completedScaleDuration = 0.35f;
 
     private readonly HashSet<int> processedItemIds = new();
     private float totalValue;
     private Vector3 totalTextBaseScale = Vector3.one;
     private float currentTextPopStrength;
     private float textPopTime = float.MaxValue;
+    private bool hasCompletedSelling;
+    private bool isCompletedScaleAnimating;
+    private float completedScaleTime;
 
     private void Start()
     {
@@ -35,10 +43,16 @@ public class EndingSellZone : MonoBehaviour
     private void Awake()
     {
         CacheTotalTextBaseScale();
+        SetCompletionButtonEnabled(false);
     }
 
     private void Update()
     {
+        if (UpdateCompletedScaleAnimation())
+        {
+            return;
+        }
+
         UpdateTotalTextPopAnimation();
     }
 
@@ -85,6 +99,7 @@ public class EndingSellZone : MonoBehaviour
         UpdateTotalText();
         TriggerTotalTextPop(soldValue);
         SpawnValuePopup(itemWorldObject.ItemData, soldValue, hitPoint + popupOffset);
+        GameManager.Instance?.TriggerEndingSellFaceFromTotalValue(totalValue, 1f);
 
         if (removeSoldItemFromStash)
         {
@@ -97,6 +112,8 @@ public class EndingSellZone : MonoBehaviour
             DisableItemPhysics(itemWorldObject);
             Destroy(itemWorldObject.gameObject, destroySoldItemDelay);
         }
+
+        TryHandleAllItemsSold();
     }
 
     private void UpdateTotalText()
@@ -161,6 +178,28 @@ public class EndingSellZone : MonoBehaviour
         }
     }
 
+    private bool UpdateCompletedScaleAnimation()
+    {
+        if (!isCompletedScaleAnimating || totalValueText == null)
+        {
+            return false;
+        }
+
+        completedScaleTime += Time.deltaTime;
+        float normalizedTime = Mathf.Clamp01(completedScaleTime / completedScaleDuration);
+        float easedTime = 1f - Mathf.Pow(1f - normalizedTime, 3f);
+        float scaleMultiplier = Mathf.LerpUnclamped(1f, completedTotalScaleMultiplier, easedTime);
+        totalValueText.transform.localScale = totalTextBaseScale * scaleMultiplier;
+
+        if (normalizedTime >= 1f)
+        {
+            isCompletedScaleAnimating = false;
+            totalValueText.transform.localScale = totalTextBaseScale * completedTotalScaleMultiplier;
+        }
+
+        return true;
+    }
+
     private void CacheTotalTextBaseScale()
     {
         if (totalValueText == null)
@@ -169,6 +208,61 @@ public class EndingSellZone : MonoBehaviour
         }
 
         totalTextBaseScale = totalValueText.transform.localScale;
+    }
+
+    private void TryHandleAllItemsSold()
+    {
+        if (hasCompletedSelling || !AreAllItemsSold())
+        {
+            return;
+        }
+
+        hasCompletedSelling = true;
+        currentTextPopStrength = 0f;
+        textPopTime = float.MaxValue;
+        completedScaleTime = 0f;
+        isCompletedScaleAnimating = true;
+        SetCompletionButtonEnabled(true);
+    }
+
+    private bool AreAllItemsSold()
+    {
+        if (removeSoldItemFromStash)
+        {
+            StashData stashData = GameManager.Instance != null ? GameManager.Instance.StashData : null;
+            if (stashData != null)
+            {
+                return stashData.TotalItemCount <= 0;
+            }
+        }
+
+        ItemWorldObject[] remainingItems = FindObjectsByType<ItemWorldObject>(FindObjectsSortMode.None);
+        for (int i = 0; i < remainingItems.Length; i++)
+        {
+            ItemWorldObject itemWorldObject = remainingItems[i];
+            if (itemWorldObject == null || itemWorldObject.ItemData == null)
+            {
+                continue;
+            }
+
+            if (!processedItemIds.Contains(itemWorldObject.GetInstanceID()))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private void SetCompletionButtonEnabled(bool isEnabled)
+    {
+        if (completionButton == null)
+        {
+            return;
+        }
+
+        completionButton.interactable = isEnabled;
+        completionButton.gameObject.SetActive(isEnabled);
     }
 
     private void SpawnValuePopup(ItemData itemData, float soldValue, Vector3 worldPosition)

@@ -1,17 +1,22 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "LevelBalanceData", menuName = "Gameplay/Level Balance Data")]
 public class LevelBalanceData : ScriptableObject
 {
     [SerializeField] private LevelLootTable lootTable;
     [SerializeField] private EnemyBalanceData enemyBalanceData;
-    [SerializeField] [Min(0)] private int minBuildings = 3;
-    [SerializeField] [Min(0)] private int maxBuildings = 6;
+    [FormerlySerializedAs("minBuildings")]
+    [SerializeField] [Min(0)] private int startMinBuildings = 3;
+    [FormerlySerializedAs("maxBuildings")]
+    [SerializeField] [Min(0)] private int startMaxBuildings = 6;
     [SerializeField] private AnimationCurve minBuildingsProgressionCurve = AnimationCurve.Linear(0f, 1f, 1f, 1f);
     [SerializeField] private AnimationCurve maxBuildingsProgressionCurve = AnimationCurve.Linear(0f, 1f, 1f, 1f);
-    [SerializeField] [Min(0)] private int minEnemies = 2;
-    [SerializeField] [Min(0)] private int maxEnemies = 5;
+    [FormerlySerializedAs("minEnemies")]
+    [SerializeField] [Min(0)] private int startMinEnemies = 2;
+    [FormerlySerializedAs("maxEnemies")]
+    [SerializeField] [Min(0)] private int startMaxEnemies = 5;
     [SerializeField] private AnimationCurve minEnemiesProgressionCurve = AnimationCurve.Linear(0f, 1f, 1f, 1f);
     [SerializeField] private AnimationCurve maxEnemiesProgressionCurve = AnimationCurve.Linear(0f, 1f, 1f, 1f);
     [SerializeField] [Min(0f)] private float levelSizeStart = 1f;
@@ -24,30 +29,30 @@ public class LevelBalanceData : ScriptableObject
 
     public LevelLootTable LootTable => lootTable;
     public EnemyBalanceData EnemyBalanceData => enemyBalanceData;
-    public int MinBuildings => minBuildings;
-    public int MaxBuildings => maxBuildings;
-    public int MinEnemies => minEnemies;
-    public int MaxEnemies => maxEnemies;
+    public int StartMinBuildings => startMinBuildings;
+    public int StartMaxBuildings => startMaxBuildings;
+    public int StartMinEnemies => startMinEnemies;
+    public int StartMaxEnemies => startMaxEnemies;
     public float LevelSizeStart => levelSizeStart;
 
     public int EvaluateMinBuildings(int progression)
     {
-        return EvaluateCount(minBuildings, minBuildingsProgressionCurve, progression);
+        return EvaluateCount(startMinBuildings, minBuildingsProgressionCurve, progression);
     }
 
     public int EvaluateMaxBuildings(int progression)
     {
-        return Mathf.Max(EvaluateMinBuildings(progression), EvaluateCount(maxBuildings, maxBuildingsProgressionCurve, progression));
+        return Mathf.Max(EvaluateMinBuildings(progression), EvaluateCount(startMaxBuildings, maxBuildingsProgressionCurve, progression));
     }
 
     public int EvaluateMinEnemies(int progression)
     {
-        return EvaluateCount(minEnemies, minEnemiesProgressionCurve, progression);
+        return EvaluateCount(startMinEnemies, minEnemiesProgressionCurve, progression);
     }
 
     public int EvaluateMaxEnemies(int progression)
     {
-        return Mathf.Max(EvaluateMinEnemies(progression), EvaluateCount(maxEnemies, maxEnemiesProgressionCurve, progression));
+        return Mathf.Max(EvaluateMinEnemies(progression), EvaluateCount(startMaxEnemies, maxEnemiesProgressionCurve, progression));
     }
 
     public float EvaluateLevelSize(int progression)
@@ -57,14 +62,14 @@ public class LevelBalanceData : ScriptableObject
 
     private void OnValidate()
     {
-        if (maxBuildings < minBuildings)
+        if (startMaxBuildings < startMinBuildings)
         {
-            maxBuildings = minBuildings;
+            startMaxBuildings = startMinBuildings;
         }
 
-        if (maxEnemies < minEnemies)
+        if (startMaxEnemies < startMinEnemies)
         {
-            maxEnemies = minEnemies;
+            startMaxEnemies = startMinEnemies;
         }
 
         if (levelSizeStart < 0f)
@@ -72,10 +77,10 @@ public class LevelBalanceData : ScriptableObject
             levelSizeStart = 0f;
         }
 
-        EnsureCurveStartsAtValue(ref minBuildingsProgressionCurve, minBuildings);
-        EnsureCurveStartsAtValue(ref maxBuildingsProgressionCurve, maxBuildings);
-        EnsureCurveStartsAtValue(ref minEnemiesProgressionCurve, minEnemies);
-        EnsureCurveStartsAtValue(ref maxEnemiesProgressionCurve, maxEnemies);
+        EnsureCurveStartsAtValue(ref minBuildingsProgressionCurve, startMinBuildings);
+        EnsureCurveStartsAtValue(ref maxBuildingsProgressionCurve, startMaxBuildings);
+        EnsureCurveStartsAtValue(ref minEnemiesProgressionCurve, startMinEnemies);
+        EnsureCurveStartsAtValue(ref maxEnemiesProgressionCurve, startMaxEnemies);
         EnsureCurveStartsAtValue(ref levelSizeProgressionCurve, levelSizeStart);
     }
 

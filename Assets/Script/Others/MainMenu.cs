@@ -32,6 +32,7 @@ public class MainMenu : MonoBehaviour
 
         if (GameManager.Instance != null)
         {
+            GameManager.Instance.ResetAllRuntimeDataForNewGame();
             GameManager.Instance.LoadScene(sceneName);
             return;
         }

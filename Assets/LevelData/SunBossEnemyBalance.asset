@@ -13,25 +13,24 @@ MonoBehaviour:
   m_Name: SunBossEnemyBalance
   m_EditorClassIdentifier: 
   speed:
-    minValue: 2
-    maxValue: 5
+    startValue: 2
     progressionCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 0
+        time: 1
+        value: 2
         inSlope: 0
-        outSlope: 1
+        outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 1
-        value: 1
+        time: 19.816422
+        value: 19.923615
         inSlope: 1
-        outSlope: 0
+        outSlope: 1
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
@@ -40,24 +39,23 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   maxHP:
-    minValue: 20
-    maxValue: 80
+    startValue: 20
     progressionCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 0
+        time: 1
+        value: 20
         inSlope: 0
-        outSlope: 0.75
+        outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0.75
+        time: 49.434425
+        value: 30.252739
+        inSlope: 0
         outSlope: 0
         tangentMode: 0
         weightedMode: 0
@@ -67,25 +65,24 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   damage:
-    minValue: 1
-    maxValue: 8
+    startValue: 1
     progressionCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 0
+        time: 1
+        value: 1
         inSlope: 0
-        outSlope: 1
+        outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 1
-        value: 1
+        time: 9.887017
+        value: 24.859097
         inSlope: 1
-        outSlope: 0
+        outSlope: 1
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
@@ -94,25 +91,24 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   coneAngle:
-    minValue: 35.2
-    maxValue: 80
+    startValue: 35.2
     progressionCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 0
+        time: 1
+        value: 35.2
         inSlope: 0
-        outSlope: 1
+        outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 1
-        value: 1
+        time: 1.0366669
+        value: 35.417145
         inSlope: 1
-        outSlope: 0
+        outSlope: 1
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
@@ -121,25 +117,24 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   coneRadius:
-    minValue: 11.76
-    maxValue: 28
+    startValue: 11.76
     progressionCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 0
+        time: 1
+        value: 11.76
         inSlope: 0
-        outSlope: 1
+        outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 1
-        value: 1
+        time: 4.982002
+        value: 29.48733
         inSlope: 1
-        outSlope: 0
+        outSlope: 1
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
@@ -149,24 +144,23 @@ MonoBehaviour:
       m_RotationOrder: 4
   conePlaneNormal: {x: 0, y: 1, z: 0}
   predictionAccuracy:
-    minValue: 0.2
-    maxValue: 0.9
+    startValue: 0.2
     progressionCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 0
+        time: 1
+        value: 0.2
         inSlope: 0
-        outSlope: 0.8
+        outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0.8
+        time: 19.92373
+        value: 0.8373378
+        inSlope: 0
         outSlope: 0
         tangentMode: 0
         weightedMode: 0
@@ -176,25 +170,24 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   scanSpeed:
-    minValue: 180
-    maxValue: 540
+    startValue: 3
     progressionCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 0
+        time: 1
+        value: 3
         inSlope: 0
-        outSlope: 1
+        outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 1
-        value: 1
+        time: 20.103176
+        value: 9.966756
         inSlope: 1
-        outSlope: 0
+        outSlope: 1
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
@@ -203,25 +196,24 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   forgetTime:
-    minValue: 2
-    maxValue: 4
+    startValue: 2
     progressionCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 0
+        time: 1
+        value: 2
         inSlope: 0
-        outSlope: 1
+        outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 1
-        value: 1
+        time: 14.955274
+        value: 4.986366
         inSlope: 1
-        outSlope: 0
+        outSlope: 1
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
@@ -230,25 +222,24 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   turnSpeed:
-    minValue: 30
-    maxValue: 180
+    startValue: 30
     progressionCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 0
+        time: 1
+        value: 30
         inSlope: 0
-        outSlope: 1
+        outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 1
-        value: 1
+        time: 19.12178
+        value: 179.32347
         inSlope: 1
-        outSlope: 0
+        outSlope: 1
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
@@ -257,25 +248,24 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   turnSpeedChase:
-    minValue: 1024
-    maxValue: 2048
+    startValue: 45
     progressionCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 0
+        time: 1
+        value: 45
         inSlope: 0
-        outSlope: 1
+        outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 1
-        value: 1
+        time: 20.096443
+        value: 239.38078
         inSlope: 1
-        outSlope: 0
+        outSlope: 1
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
@@ -284,25 +274,24 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   maxMoveAngleFromFacing:
-    minValue: 15
-    maxValue: 40
+    startValue: 15
     progressionCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 0
+        time: 1
+        value: 15
         inSlope: 0
-        outSlope: 1
+        outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 1
-        value: 1
+        time: 1.0544481
+        value: 15.022222
         inSlope: 1
-        outSlope: 0
+        outSlope: 1
         tangentMode: 0
         weightedMode: 0
         inWeight: 0

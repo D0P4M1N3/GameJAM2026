@@ -37,6 +37,7 @@ public class DATA_Player : MonoBehaviour
 
     private CharacterStats initialCharacterStats;
     private Coroutine resetFaceRoutine;
+    private bool hasTriggeredDefeat;
 
     private void Awake()
     {
@@ -72,6 +73,7 @@ public class DATA_Player : MonoBehaviour
 
         CharacterStats.RefreshInspectorFinals();
         PlayerStorageVisual.RefreshAll();
+        hasTriggeredDefeat = false;
 
         if (GameManager.Instance != null)
         {
@@ -181,6 +183,17 @@ public class DATA_Player : MonoBehaviour
     private void OnValidate()
     {
         CharacterStats?.RefreshInspectorFinals();
+    }
+
+    private void Update()
+    {
+        if (hasTriggeredDefeat || CharacterStats == null || CharacterStats.HP > 0f)
+        {
+            return;
+        }
+
+        hasTriggeredDefeat = true;
+        GameManager.Instance?.HandlePlayerDefeated();
     }
 
     private void NotifyFaceChanged()

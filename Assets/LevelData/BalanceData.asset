@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lootTable: {fileID: 11400000, guid: efad36a05f41423bb1d768cbe3877303, type: 2}
   enemyBalanceData: {fileID: 11400000, guid: 54f0bc3fdd8f40b2af0a6948d86f559f, type: 2}
-  minBuildings: 12
-  maxBuildings: 16
+  startMinBuildings: 12
+  startMaxBuildings: 16
   minBuildingsProgressionCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 1
+      time: 1
+      value: 12
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -29,8 +29,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 19.042023
-      value: 1.9553465
+      time: 11.613197
+      value: 30.171095
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -44,8 +44,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 1
+      time: 1
+      value: 16
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -53,8 +53,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.9972229
-      value: 1.0487366
+      time: 19.010113
+      value: 60.58046
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -64,13 +64,13 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  minEnemies: 1
-  maxEnemies: 3
+  startMinEnemies: 1
+  startMaxEnemies: 3
   minEnemiesProgressionCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
+      time: 1
       value: 1
       inSlope: 0
       outSlope: 0
@@ -79,8 +79,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 4.913132
-      value: 1.50375
+      time: 10.346839
+      value: 2.9950829
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -94,8 +94,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 1
+      time: 1
+      value: 3
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -119,7 +119,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
+      time: 1
       value: 1
       inSlope: 0
       outSlope: 0
@@ -128,17 +128,17 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 3.4287417
-      value: 1.7367195
-      inSlope: 0.40127555
-      outSlope: 0.40127555
+      time: 8.246315
+      value: 10.190882
+      inSlope: 1.4815949
+      outSlope: 1.4815949
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.33333334
+      outWeight: 0.23536594
     - serializedVersion: 3
-      time: 19.545609
-      value: 10.036987
+      time: 8.614873
+      value: 10.518161
       inSlope: 0
       outSlope: 0
       tangentMode: 0

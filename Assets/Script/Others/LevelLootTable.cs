@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -57,35 +58,39 @@ public class LevelLootTable : ScriptableObject
 {
     private const string ItemSearchRoot = "Assets/Items";
 
-    [SerializeField] [Min(0)] private int minDrops = 1;
-    [SerializeField] [Min(0)] private int maxDrops = 3;
+    [FormerlySerializedAs("minDrops")]
+    [SerializeField] [Min(0)] private int startMinDrops = 1;
+    [FormerlySerializedAs("maxDrops")]
+    [SerializeField] [Min(0)] private int startMaxDrops = 3;
     [SerializeField] private AnimationCurve minDropsProgressionCurve = AnimationCurve.Linear(0f, 1f, 1f, 1f);
     [SerializeField] private AnimationCurve maxDropsProgressionCurve = AnimationCurve.Linear(0f, 1f, 1f, 1f);
     [SerializeField] private List<LootRarityRule> rarityRules = new();
     [SerializeField] [HideInInspector] private List<ItemData> autoDiscoveredItems = new();
 
-    public int MinDrops => minDrops;
-    public int MaxDrops => maxDrops;
+    public int StartMinDrops => startMinDrops;
+    public int StartMaxDrops => startMaxDrops;
     public IReadOnlyList<LootRarityRule> RarityRules => rarityRules;
     public IReadOnlyList<ItemData> AutoDiscoveredItems => autoDiscoveredItems;
 
     public int EvaluateMinDrops(int progression)
     {
-        return EvaluateCount(minDrops, minDropsProgressionCurve, progression);
+        return EvaluateCount(startMinDrops, minDropsProgressionCurve, progression);
     }
 
     public int EvaluateMaxDrops(int progression)
     {
-        return Mathf.Max(EvaluateMinDrops(progression), EvaluateCount(maxDrops, maxDropsProgressionCurve, progression));
+        return Mathf.Max(EvaluateMinDrops(progression), EvaluateCount(startMaxDrops, maxDropsProgressionCurve, progression));
     }
 
     private void OnValidate()
     {
-        if (maxDrops < minDrops)
+        if (startMaxDrops < startMinDrops)
         {
-            maxDrops = minDrops;
+            startMaxDrops = startMinDrops;
         }
 
+        EnsureCurveStartsAtValue(ref minDropsProgressionCurve, startMinDrops);
+        EnsureCurveStartsAtValue(ref maxDropsProgressionCurve, startMaxDrops);
         EnsureDefaultRarityRules();
         RefreshItemsInEditor();
     }
@@ -275,6 +280,35 @@ public class LevelLootTable : ScriptableObject
         }
 
         return curve.Evaluate(level);
+    }
+
+    private static void EnsureCurveStartsAtValue(ref AnimationCurve curve, float startValue)
+    {
+        if (curve == null || curve.length == 0)
+        {
+            curve = new AnimationCurve(new Keyframe(1f, startValue));
+            return;
+        }
+
+        Keyframe[] keys = curve.keys;
+        int firstIndex = 0;
+        float earliestTime = keys[0].time;
+        for (int i = 1; i < keys.Length; i++)
+        {
+            if (keys[i].time >= earliestTime)
+            {
+                continue;
+            }
+
+            earliestTime = keys[i].time;
+            firstIndex = i;
+        }
+
+        Keyframe firstKey = keys[firstIndex];
+        firstKey.time = 1f;
+        firstKey.value = startValue;
+        keys[firstIndex] = firstKey;
+        curve.keys = keys;
     }
 
     private void EnsureDefaultRarityRules()

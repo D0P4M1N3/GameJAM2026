@@ -192,20 +192,37 @@ public class LevelGenerator : MonoBehaviour
 
         int buildingCount = Random.Range(minCount, maxCount + 1);
         Transform buildingsParent = GetOrCreateGeneratedCategoryRoot("Buildings", ref generatedBuildingsRoot);
-        for (int i = 0; i < buildingCount; i++)
+        int spawnedCount = 0;
+        int totalAttempts = 0;
+        int maxTotalAttempts = Mathf.Max(buildingCount * maxBuildingPlacementAttempts, maxBuildingPlacementAttempts);
+
+        while (spawnedCount < buildingCount && totalAttempts < maxTotalAttempts)
         {
-            TrySpawnBuilding(buildingZones, buildingsParent != null ? buildingsParent : parent);
+            if (TrySpawnBuilding(buildingZones, buildingsParent != null ? buildingsParent : parent))
+            {
+                spawnedCount++;
+            }
+
+            totalAttempts++;
+        }
+
+        if (spawnedCount < minCount)
+        {
+            Debug.LogWarning(
+                $"LevelGenerator spawned only {spawnedCount} buildings, below evaluated min {minCount}. " +
+                $"Chosen target was {buildingCount} within range [{minCount}, {maxCount}].",
+                this);
         }
     }
 
-    private void TrySpawnBuilding(List<LevelScatterZone> buildingZones, Transform parent)
+    private bool TrySpawnBuilding(List<LevelScatterZone> buildingZones, Transform parent)
     {
         for (int attempt = 0; attempt < maxBuildingPlacementAttempts; attempt++)
         {
             GameObject prefab = GetRandomBuildingPrefab();
             if (prefab == null)
             {
-                return;
+                return false;
             }
 
             LevelScatterZone zone = buildingZones[Random.Range(0, buildingZones.Count)];
@@ -222,7 +239,7 @@ public class LevelGenerator : MonoBehaviour
             if (!TryGetCombinedBounds(instance, out Bounds bounds))
             {
                 spawnedBuildings.Add(instance);
-                return;
+                return true;
             }
 
             if (!Contains(zone.GetWorldBounds(), bounds) || IntersectsPlacedBuilding(bounds))
@@ -233,8 +250,10 @@ public class LevelGenerator : MonoBehaviour
 
             spawnedBuildings.Add(instance);
             placedBuildingBounds.Add(bounds);
-            return;
+            return true;
         }
+
+        return false;
     }
 
     private void SpawnItems(List<LevelScatterZone> itemZones, Transform parent)
@@ -354,9 +373,27 @@ public class LevelGenerator : MonoBehaviour
         int enemyCount = Random.Range(minCount, maxCount + 1);
         Transform enemiesParent = GetOrCreateGeneratedCategoryRoot("Enemies", ref generatedEnemiesRoot);
         LogEnemyDebug($"Trying to spawn {enemyCount} enemies across {enemyZones.Count} zones.");
-        for (int i = 0; i < enemyCount; i++)
+        int spawnedCount = 0;
+        int totalAttempts = 0;
+        int maxTotalAttempts = Mathf.Max(enemyCount * maxEnemyPlacementAttempts, maxEnemyPlacementAttempts);
+
+        while (spawnedCount < enemyCount && totalAttempts < maxTotalAttempts)
         {
-            TrySpawnEnemy(enemyZones, enemiesParent != null ? enemiesParent : parent, i + 1);
+            if (TrySpawnEnemy(enemyZones, enemiesParent != null ? enemiesParent : parent, spawnedCount + 1))
+            {
+                spawnedCount++;
+            }
+
+            totalAttempts++;
+        }
+
+        if (spawnedCount < minCount)
+        {
+            Debug.LogWarning(
+                $"LevelGenerator spawned only {spawnedCount} enemies, below evaluated min {minCount}. " +
+                $"Chosen target was {enemyCount} within range [{minCount}, {maxCount}].",
+                this);
+            LogEnemyDebug($"Enemy spawn failed to reach min. Spawned={spawnedCount}, Min={minCount}, Attempts={totalAttempts}/{maxTotalAttempts}.");
         }
     }
 
@@ -392,10 +429,15 @@ public class LevelGenerator : MonoBehaviour
             return;
         }
 
-        Debug.LogWarning("LevelGenerator could not place exit gate after all attempts.", this);
+        if (TrySpawnExitGateFallback(exitGateZones, exitGateParent != null ? exitGateParent : parent))
+        {
+            return;
+        }
+
+        Debug.LogWarning("LevelGenerator could not place exit gate after all attempts or fallback.", this);
     }
 
-    private void TrySpawnEnemy(List<LevelScatterZone> enemyZones, Transform parent, int enemyIndex)
+    private bool TrySpawnEnemy(List<LevelScatterZone> enemyZones, Transform parent, int enemyIndex)
     {
         string failureReason = "No attempts were made.";
 
@@ -405,7 +447,7 @@ public class LevelGenerator : MonoBehaviour
             if (prefab == null)
             {
                 LogEnemyDebug($"Enemy {enemyIndex}: no valid enemy prefab found.");
-                return;
+                return false;
             }
 
             LevelScatterZone zone = enemyZones[Random.Range(0, enemyZones.Count)];
@@ -430,10 +472,16 @@ public class LevelGenerator : MonoBehaviour
 
             spawnedEnemies.Add(instance);
             LogEnemyDebug($"Enemy {enemyIndex}: spawned '{prefab.name}' at {position} on attempt {attempt + 1}.");
-            return;
+            return true;
         }
 
-        LogEnemyDebug($"Enemy {enemyIndex}: failed after {maxEnemyPlacementAttempts} attempts. Last reason: {failureReason}");
+        if (TrySpawnEnemyFallback(enemyZones, parent, enemyIndex))
+        {
+            return true;
+        }
+
+        LogEnemyDebug($"Enemy {enemyIndex}: failed after {maxEnemyPlacementAttempts} attempts and fallback. Last reason: {failureReason}");
+        return false;
     }
 
     private GameObject ResolvePickupPrefab(ItemData item)
@@ -756,6 +804,80 @@ public class LevelGenerator : MonoBehaviour
             return true;
         }
 
+        return false;
+    }
+
+    private bool TrySpawnEnemyFallback(List<LevelScatterZone> enemyZones, Transform parent, int enemyIndex)
+    {
+        GameObject prefab = GetRandomEnemyPrefab();
+        if (prefab == null || enemyZones == null || enemyZones.Count == 0)
+        {
+            return false;
+        }
+
+        for (int i = 0; i < enemyZones.Count; i++)
+        {
+            LevelScatterZone zone = enemyZones[i];
+            if (zone == null)
+            {
+                continue;
+            }
+
+            Vector3 position = B_NavMeshUtil.Project(zone.GetWorldBounds().center);
+            if (!NavMesh.SamplePosition(position, out NavMeshHit hit, 10f, NavMesh.AllAreas))
+            {
+                continue;
+            }
+
+            GameObject instance = Instantiate(prefab, hit.position, prefab.transform.rotation, parent);
+            ApplyEnemyBalance(instance);
+            spawnedEnemies.Add(instance);
+            LogEnemyDebug($"Enemy {enemyIndex}: fallback spawned '{prefab.name}' at {hit.position}.");
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool TrySpawnExitGateFallback(List<LevelScatterZone> exitGateZones, Transform parent)
+    {
+        if (exitGatePrefab == null || exitGateZones == null || exitGateZones.Count == 0)
+        {
+            return false;
+        }
+
+        for (int i = 0; i < exitGateZones.Count; i++)
+        {
+            LevelScatterZone zone = exitGateZones[i];
+            if (zone == null)
+            {
+                continue;
+            }
+
+            Vector3 position;
+            if (!TryGetGroundPositionNear(zone.GetWorldBounds().center, out position))
+            {
+                position = zone.GetWorldBounds().center;
+            }
+
+            spawnedExitGate = Instantiate(exitGatePrefab, position, exitGatePrefab.transform.rotation, parent);
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool TryGetGroundPositionNear(Vector3 sourcePosition, out Vector3 position)
+    {
+        Vector3 rayOrigin = sourcePosition + Vector3.up * groundRaycastHeight;
+        Ray ray = new(rayOrigin, Vector3.down);
+        if (Physics.Raycast(ray, out RaycastHit hit, groundRaycastDistance, groundLayerMask, QueryTriggerInteraction.Ignore))
+        {
+            position = hit.point;
+            return true;
+        }
+
+        position = default;
         return false;
     }
 
