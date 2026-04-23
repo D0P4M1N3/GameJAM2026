@@ -73,7 +73,7 @@ MonoBehaviour:
     type: 0
   - name: sfx_walk
     clip: {fileID: 8300000, guid: 275e35e5bb5e5504e985700e98daeae4, type: 3}
-    volume: 0
+    volume: 0.25
     pitch: 1
     loop: 0
     type: 0

@@ -16,6 +16,9 @@ public class TopDownController : MonoBehaviour
 
     private bool paused;
 
+    [SerializeField] private Animator animator;
+    [SerializeField] private string speedParam = "Speed";
+
 
     private void Awake()
     {
@@ -41,14 +44,16 @@ public class TopDownController : MonoBehaviour
 
         camForward.Normalize();
         camRight.Normalize();
+
         Vector3 move = camForward * input.y + camRight * input.x;
         move = Vector3.ClampMagnitude(move, 1f);
+
+        UpdateAnimator(move);
 
         float moveSpeed = BB_Player_Master.CharacterStats.finalSpeed;
         Vector3 delta = move * moveSpeed * Time.fixedDeltaTime;
 
         MoveWithCollision(delta);
-
         RotateTowards(move);
     }
 
@@ -112,10 +117,30 @@ public class TopDownController : MonoBehaviour
         {
             wasKinematic = rb.isKinematic;
             rb.isKinematic = true;
+
+            if (animator != null)
+                animator.speed = 0f; 
         }
         else
         {
             rb.isKinematic = wasKinematic;
+
+            if (animator != null)
+                animator.speed = 1f;
         }
     }
+
+    private void UpdateAnimator(Vector3 move)
+    {
+        if (animator == null) return;
+
+        float normalizedSpeed = move.magnitude;
+
+        animator.SetFloat(speedParam, normalizedSpeed, 0.1f, Time.deltaTime);
+
+        bool isMoving = normalizedSpeed >= 0.1f;
+
+    }
+
+
 }

@@ -727,6 +727,10 @@ PrefabInstance:
       propertyPath: sounds.Array.data[3].volume
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7105673667501695, guid: 608b39c81b71c4548b7271dda358ff9e, type: 3}
+      propertyPath: sounds.Array.data[4].volume
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 1043451333200621071, guid: 608b39c81b71c4548b7271dda358ff9e, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -1586,6 +1590,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1345481311484397410, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
   m_PrefabInstance: {fileID: 3762316955707977069}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &1691496230 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4053894275942957462, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
+  m_PrefabInstance: {fileID: 3762316955707977069}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1705217713
 GameObject:
   m_ObjectHideFlags: 0
@@ -2186,6 +2195,10 @@ PrefabInstance:
       propertyPath: popupDragCamera
       value: 
       objectReference: {fileID: 5332154754141023222}
+    - target: {fileID: 2764001325139641421, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.148
+      objectReference: {fileID: 0}
     - target: {fileID: 2818565371957159058, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
       propertyPath: m_LocalScale.y
       value: 0.35570145
@@ -2255,12 +2268,20 @@ PrefabInstance:
       value: -5.95
       objectReference: {fileID: 0}
     - target: {fileID: 7168244022685300921, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 1691496230}
+    - target: {fileID: 7168244022685300921, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
       propertyPath: cameraTransform
       value: 
       objectReference: {fileID: 1075667502}
     - target: {fileID: 7846696084699538219, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
       propertyPath: m_LocalScale.y
       value: 0.33712906
+      objectReference: {fileID: 0}
+    - target: {fileID: 8150777542280331169, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
+      propertyPath: CollisionModule.enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
