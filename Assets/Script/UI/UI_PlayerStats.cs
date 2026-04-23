@@ -38,13 +38,13 @@ public class UI_PlayerStats : MonoBehaviour
         CharacterStats stats = DATA_Player.Instance.CharacterStats;
         if (stats == null) return;
 
-        speedText.text = $"Speed: {stats.finalSpeed:0}";
-        hpText.text = $"HP: {stats.finalMaxHP:0}";
-        damageText.text = $"Damage: {stats.finalDamage:0}";
-        storageText.text = $"Storage: {stats.finalStorage:0}";
-        currencyText.text = $"Currency: {stats.Currency:0}";
+        speedText.text = $"{stats.finalSpeed:0}";
+        hpText.text = $"{stats.finalMaxHP:0}";
+        damageText.text = $"{stats.finalDamage:0}";
+        storageText.text = $"{stats.finalStorage:0}";
+        currencyText.text = $"{stats.Currency:0}";
 
-        bullet.text = "Bullets: " + DATA_Player.Instance.ProjectileShooterStats.ProjectileCount_Current + "/" + DATA_Player.Instance.ProjectileShooterStats.ProjectileCount_Max;
+        bullet.text = DATA_Player.Instance.ProjectileShooterStats.ProjectileCount_Current + "/" + DATA_Player.Instance.ProjectileShooterStats.ProjectileCount_Max;
 
     }
 
