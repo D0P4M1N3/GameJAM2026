@@ -155,26 +155,28 @@ namespace SunBoss
                         bb.BB_SunbossCTX_Brain.ActualPlayerPosition_NavmeshProjected);
 
 
+            //FACE TARGET
+            Vector3 flatTarget = new Vector3(
+                bb.BB_SunbossCTX_Brain.ActualPlayerPosition_NavmeshProjected.x,
+                bb.BB_SunbossCTX_Body.WholeBody.transform.position.y,
+                bb.BB_SunbossCTX_Brain.ActualPlayerPosition_NavmeshProjected.z
+            );
+            Vector3 toTarget = flatTarget - bb.BB_SunbossCTX_Body.WholeBody.transform.position;
+            if (toTarget.sqrMagnitude > 0.0001f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(toTarget.normalized, Vector3.up);
+                bb.BB_SunbossCTX_Body.WholeBody.rotation = Quaternion.RotateTowards(
+                    bb.BB_SunbossCTX_Body.WholeBody.rotation,
+                    targetRotation,
+                    bb.BB_SunbossCTX_Move.TurnSpeedChase * Time.deltaTime);
+            }
+
+
             if (sense.ReachedTarget)
             {
                 GoSeekTimer = BB.BB_SunbossCTX_Brain.ForgetTime;
 
 
-                //FACE TARGET
-                Vector3 flatTarget = new Vector3(
-                    bb.BB_SunbossCTX_Brain.ActualPlayerPosition_NavmeshProjected.x,
-                    bb.BB_SunbossCTX_Body.WholeBody.transform.position.y,
-                    bb.BB_SunbossCTX_Brain.ActualPlayerPosition_NavmeshProjected.z
-                );
-                Vector3 toTarget = flatTarget - bb.BB_SunbossCTX_Body.WholeBody.transform.position;
-                if (toTarget.sqrMagnitude > 0.0001f)
-                {
-                    Quaternion targetRotation = Quaternion.LookRotation(toTarget.normalized, Vector3.up);
-                    bb.BB_SunbossCTX_Body.WholeBody.rotation = Quaternion.RotateTowards(
-                        bb.BB_SunbossCTX_Body.WholeBody.rotation,
-                        targetRotation,
-                        bb.BB_SunbossCTX_Move.TurnSpeedChase * Time.deltaTime);
-                }
             }
             else
             {
