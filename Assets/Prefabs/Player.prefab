@@ -327,6 +327,9 @@ MonoBehaviour:
   collisionMask:
     serializedVersion: 2
     m_Bits: 72
+  animator: {fileID: 4053894275942957462}
+  speedParam: Speed
+  walkVFX: {fileID: 0}
 --- !u!54 &5766282951497282806
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -926,6 +929,12 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d09a84e8bf35d2343bcdc606dcc662e5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4053894275942957462}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d09a84e8bf35d2343bcdc606dcc662e5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5701300000280940743}
     - targetCorrespondingSourceObject: {fileID: 2397150311703773538, guid: d09a84e8bf35d2343bcdc606dcc662e5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2146797725736378763}
@@ -967,6 +976,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3941c7d4f60762f4fb33466d6ef1bbb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChangeLiquidColor
+--- !u!1 &2692767440567736464 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: d09a84e8bf35d2343bcdc606dcc662e5, type: 3}
+  m_PrefabInstance: {fileID: 2999336232326669761}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &4053894275942957462
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2692767440567736464}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: a7ebbb6d6788de546a4a111723e90fb6, type: 3}
+  m_Controller: {fileID: 9100000, guid: ebb760276ee2cc542b2639a13af48fdd, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5701300000280940743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2692767440567736464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61b392661ecea374685ad7222334f558, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player_Footstep
 --- !u!4 &3320684635254899242 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d09a84e8bf35d2343bcdc606dcc662e5, type: 3}

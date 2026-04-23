@@ -12,6 +12,8 @@ public class ACT_SunBoss_Navagent : MonoBehaviour
     [SerializeField] private bool followThisFrameActive;
     [SerializeField] private Vector3 currentTarget;
 
+    [SerializeField] private Animator animator;
+
     // NEW: cache last reachable point
     private Vector3 lastReachableTarget;
     private bool hasReachableTarget;
@@ -35,7 +37,20 @@ public class ACT_SunBoss_Navagent : MonoBehaviour
         if (paused) return;
 
         ApplyFacingMovementConstraint();
+        UpdateAnimation();
     }
+
+    private void UpdateAnimation()
+    {
+        if (animator == null || agent == null) return;
+
+        float speed = agent.velocity.magnitude;
+
+        float normalizedSpeed = speed / agent.speed;
+
+        animator.SetFloat("Speed", normalizedSpeed);
+    }
+
     void LateUpdate()
     {
         if (paused)
