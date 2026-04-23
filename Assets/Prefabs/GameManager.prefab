@@ -73,6 +73,89 @@ MonoBehaviour:
     type: 0
   sfxSource: {fileID: 1942323850126279993}
   sfxVolume: 1
+--- !u!1 &1021739583022264080
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5097730849140954722}
+  - component: {fileID: 1035073374741978376}
+  - component: {fileID: 2493241154668510981}
+  - component: {fileID: 3327821396049269863}
+  m_Layer: 0
+  m_Name: '//CutsceneManager '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5097730849140954722
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1021739583022264080}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7484573982318285572}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1035073374741978376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1021739583022264080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cac8a5bbd284c7745a315307c7ae0320, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CutsceneRooster
+  entries:
+  - key: MainMenu
+    timeline: {fileID: 11400000, guid: 90a45821194acb540a80cdbbbed750c3, type: 2}
+  - key: PlayerDeath
+    timeline: {fileID: 11400000, guid: c8082077432bd9c45901f8f56c36f14c, type: 2}
+  - key: PlayerSpawn
+    timeline: {fileID: 11400000, guid: 4f9576460e1ed144e9d2092405591509, type: 2}
+--- !u!114 &2493241154668510981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1021739583022264080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b4af21e88e95ed4683faef5e2f95408, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CutsceneManager
+  director: {fileID: 3327821396049269863}
+--- !u!320 &3327821396049269863
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1021739583022264080}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 0}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings: []
+  m_ExposedReferences:
+    m_References: []
 --- !u!1 &1043451333200621071
 GameObject:
   m_ObjectHideFlags: 0
@@ -106,6 +189,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8770785363291189333}
+  - {fileID: 5097730849140954722}
   - {fileID: 3573913612518438534}
   - {fileID: 5031169318546783175}
   - {fileID: 5233819179323365784}
