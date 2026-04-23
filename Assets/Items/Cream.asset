@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: GameJAM2026.Runtime::ItemData
   itemId: 25
   displayName: Cream
-  description: 
+  description: You've gotta pick between this or hit the gym.
   rarity: 1
   pickupBehavior: 0
   storagePercent: 0

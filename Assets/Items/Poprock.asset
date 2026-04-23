@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: GameJAM2026.Runtime::ItemData
   itemId: 29
   displayName: Poprock
-  description: 
+  description: Slightly worse than Heavy Metal
   rarity: 3
   pickupBehavior: 0
   storagePercent: 0

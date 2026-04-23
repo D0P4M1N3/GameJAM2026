@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: GameJAM2026.Runtime::ItemData
   itemId: 24
   displayName: HonCool
-  description: 
+  description: One of the 3 Refreshing Sensation for Thai people back in the 2010s
+    when the cinema was peak.
   rarity: 0
   pickupBehavior: 0
   storagePercent: 0
