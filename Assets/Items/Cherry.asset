@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: GameJAM2026.Runtime::ItemData
   itemId: 1
   displayName: Cherry
-  description: 
+  description: "Tiny, red, and comes in pairs \u2014 just like Homelander's last
+    two brain cells. Looks dangerous, probably isn't. The kind of item that stares
+    at a glass of milk and starts crying"
   rarity: 0
   pickupBehavior: 0
   storagePercent: 0

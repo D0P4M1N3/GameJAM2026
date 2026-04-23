@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: GameJAM2026.Runtime::ItemData
   itemId: 3
   displayName: Chocolate
-  description: 
+  description: 100 hours of child labor Straight out of Willy Wanker factory
   rarity: 1
   pickupBehavior: 0
   storagePercent: 0

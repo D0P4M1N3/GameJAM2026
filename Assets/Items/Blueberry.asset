@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: GameJAM2026.Runtime::ItemData
   itemId: 17
   displayName: Blueberry
-  description: 
+  description: Small, round, and absolutely useless in a fight. Oliver, you totally
+    deserved that punch from Thragg, lil' yapper.
   rarity: 0
   pickupBehavior: 0
   storagePercent: 0

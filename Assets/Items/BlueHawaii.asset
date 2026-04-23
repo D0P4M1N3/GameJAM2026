@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: GameJAM2026.Runtime::ItemData
   itemId: 22
   displayName: BlueHawaii
-  description: 
+  description: Tanky as your uncle at a BBQ who won't move from his lawn chair. Slow,
+    sturdy, and suspiciously hydrated. Hot load of HP incoming
   rarity: 1
   pickupBehavior: 0
   storagePercent: 0
