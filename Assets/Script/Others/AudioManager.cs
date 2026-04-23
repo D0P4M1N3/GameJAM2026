@@ -61,9 +61,10 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        sfxSource.pitch = s.pitch;
+        sfxSource.pitch = Random.Range(0.9f, 1.1f);
         sfxSource.PlayOneShot(s.clip, s.volume * sfxVolume);
     }
+
 
     public void StopAllSFX()
     {
