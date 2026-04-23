@@ -57,7 +57,7 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
 
         if (collectBoxTriggerZone != null)
         {
-            collectBoxTriggerZone.SetCollectBoxExitRemovalEnabled(false);
+            collectBoxTriggerZone.SetCollectBoxExitRemovalEnabled(true);
         }
 
         if (collectBoxPopupUi != null)
@@ -106,7 +106,7 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
         Pause3D.Instance.SetPause(false);
         if (collectBoxTriggerZone != null)
         {
-            collectBoxTriggerZone.SetCollectBoxExitRemovalEnabled(true);
+            collectBoxTriggerZone.SetCollectBoxExitRemovalEnabled(false);
         }
 
         if (collectingPopup != null)

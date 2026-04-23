@@ -1108,7 +1108,7 @@ GameObject:
   - component: {fileID: 2145279457055403716}
   - component: {fileID: 6249116253994611158}
   m_Layer: 0
-  m_Name: SunBoss
+  m_Name: SunBoss 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

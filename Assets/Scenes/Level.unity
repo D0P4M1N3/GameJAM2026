@@ -2263,6 +2263,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 6844694854685330706, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
+      propertyPath: ownerPopup
+      value: 
+      objectReference: {fileID: 463406094}
     - target: {fileID: 6968839260532753712, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.95
@@ -2283,7 +2287,8 @@ PrefabInstance:
       propertyPath: CollisionModule.enabled
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8977680380431440769, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
