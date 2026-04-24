@@ -78,6 +78,7 @@ MonoBehaviour:
     loop: 0
     type: 0
   sfxSource: {fileID: 1942323850126279993}
+  loopSfxSource: {fileID: 0}
   sfxVolume: 1
 --- !u!1 &1021739583022264080
 GameObject:
@@ -524,7 +525,7 @@ MonoBehaviour:
     Damage: 1
     Storage: 0
     MaxStorage: 500
-    HP: 100
+    HP: 1
     Currency: 0
     CharacterColor: {r: 1, g: 1, b: 1, a: 1}
     mSpeed: 0

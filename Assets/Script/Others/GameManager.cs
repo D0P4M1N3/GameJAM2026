@@ -457,6 +457,36 @@ public class GameManager : MonoBehaviour
         Debug.Log("ApplyInventoryStatsAndDeleteInventoryItems step 4: deleted inventory items", this);
     }
 
+    public void ApplyInventoryStatsAndDeleteInventoryItemsWithoutHealing()
+    {
+        Debug.Log("ApplyInventoryStatsAndDeleteInventoryItemsWithoutHealing step 1: start", this);
+
+        if (inventoryData == null)
+        {
+            Debug.LogWarning("ApplyInventoryStatsAndDeleteInventoryItemsWithoutHealing aborted: inventoryData is null.", this);
+            return;
+        }
+
+        if (DATA_Player.Instance == null || DATA_Player.Instance.CharacterStats == null)
+        {
+            Debug.LogWarning("ApplyInventoryStatsAndDeleteInventoryItemsWithoutHealing aborted: DATA_Player.Instance or CharacterStats is null.", this);
+            return;
+        }
+
+        ItemStats inventoryTotals = inventoryData.TotalStats;
+        CharacterStats targetCharacterStats = DATA_Player.Instance.CharacterStats;
+        float preservedHp = targetCharacterStats.HP;
+
+        targetCharacterStats.mSpeed += inventoryTotals.Speed;
+        targetCharacterStats.mMaxHP += inventoryTotals.Health;
+        targetCharacterStats.mDamage += inventoryTotals.Attack;
+        targetCharacterStats.HP = Mathf.Clamp(preservedHp, 0f, targetCharacterStats.finalMaxHP);
+        targetCharacterStats.CharacterColor = inventoryData.MixedColor;
+        targetCharacterStats.RefreshInspectorFinals();
+
+        DeleteInventoryItems();
+    }
+
     private void InitializeRuntimeDataFromScene()
     {
         if (hasInitializedRuntimeData)
@@ -570,6 +600,8 @@ public class GameManager : MonoBehaviour
 
             runtimeInventoryItems.Add(entry.Item);
         }
+
+        SyncPlayerColorFromInventory();
     }
 
     private void HandleStashChanged()
@@ -755,6 +787,19 @@ public class GameManager : MonoBehaviour
         }
 
         DATA_Player.Instance.CharacterStats.Currency = totalCurrency;
+    }
+
+    private void SyncPlayerColorFromInventory()
+    {
+        if (inventoryData == null || DATA_Player.Instance == null || DATA_Player.Instance.CharacterStats == null)
+        {
+            return;
+        }
+
+        DATA_Player.Instance.CharacterStats.CharacterColor = inventoryData.TotalItemCount > 0
+            ? inventoryData.MixedColor
+            : Color.white;
+        DATA_Player.Instance.CharacterStats.RefreshInspectorFinals();
     }
 
     private void RefreshSceneStashSpawn()

@@ -25,6 +25,8 @@ public class ItemTriggerZone : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        TriggerRandomPlayerFace();
+
         if (zoneMode == ZoneMode.CollectBox)
         {
             SetItemCollectBoxMembership(other, shouldBeInCollectBox: true);
@@ -60,6 +62,19 @@ public class ItemTriggerZone : MonoBehaviour
     public void SetCollectBoxExitRemovalEnabled(bool isEnabled)
     {
         CollectBoxExitRemovalEnabled = isEnabled;
+    }
+
+    private static void TriggerRandomPlayerFace()
+    {
+        if (DATA_Player.Instance == null)
+        {
+            return;
+        }
+
+        PlayerFaceVariant faceVariant = Random.value < 0.5f
+            ? PlayerFaceVariant.B
+            : PlayerFaceVariant.D;
+        DATA_Player.Instance.SetFaceForDuration(faceVariant, 0.5f);
     }
 
     private void OnDrawGizmos()
