@@ -26,13 +26,13 @@ public class ACT_SunBoss_Brain : MonoBehaviour
 
     void Update()
     {
-        if (intrREGIS.isInterrupted) { return; }
+        if (intrREGIS.isInterrupted || Pause3D.Instance.IsPaused ) { return; }
         SM_SunBoss_Brain_INST.Tick();
     }
 
     private void LateUpdate()
     {
-        if (intrREGIS.isInterrupted) { return;  }
+        if (intrREGIS.isInterrupted || Pause3D.Instance.IsPaused) { return;  }
         SM_SunBoss_Brain_INST.TickLate();
     }
 
