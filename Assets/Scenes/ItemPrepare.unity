@@ -2822,6 +2822,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UI_BlendingSequence
   gameManagerActions: {fileID: 1021687076}
   blenderBladeAnimator: {fileID: 1127470968}
+  JarManAnimator: {fileID: 1004190889}
   blendingTime: 4
   loopFadeOutTime: 0.45
   blenderLoopClip: {fileID: 8300000, guid: 792da56b6a7114240a90e408209b513b, type: 3}
@@ -4562,10 +4563,18 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 01b6dd7cd269c8047ab222d9c18f8ec6, type: 2}
+    - target: {fileID: -651274516525247862, guid: 75ade25a42b789a418b9202cea638b67, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -630112426351633410, guid: 75ade25a42b789a418b9202cea638b67, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 136c42f6077c9cb4485f3fbc735b7333, type: 2}
+    - target: {fileID: -201212750143568859, guid: 75ade25a42b789a418b9202cea638b67, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 811959304240227402, guid: 75ade25a42b789a418b9202cea638b67, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 

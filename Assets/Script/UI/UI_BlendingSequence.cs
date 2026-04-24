@@ -6,6 +6,7 @@ public class UI_BlendingSequence : MonoBehaviour
 {
     [SerializeField] private GameManagerActions gameManagerActions;
     [SerializeField] private Animator blenderBladeAnimator;
+    [SerializeField] private Animator JarManAnimator;
     [SerializeField] [Min(0.1f)] private float blendingTime = 2f;
     [SerializeField] [Min(0f)] private float loopFadeOutTime = 0.35f;
     [SerializeField] private AudioClip blenderLoopClip;
@@ -41,6 +42,8 @@ public class UI_BlendingSequence : MonoBehaviour
 
     private IEnumerator PlayBlendingSequenceRoutine()
     {
+        JarManAnimator.CrossFadeInFixedTime("Blend", 0.32f);
+
         CharacterStats playerStats = DATA_Player.Instance != null ? DATA_Player.Instance.CharacterStats : null;
 
         SetBlenderSpin(true);
