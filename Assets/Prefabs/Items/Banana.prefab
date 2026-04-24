@@ -76,6 +76,22 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 400003, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400003, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400003, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400003, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 610002, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
       propertyPath: m_Size.x
       value: 0.14848673
@@ -130,6 +146,10 @@ PrefabInstance:
       objectReference: {fileID: 1702066564, guid: 10fd334d805c1644e8d037fc897384c2, type: 3}
     - target: {fileID: 2120003, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
       propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 990597436114711680, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
