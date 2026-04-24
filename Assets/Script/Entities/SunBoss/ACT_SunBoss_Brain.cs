@@ -10,6 +10,7 @@ public class ACT_SunBoss_Brain : MonoBehaviour
 
     [Header("Runtime")]
     public SM_SunBoss__BASE SM_SunBoss_Brain_INST;
+    public InterruptionRegistry intrREGIS;
 
 
 
@@ -25,11 +26,13 @@ public class ACT_SunBoss_Brain : MonoBehaviour
 
     void Update()
     {
+        if (intrREGIS.isInterrupted) { return; }
         SM_SunBoss_Brain_INST.Tick();
     }
 
     private void LateUpdate()
     {
+        if (intrREGIS.isInterrupted) { return;  }
         SM_SunBoss_Brain_INST.TickLate();
     }
 
