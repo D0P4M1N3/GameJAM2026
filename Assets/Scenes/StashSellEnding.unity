@@ -229,27 +229,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2397150311703773538, guid: d09a84e8bf35d2343bcdc606dcc662e5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 51085856}
-    - targetCorrespondingSourceObject: {fileID: 2397150311703773538, guid: d09a84e8bf35d2343bcdc606dcc662e5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 51085855}
   m_SourcePrefab: {fileID: 100100000, guid: d09a84e8bf35d2343bcdc606dcc662e5, type: 3}
 --- !u!1 &51085854 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2397150311703773538, guid: d09a84e8bf35d2343bcdc606dcc662e5, type: 3}
   m_PrefabInstance: {fileID: 51085853}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &51085855
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 51085854}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3941c7d4f60762f4fb33466d6ef1bbb9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ChangeLiquidColor
 --- !u!114 &51085856
 MonoBehaviour:
   m_ObjectHideFlags: 0
