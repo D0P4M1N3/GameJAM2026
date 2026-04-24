@@ -7,6 +7,9 @@ public class UI_BlendingSequence : MonoBehaviour
     [SerializeField] private GameManagerActions gameManagerActions;
     [SerializeField] private Animator blenderBladeAnimator;
     [SerializeField] private Animator JarManAnimator;
+    [SerializeField] private Transform rotatingCharacterTarget;
+    [SerializeField] private Vector3 rotationAxis = Vector3.up;
+    [SerializeField] private float characterRotationSpeed = 180f;
     [SerializeField] [Min(0.1f)] private float blendingTime = 2f;
     [SerializeField] [Min(0f)] private float loopFadeOutTime = 0.35f;
     [SerializeField] private AudioClip blenderLoopClip;
@@ -66,6 +69,8 @@ public class UI_BlendingSequence : MonoBehaviour
             elapsed += Time.unscaledDeltaTime;
             float progress = blendingTime <= 0f ? 1f : Mathf.Clamp01(elapsed / blendingTime);
 
+            RotateCharacterForBlend(Time.unscaledDeltaTime);
+
             if (playerStats != null)
             {
                 playerStats.HP = Mathf.Lerp(startHp, targetHp, progress);
@@ -122,6 +127,11 @@ public class UI_BlendingSequence : MonoBehaviour
         if (blenderBladeAnimator == null)
         {
             blenderBladeAnimator = GetComponent<Animator>();
+        }
+
+        if (rotatingCharacterTarget == null && JarManAnimator != null)
+        {
+            rotatingCharacterTarget = JarManAnimator.transform;
         }
     }
 
@@ -186,5 +196,19 @@ public class UI_BlendingSequence : MonoBehaviour
         }
 
         blenderBladeAnimator.SetBool(spinBoolName, isSpinning);
+    }
+
+    private void RotateCharacterForBlend(float deltaTime)
+    {
+        if (rotatingCharacterTarget == null || Mathf.Approximately(characterRotationSpeed, 0f))
+        {
+            return;
+        }
+
+        Vector3 normalizedAxis = rotationAxis.sqrMagnitude > 0f
+            ? rotationAxis.normalized
+            : Vector3.up;
+        float rotationAmount = characterRotationSpeed * deltaTime;
+        rotatingCharacterTarget.Rotate(normalizedAxis, rotationAmount, Space.Self);
     }
 }
