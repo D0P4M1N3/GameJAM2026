@@ -183,6 +183,19 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
         RefreshAcceptButtonState();
     }
 
+    public void RespawnPendingItem()
+    {
+        EnsureReferences();
+
+        if (collectingItemSpawner == null || !collectingItemSpawner.RespawnPendingItem())
+        {
+            return;
+        }
+
+        RebuildPopupItemState();
+        RefreshAcceptButtonState();
+    }
+
     public void NotifyCollectBoxItemEntered(ItemWorldObject itemWorldObject)
     {
         if (itemWorldObject == null)

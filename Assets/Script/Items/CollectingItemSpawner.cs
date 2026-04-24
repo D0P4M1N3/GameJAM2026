@@ -52,34 +52,11 @@ public class CollectingItemSpawner : MonoBehaviour
         pendingPickup = pickup;
         pendingPlacement = PendingPlacement.None;
         pendingCollectBoxTransform = null;
-
-        Transform parent = spawnPoint != null ? spawnPoint : transform;
-        Vector3 spawnPosition = spawnPoint != null ? spawnPoint.position : transform.position;
-        Quaternion spawnRotation = spawnPoint != null ? spawnPoint.rotation : transform.rotation;
-
-        GameObject instance = Instantiate(itemPrefab, spawnPosition, spawnRotation, parent);
-        spawnedUiItem = instance.GetComponent<ItemWorldObject>();
-        if (spawnedUiItem == null)
+        if (!SpawnPendingUiItem(itemPrefab, pickup.ItemData))
         {
-            Destroy(instance);
             pendingPickup = null;
             ownerPopup = null;
             return false;
-        }
-
-        spawnedUiItem.Initialize(pickup.ItemData, null);
-        spawnedUiItem.SetInventoryState(false);
-
-        DraggableItem2D draggableItem = instance.GetComponent<DraggableItem2D>();
-        if (draggableItem == null)
-        {
-            draggableItem = instance.GetComponentInChildren<DraggableItem2D>(true);
-        }
-
-        if (draggableItem != null)
-        {
-            draggableItem.SetRequireExplicitDragCamera(true);
-            draggableItem.SetDragCamera(popupDragCamera);
         }
 
         return true;
@@ -229,11 +206,81 @@ public class CollectingItemSpawner : MonoBehaviour
         ownerPopup = null;
     }
 
+    public bool RespawnPendingItem()
+    {
+        EnsureSpawnPoint();
+
+        if (pendingPickup == null || pendingPickup.ItemData == null)
+        {
+            return false;
+        }
+
+        GameObject itemPrefab = pendingPickup.ItemData.ItemPrefab;
+        if (itemPrefab == null)
+        {
+            return false;
+        }
+
+        if (spawnedUiItem != null)
+        {
+            Destroy(spawnedUiItem.gameObject);
+            spawnedUiItem = null;
+        }
+
+        pendingPlacement = PendingPlacement.None;
+        pendingCollectBoxTransform = null;
+        bool didRespawn = SpawnPendingUiItem(itemPrefab, pendingPickup.ItemData);
+        if (didRespawn)
+        {
+            ownerPopup?.RefreshAcceptButtonState();
+        }
+
+        return didRespawn;
+    }
+
     private void EnsureSpawnPoint()
     {
         if (spawnPoint == null)
         {
             spawnPoint = transform;
         }
+    }
+
+    private bool SpawnPendingUiItem(GameObject itemPrefab, ItemData itemData)
+    {
+        if (itemPrefab == null || itemData == null)
+        {
+            return false;
+        }
+
+        Transform parent = spawnPoint != null ? spawnPoint : transform;
+        Vector3 spawnPosition = spawnPoint != null ? spawnPoint.position : transform.position;
+        Quaternion spawnRotation = spawnPoint != null ? spawnPoint.rotation : transform.rotation;
+
+        GameObject instance = Instantiate(itemPrefab, spawnPosition, spawnRotation, parent);
+        spawnedUiItem = instance.GetComponent<ItemWorldObject>();
+        if (spawnedUiItem == null)
+        {
+            Destroy(instance);
+            spawnedUiItem = null;
+            return false;
+        }
+
+        spawnedUiItem.Initialize(itemData, null);
+        spawnedUiItem.SetInventoryState(false);
+
+        DraggableItem2D draggableItem = instance.GetComponent<DraggableItem2D>();
+        if (draggableItem == null)
+        {
+            draggableItem = instance.GetComponentInChildren<DraggableItem2D>(true);
+        }
+
+        if (draggableItem != null)
+        {
+            draggableItem.SetRequireExplicitDragCamera(true);
+            draggableItem.SetDragCamera(popupDragCamera);
+        }
+
+        return true;
     }
 }

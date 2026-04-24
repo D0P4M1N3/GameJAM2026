@@ -8,9 +8,15 @@ public class StashSpawner : MonoBehaviour
     [SerializeField] private bool spawnOnStart = true;
     [SerializeField] private bool clearExistingChildrenOnSpawn = true;
     [SerializeField] [Min(0f)] private float spawnDelaySeconds = 0.08f;
+    [SerializeField] private GameObject spawningIndicatorObject;
 
     private readonly List<ItemWorldObject> spawnedItems = new();
     private Coroutine spawnRoutine;
+
+    private void Awake()
+    {
+        SetSpawningIndicatorActive(false);
+    }
 
     private void Start()
     {
@@ -31,12 +37,14 @@ public class StashSpawner : MonoBehaviour
         StashData stashData = GameManager.Instance != null ? GameManager.Instance.StashData : null;
         if (stashData == null)
         {
+            SetSpawningIndicatorActive(false);
             return;
         }
 
         Transform parent = transform;
 
         StopSpawnRoutine();
+        SetSpawningIndicatorActive(true);
 
         if (clearExisting)
         {
@@ -46,6 +54,7 @@ public class StashSpawner : MonoBehaviour
         if (!Application.isPlaying || spawnDelaySeconds <= 0f)
         {
             SpawnItemsImmediately(parent, stashData);
+            SetSpawningIndicatorActive(false);
             return;
         }
 
@@ -93,6 +102,7 @@ public class StashSpawner : MonoBehaviour
         }
 
         spawnRoutine = null;
+        SetSpawningIndicatorActive(false);
     }
 
     [ContextMenu("Reset Stash")]
@@ -101,9 +111,11 @@ public class StashSpawner : MonoBehaviour
         StashData stashData = GameManager.Instance != null ? GameManager.Instance.StashData : null;
         if (stashData == null)
         {
+            SetSpawningIndicatorActive(false);
             return;
         }
 
+        SetSpawningIndicatorActive(true);
         StopSpawnRoutine();
         DestroyNonInventorySpawnedItems();
         SpawnItems(false);
@@ -173,6 +185,12 @@ public class StashSpawner : MonoBehaviour
 
         StopCoroutine(spawnRoutine);
         spawnRoutine = null;
+        SetSpawningIndicatorActive(false);
+    }
+
+    private void OnDisable()
+    {
+        SetSpawningIndicatorActive(false);
     }
 
     private void DestroyNonInventorySpawnedItems()
@@ -230,5 +248,15 @@ public class StashSpawner : MonoBehaviour
         }
 
         return item.ItemPrefab;
+    }
+
+    private void SetSpawningIndicatorActive(bool isActive)
+    {
+        if (spawningIndicatorObject == null)
+        {
+            return;
+        }
+
+        spawningIndicatorObject.SetActive(isActive);
     }
 }
