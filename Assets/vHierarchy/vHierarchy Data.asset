@@ -15,12 +15,31 @@ MonoBehaviour:
   sceneDatas_byGuid:
     keys:
     - 84098e8a17b37b74a86f0d4a5fc182c9
+    - 0636429aabf6fa74e9b685a660326207
     values:
     - goDatas_byGlobalId:
         keys:
         - globalObjectIdString: GlobalObjectId_V1-2-84098e8a17b37b74a86f0d4a5fc182c9-1043451333200621071-1668288597
         values:
         - colorIndex: 8
+          iconNameOrGuid: 
+          isIconRecursive: 0
+          isColorRecursive: 0
+    - goDatas_byGlobalId:
+        keys:
+        - globalObjectIdString: GlobalObjectId_V1-2-0636429aabf6fa74e9b685a660326207-1954863727-0
+        - globalObjectIdString: GlobalObjectId_V1-2-0636429aabf6fa74e9b685a660326207-1043451333200621071-522503064
+        - globalObjectIdString: GlobalObjectId_V1-2-0636429aabf6fa74e9b685a660326207-1068752843-0
+        values:
+        - colorIndex: 9
+          iconNameOrGuid: 
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 8
+          iconNameOrGuid: 
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 6
           iconNameOrGuid: 
           isIconRecursive: 0
           isColorRecursive: 0
