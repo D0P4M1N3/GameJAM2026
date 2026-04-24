@@ -45,6 +45,13 @@ public class UI_BlendingSequence : MonoBehaviour
         JarManAnimator.CrossFadeInFixedTime("Blend", 0.32f);
 
         CharacterStats playerStats = DATA_Player.Instance != null ? DATA_Player.Instance.CharacterStats : null;
+        PlayerFaceVariant? blendingFaceVariant = null;
+
+        if (DATA_Player.Instance != null)
+        {
+            blendingFaceVariant = Random.value < 0.5f ? PlayerFaceVariant.E : PlayerFaceVariant.G;
+            DATA_Player.Instance.SetFace(blendingFaceVariant.Value);
+        }
 
         SetBlenderSpin(true);
         PlayLoopSound();
@@ -88,6 +95,11 @@ public class UI_BlendingSequence : MonoBehaviour
         }
 
         SetBlenderSpin(false);
+        if (DATA_Player.Instance != null && blendingFaceVariant.HasValue)
+        {
+            DATA_Player.Instance.ResetFaceToDefault();
+        }
+
         GameManager.Instance?.LoadScene(loadSceneName);
 
         blendingRoutine = null;
