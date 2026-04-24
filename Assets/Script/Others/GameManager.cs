@@ -844,7 +844,16 @@ public class GameManager : MonoBehaviour
     }
 
 
+    public void QuitGame()
+    {
+        Debug.Log("Quit Game triggered");
 
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
 
 
 }
