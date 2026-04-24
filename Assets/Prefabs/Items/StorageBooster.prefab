@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7dc6e4819ca4559b9e6207dbf167d9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldItemIdleMotion
-  rotationAxis: {x: 0, y: 0, z: 1}
+  rotationAxis: {x: 0, y: 1, z: 0}
   rotationSpeed: 90
   bobAmplitude: 0.15
   bobFrequency: 1.5
@@ -266,11 +266,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9204465991953014222, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
       propertyPath: InitialModule.startColor.maxColor.b
-      value: 0.3254717
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9204465991953014222, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
       propertyPath: InitialModule.startColor.maxColor.g
-      value: 0.69897634
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9204465991953014222, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
       propertyPath: InitialModule.startColor.maxColor.r
