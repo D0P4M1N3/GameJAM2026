@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: GameJAM2026.Runtime::ItemData
   itemId: 14
   displayName: DeadBull
-  description: They sell drinks right?
+  description: Presented by Boost Verstappen
   rarity: 3
   pickupBehavior: 0
   storagePercent: 0

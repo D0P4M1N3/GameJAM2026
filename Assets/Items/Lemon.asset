@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Lemon
   m_EditorClassIdentifier: GameJAM2026.Runtime::ItemData
   itemId: 9
-  displayName: Lemon
+  displayName: Le mon
   description: When life hands you lemons you gotta make some lemonade.
   rarity: 0
   pickupBehavior: 0

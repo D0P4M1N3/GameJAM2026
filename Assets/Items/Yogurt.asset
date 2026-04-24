@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Yogurt
   m_EditorClassIdentifier: GameJAM2026.Runtime::ItemData
   itemId: 19
-  displayName: Yogurt
-  description: Depressed milk that causes diarrhea
+  displayName: Yoguruto
+  description: Just want to make it look japanese for cool looking
   rarity: 1
   pickupBehavior: 0
   storagePercent: 0

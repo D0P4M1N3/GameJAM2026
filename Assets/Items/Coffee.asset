@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: GameJAM2026.Runtime::ItemData
   itemId: 4
   displayName: Coffee
-  description: Woman.
+  description: Life without coffee is Depresso
   rarity: 0
   pickupBehavior: 0
   storagePercent: 0

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Matcha
   m_EditorClassIdentifier: GameJAM2026.Runtime::ItemData
   itemId: 30
-  displayName: Matcha
+  displayName: Green Powder
   description: Performative male starter pack.
   rarity: 1
   pickupBehavior: 0

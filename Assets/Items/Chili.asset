@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Chili
   m_EditorClassIdentifier: GameJAM2026.Runtime::ItemData
   itemId: 2
-  displayName: Chili
+  displayName: ChiliCarlos
   description: Bro crashed into the wall TWICE and still finished top five. Absolute
     menace. Spicy, unpredictable, and somehow always your problem.
   rarity: 0

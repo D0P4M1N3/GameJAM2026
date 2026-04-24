@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Strawberry
   m_EditorClassIdentifier: GameJAM2026.Runtime::ItemData
   itemId: 11
-  displayName: Strawberry
-  description: Least creative Ice-cream flavor
+  displayName: Behelit (Strawberry)
+  description: You may (be not) become God Hand by consuming this
   rarity: 0
   pickupBehavior: 0
   storagePercent: 0

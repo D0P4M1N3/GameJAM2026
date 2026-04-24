@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Orange
   m_EditorClassIdentifier: GameJAM2026.Runtime::ItemData
   itemId: 10
-  displayName: Orange
+  displayName: O
   description: Hey Marty, I've turned myself into an Orange.
   rarity: 1
   pickupBehavior: 0
