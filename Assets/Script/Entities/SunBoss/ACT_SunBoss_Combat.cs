@@ -43,11 +43,22 @@ public class ACT_SunBoss_Combat : MonoBehaviour
     {
         if (Pause3D.Instance.IsPaused) { return; }
 
+        if (DATA_Player.Instance == null || DATA_Player.Instance.CharacterStats == null)
+        {
+            return;
+        }
+
         CharacterStats targetCharacterStats = DATA_Player.Instance.CharacterStats;
+        float previousHp = targetCharacterStats.HP;
 
         float damageThisFrame = damagePerSecond * Time.deltaTime;
 
         targetCharacterStats.HP -= damageThisFrame;
         targetCharacterStats.HP = Mathf.Clamp(targetCharacterStats.HP, 0, targetCharacterStats.finalMaxHP);
+
+        if (targetCharacterStats.HP < previousHp)
+        {
+            DATA_Player.Instance.PlayDamageFaceSwap();
+        }
     }
 }

@@ -5,12 +5,14 @@ using UnityEngine;
 public class UI_BlendingSequence : MonoBehaviour
 {
     [SerializeField] private GameManagerActions gameManagerActions;
+    [SerializeField] private Animator blenderBladeAnimator;
     [SerializeField] [Min(0.1f)] private float blendingTime = 2f;
     [SerializeField] [Min(0f)] private float loopFadeOutTime = 0.35f;
     [SerializeField] private AudioClip blenderLoopClip;
     [SerializeField] [Range(0f, 1f)] private float loopVolume = 1f;
     [SerializeField] [Range(0.1f, 3f)] private float loopPitch = 1f;
     [SerializeField] private string loadSceneName = "Level";
+    [SerializeField] private string spinBoolName = "Spin";
 
     private AudioSource loopAudioSource;
     private Coroutine blendingRoutine;
@@ -41,6 +43,7 @@ public class UI_BlendingSequence : MonoBehaviour
     {
         CharacterStats playerStats = DATA_Player.Instance != null ? DATA_Player.Instance.CharacterStats : null;
 
+        SetBlenderSpin(true);
         PlayLoopSound();
 
         playerStats = DATA_Player.Instance != null ? DATA_Player.Instance.CharacterStats : null;
@@ -81,6 +84,7 @@ public class UI_BlendingSequence : MonoBehaviour
             yield return new WaitForSecondsRealtime(loopFadeOutTime);
         }
 
+        SetBlenderSpin(false);
         GameManager.Instance?.LoadScene(loadSceneName);
 
         blendingRoutine = null;
@@ -98,6 +102,11 @@ public class UI_BlendingSequence : MonoBehaviour
         if (gameManagerActions == null)
         {
             gameManagerActions = GetComponent<GameManagerActions>();
+        }
+
+        if (blenderBladeAnimator == null)
+        {
+            blenderBladeAnimator = GetComponent<Animator>();
         }
     }
 
@@ -152,5 +161,15 @@ public class UI_BlendingSequence : MonoBehaviour
             loopAudioSource.clip = null;
             loopAudioSource.volume = loopVolume;
         }
+    }
+
+    private void SetBlenderSpin(bool isSpinning)
+    {
+        if (blenderBladeAnimator == null || string.IsNullOrWhiteSpace(spinBoolName))
+        {
+            return;
+        }
+
+        blenderBladeAnimator.SetBool(spinBoolName, isSpinning);
     }
 }

@@ -37,6 +37,8 @@ public class DATA_Player : MonoBehaviour
 
     private CharacterStats initialCharacterStats;
     private Coroutine resetFaceRoutine;
+    private Coroutine damageFaceRoutine;
+    private float damageFaceEndTime;
     private bool hasTriggeredDefeat;
 
     private void Awake()
@@ -116,6 +118,7 @@ public class DATA_Player : MonoBehaviour
     public void ResetFaceToDefault()
     {
         CancelFaceReset();
+        CancelDamageFace();
         ApplyFace(defaultFace);
     }
 
@@ -133,6 +136,23 @@ public class DATA_Player : MonoBehaviour
     public void SetFaceState(PlayerFaceState faceState)
     {
         SetFace(faceState.Variant);
+    }
+
+    public void PlayDamageFaceSwap(float duration = 0.4f, float swapInterval = 0.2f)
+    {
+        if (duration <= 0f || swapInterval <= 0f)
+        {
+            return;
+        }
+
+        damageFaceEndTime = Time.time + duration;
+
+        if (damageFaceRoutine != null)
+        {
+            return;
+        }
+
+        damageFaceRoutine = StartCoroutine(DamageFaceSwapRoutine(swapInterval));
     }
 
     private void ApplyFace(PlayerFaceVariant variant)
@@ -157,12 +177,39 @@ public class DATA_Player : MonoBehaviour
         resetFaceRoutine = null;
     }
 
+    private void CancelDamageFace()
+    {
+        if (damageFaceRoutine == null)
+        {
+            return;
+        }
+
+        StopCoroutine(damageFaceRoutine);
+        damageFaceRoutine = null;
+    }
+
     private System.Collections.IEnumerator ResetFaceAfterDelay(float duration)
     {
         yield return new WaitForSeconds(duration);
         resetFaceRoutine = null;
         ApplyFace(defaultFace);
 
+    }
+
+    private System.Collections.IEnumerator DamageFaceSwapRoutine(float swapInterval)
+    {
+        CancelFaceReset();
+
+        bool useFaceF = true;
+        while (Time.time < damageFaceEndTime)
+        {
+            ApplyFace(useFaceF ? PlayerFaceVariant.F : PlayerFaceVariant.H);
+            useFaceF = !useFaceF;
+            yield return new WaitForSeconds(swapInterval);
+        }
+
+        damageFaceRoutine = null;
+        ApplyFace(defaultFace);
     }
 
     private void CacheInitialStats()
