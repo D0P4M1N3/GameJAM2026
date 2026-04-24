@@ -111,9 +111,11 @@ public class StashSpawner : MonoBehaviour
         StashData stashData = GameManager.Instance != null ? GameManager.Instance.StashData : null;
         if (stashData == null)
         {
+            SetSpawningIndicatorActive(false);
             return;
         }
 
+        SetSpawningIndicatorActive(true);
         StopSpawnRoutine();
         DestroyNonInventorySpawnedItems();
         SpawnItems(false);
