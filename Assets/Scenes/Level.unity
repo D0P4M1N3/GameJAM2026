@@ -3031,7 +3031,7 @@ GameObject:
   - component: {fileID: 1711884895}
   - component: {fileID: 1711884894}
   m_Layer: 5
-  m_Name: ReStashButton
+  m_Name: ReItemButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3834,10 +3834,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4207653539129555500, guid: 9ca0ccaded7f4d8418be88de59ab018c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4624208420999423890, guid: 9ca0ccaded7f4d8418be88de59ab018c, type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4624208420999423890, guid: 9ca0ccaded7f4d8418be88de59ab018c, type: 3}
+      propertyPath: m_RaycastTarget
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5682477434419350730, guid: 9ca0ccaded7f4d8418be88de59ab018c, type: 3}
@@ -4444,15 +4448,15 @@ PrefabInstance:
       objectReference: {fileID: 463406094}
     - target: {fileID: 6968839260532753712, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.16528213
+      value: 0.20035855
       objectReference: {fileID: 0}
     - target: {fileID: 6968839260532753712, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.19529736
+      value: 0.23674364
       objectReference: {fileID: 0}
     - target: {fileID: 6968839260532753712, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.16528213
+      value: 0.20035855
       objectReference: {fileID: 0}
     - target: {fileID: 6968839260532753712, guid: 94d734b1a5be3fd4cb6360fff3c85123, type: 3}
       propertyPath: m_LocalPosition.x
