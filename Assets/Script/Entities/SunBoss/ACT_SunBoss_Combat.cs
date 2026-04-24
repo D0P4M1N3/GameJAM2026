@@ -11,7 +11,7 @@ public class ACT_SunBoss_Combat : MonoBehaviour
 
     private void Start()
     {
-        damagePerSecond = BB_Sunboss_Master.CharacterStats.finalDamage / 0.123f;
+        damagePerSecond = BB_Sunboss_Master.CharacterStats.finalDamage / 0.5f;
     }
 
     private void Update()
