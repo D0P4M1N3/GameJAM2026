@@ -12,6 +12,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlueHawaii
       objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100003, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400001, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -120,6 +128,22 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 733885727, guid: 84d182e344ab4e64992925b1041f7cb1, type: 3}
+    - target: {fileID: 2120003, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
+      propertyPath: m_Size.x
+      value: 0.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 2120003, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
+      propertyPath: m_Size.y
+      value: 1.28
+      objectReference: {fileID: 0}
+    - target: {fileID: 2120003, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 733885727, guid: 84d182e344ab4e64992925b1041f7cb1, type: 3}
+    - target: {fileID: 2120003, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 610002, guid: 2e5da99f53fb4862842a0352fe775ec1, type: 3}
     m_RemovedGameObjects: []

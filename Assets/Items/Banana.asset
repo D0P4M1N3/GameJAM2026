@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: GameJAM2026.Runtime::ItemData
   itemId: 8
   displayName: B0.5
-  description: Boss is superior GDP, he discover how to goon 24/7 non stop speed
-    run
+  description: The Fastest banana alive
   rarity: 2
   pickupBehavior: 0
   storagePercent: 0

@@ -26,6 +26,7 @@ MonoBehaviour:
     - 55412c040bee6ca4fa4f6d8a7c7f00a1
     - 1aa60b90f29f03d4c9c50ff496a5af6c
     - 8d0ad27ea3be59a4abd3fee6d3ad5c62
+    - d762c7ae20774614e8c5b10717afb0a1
     values:
     - iconNameOrGuid: cs Script Icon
       colorIndex: 5
@@ -72,6 +73,10 @@ MonoBehaviour:
       isIconRecursive: 0
       isColorRecursive: 0
     - iconNameOrGuid: PrefabModel Icon
+      colorIndex: 0
+      isIconRecursive: 0
+      isColorRecursive: 0
+    - iconNameOrGuid: AnimationClip Icon
       colorIndex: 0
       isIconRecursive: 0
       isColorRecursive: 0
