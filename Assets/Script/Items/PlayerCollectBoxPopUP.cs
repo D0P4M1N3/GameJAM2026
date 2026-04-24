@@ -186,9 +186,31 @@ public class PlayerCollectBoxPopUP : MonoBehaviour
     public void RespawnPendingItem()
     {
         EnsureReferences();
+        RebuildPopupItemState();
 
-        if (collectingItemSpawner == null || !collectingItemSpawner.RespawnPendingItem())
+        bool didRespawnAny = false;
+        List<ItemWorldObject> itemsToRespawn = new(popupItemsOutsideValidZones);
+        for (int i = 0; i < itemsToRespawn.Count; i++)
         {
+            ItemWorldObject itemWorldObject = itemsToRespawn[i];
+            if (itemWorldObject == null || collectingItemSpawner == null)
+            {
+                continue;
+            }
+
+            didRespawnAny |= collectingItemSpawner.RespawnPopupItem(itemWorldObject);
+        }
+
+        if (!didRespawnAny &&
+            collectingItemSpawner != null &&
+            collectingItemSpawner.RespawnPendingItem())
+        {
+            didRespawnAny = true;
+        }
+
+        if (!didRespawnAny)
+        {
+            RefreshAcceptButtonState();
             return;
         }
 

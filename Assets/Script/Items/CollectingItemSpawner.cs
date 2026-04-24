@@ -238,6 +238,51 @@ public class CollectingItemSpawner : MonoBehaviour
         return didRespawn;
     }
 
+    public bool RespawnPopupItem(ItemWorldObject itemWorldObject)
+    {
+        EnsureSpawnPoint();
+
+        if (itemWorldObject == null)
+        {
+            return false;
+        }
+
+        if (itemWorldObject == spawnedUiItem)
+        {
+            pendingPlacement = PendingPlacement.None;
+            pendingCollectBoxTransform = null;
+        }
+
+        DraggableItem2D draggableItem = itemWorldObject.GetComponent<DraggableItem2D>();
+        if (draggableItem == null)
+        {
+            draggableItem = itemWorldObject.GetComponentInChildren<DraggableItem2D>(true);
+        }
+
+        draggableItem?.HandlePointerUp();
+
+        Rigidbody2D itemRigidbody = itemWorldObject.GetComponent<Rigidbody2D>();
+        if (itemRigidbody == null)
+        {
+            itemRigidbody = itemWorldObject.GetComponentInChildren<Rigidbody2D>(true);
+        }
+
+        if (itemRigidbody != null)
+        {
+            itemRigidbody.linearVelocity = Vector2.zero;
+            itemRigidbody.angularVelocity = 0f;
+        }
+
+        Transform parent = spawnPoint != null ? spawnPoint : transform;
+        Vector3 spawnPosition = spawnPoint != null ? spawnPoint.position : transform.position;
+        Quaternion spawnRotation = spawnPoint != null ? spawnPoint.rotation : transform.rotation;
+
+        itemWorldObject.transform.SetParent(parent, true);
+        itemWorldObject.transform.SetPositionAndRotation(spawnPosition, spawnRotation);
+        itemWorldObject.SetCollectBoxState(false);
+        return true;
+    }
+
     private void EnsureSpawnPoint()
     {
         if (spawnPoint == null)

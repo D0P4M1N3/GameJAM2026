@@ -1498,6 +1498,7 @@ MonoBehaviour:
   spawnOnStart: 1
   clearExistingChildrenOnSpawn: 1
   spawnDelaySeconds: 0.08
+  spawningIndicatorObject: {fileID: 0}
 --- !u!4 &1068752845
 Transform:
   m_ObjectHideFlags: 0
