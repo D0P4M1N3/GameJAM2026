@@ -395,6 +395,7 @@ public class GameManager : MonoBehaviour
         float speedModifierDelta = appliedStats.Speed;
         float maxHpModifierDelta = appliedStats.Health;
         float damageModifierDelta = appliedStats.Attack;
+        int projectileCountBonus = CountInventoryItemsWithAttack();
 
         targetCharacterStats.mMaxHP += maxHpModifierDelta;
         targetCharacterStats.mDamage += damageModifierDelta;
@@ -402,12 +403,14 @@ public class GameManager : MonoBehaviour
         targetCharacterStats.HP = targetCharacterStats.finalMaxHP;
         targetCharacterStats.CharacterColor = inventoryData.MixedColor;
         targetCharacterStats.RefreshInspectorFinals();
+        ApplyProjectileCountBonus(projectileCountBonus);
 
         Debug.Log(
             "Applied inventory stats to player modifiers.\n" +
             $"Base Stats: Speed={baseSpeed:0.##}, MaxHP={baseMaxHp:0.##}, Damage={baseDamage:0.##}\n" +
             $"Previous Modifiers: mSpeed={previousModifierSpeed:0.####}, mMaxHP={previousModifierMaxHp:0.##}, mDamage={previousModifierDamage:0.##}\n" +
             $"Inventory Modifiers Applied: SpeedDelta={speedModifierDelta:0.####}, MaxHPDelta={maxHpModifierDelta:0.##}, DamageDelta={damageModifierDelta:0.##}\n" +
+            $"Projectile Bonus Applied: ProjectileCountDelta={projectileCountBonus}\n" +
             $"New Modifiers: mSpeed={targetCharacterStats.mSpeed:0.####}, mMaxHP={targetCharacterStats.mMaxHP:0.##}, mDamage={targetCharacterStats.mDamage:0.##}\n" +
             $"New Finals: finalSpeed={targetCharacterStats.finalSpeed:0.##}, finalMaxHP={targetCharacterStats.finalMaxHP:0.##}, finalDamage={targetCharacterStats.finalDamage:0.##}, HP={targetCharacterStats.HP:0.##}",
             this);
@@ -437,6 +440,7 @@ public class GameManager : MonoBehaviour
         }
 
         ItemStats inventoryTotals = inventoryData.TotalStats;
+        int projectileCountBonus = CountInventoryItemsWithAttack();
         Debug.Log(
             $"ApplyInventoryStatsAndDeleteInventoryItems step 2: inventory totals Speed={inventoryTotals.Speed:0.##}, Health={inventoryTotals.Health:0.##}, Attack={inventoryTotals.Attack:0.##}, Value={inventoryTotals.Value:0.##}",
             this);
@@ -448,9 +452,10 @@ public class GameManager : MonoBehaviour
         targetCharacterStats.HP = targetCharacterStats.finalMaxHP;
         targetCharacterStats.CharacterColor = inventoryData.MixedColor;
         targetCharacterStats.RefreshInspectorFinals();
+        ApplyProjectileCountBonus(projectileCountBonus);
 
         Debug.Log(
-            $"ApplyInventoryStatsAndDeleteInventoryItems step 3: applied modifiers mSpeed={targetCharacterStats.mSpeed:0.##}, mMaxHP={targetCharacterStats.mMaxHP:0.##}, mDamage={targetCharacterStats.mDamage:0.##}, finalSpeed={targetCharacterStats.finalSpeed:0.##}, finalMaxHP={targetCharacterStats.finalMaxHP:0.##}, finalDamage={targetCharacterStats.finalDamage:0.##}",
+            $"ApplyInventoryStatsAndDeleteInventoryItems step 3: applied modifiers mSpeed={targetCharacterStats.mSpeed:0.##}, mMaxHP={targetCharacterStats.mMaxHP:0.##}, mDamage={targetCharacterStats.mDamage:0.##}, projectileCountDelta={projectileCountBonus}, projectileCountMax={DATA_Player.Instance.ProjectileShooterStats.ProjectileCount_Max:0}, finalSpeed={targetCharacterStats.finalSpeed:0.##}, finalMaxHP={targetCharacterStats.finalMaxHP:0.##}, finalDamage={targetCharacterStats.finalDamage:0.##}",
             this);
 
         DeleteInventoryItems();
@@ -476,6 +481,7 @@ public class GameManager : MonoBehaviour
         ItemStats inventoryTotals = inventoryData.TotalStats;
         CharacterStats targetCharacterStats = DATA_Player.Instance.CharacterStats;
         float preservedHp = targetCharacterStats.HP;
+        int projectileCountBonus = CountInventoryItemsWithAttack();
 
         targetCharacterStats.mSpeed += inventoryTotals.Speed;
         targetCharacterStats.mMaxHP += inventoryTotals.Health;
@@ -483,6 +489,7 @@ public class GameManager : MonoBehaviour
         targetCharacterStats.HP = Mathf.Clamp(preservedHp, 0f, targetCharacterStats.finalMaxHP);
         targetCharacterStats.CharacterColor = inventoryData.MixedColor;
         targetCharacterStats.RefreshInspectorFinals();
+        ApplyProjectileCountBonus(projectileCountBonus);
 
         DeleteInventoryItems();
     }
@@ -802,6 +809,44 @@ public class GameManager : MonoBehaviour
         DATA_Player.Instance.CharacterStats.RefreshInspectorFinals();
     }
 
+    private int CountInventoryItemsWithAttack()
+    {
+        if (inventoryData == null)
+        {
+            return 0;
+        }
+
+        int attackItemCount = 0;
+        IReadOnlyList<InventoryEntry> items = inventoryData.Items;
+        for (int i = 0; i < items.Count; i++)
+        {
+            InventoryEntry entry = items[i];
+            if (!entry.IsValid || entry.Item == null)
+            {
+                continue;
+            }
+
+            if (entry.Item.Stats.Attack > 0f)
+            {
+                attackItemCount++;
+            }
+        }
+
+        return attackItemCount;
+    }
+
+    private void ApplyProjectileCountBonus(int projectileCountBonus)
+    {
+        if (projectileCountBonus <= 0 || DATA_Player.Instance == null || DATA_Player.Instance.ProjectileShooterStats == null)
+        {
+            return;
+        }
+
+        ProjectileShooterStats projectileShooterStats = DATA_Player.Instance.ProjectileShooterStats;
+        projectileShooterStats.ProjectileCount_Max += projectileCountBonus;
+        projectileShooterStats.ProjectileCount_Current = projectileShooterStats.ProjectileCount_Max;
+    }
+
     private void RefreshSceneStashSpawn()
     {
         StashSpawner stashSpawner = FindFirstObjectByType<StashSpawner>();
@@ -815,32 +860,34 @@ public class GameManager : MonoBehaviour
 
     private static PlayerFaceVariant GetEndingSellFaceVariant(float totalValue)
     {
-        if (totalValue > 1500f)
-        {
-            return PlayerFaceVariant.G;
-        }
+        PlayerFaceVariant faceVariant = PlayerFaceVariant.C;
 
-        if (totalValue > 1000f)
+        if (totalValue > 100f)
         {
-            return PlayerFaceVariant.B;
-        }
-
-        if (totalValue > 500f)
-        {
-            return PlayerFaceVariant.D;
+            faceVariant = PlayerFaceVariant.E;
         }
 
         if (totalValue > 300f)
         {
-            return PlayerFaceVariant.A;
+            faceVariant = PlayerFaceVariant.A;
         }
 
-        if (totalValue > 100f)
+        if (totalValue > 500f)
         {
-            return PlayerFaceVariant.E;
+            faceVariant = PlayerFaceVariant.D;
         }
 
-        return PlayerFaceVariant.C;
+        if (totalValue > 1000f)
+        {
+            faceVariant = PlayerFaceVariant.B;
+        }
+
+        if (totalValue > 1500f)
+        {
+            faceVariant = PlayerFaceVariant.G;
+        }
+
+        return faceVariant;
     }
 
 

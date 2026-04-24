@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Collider2D))]
+[RequireComponent(typeof(AudioSource))]
 public class EndingSellZone : MonoBehaviour
 {
     [SerializeField] private TMP_Text totalValueText;
@@ -20,6 +21,10 @@ public class EndingSellZone : MonoBehaviour
     [SerializeField] [Min(0f)] private float maxTextPopScale = 0.65f;
     [SerializeField] [Min(0.01f)] private float textPopDuration = 0.28f;
     [SerializeField] [Min(0f)] private float textPopOvershoot = 0.18f;
+    [Header("Sell Sound")]
+    [SerializeField] private AudioClip sellClip;
+    [SerializeField] [Range(0f, 1f)] private float sellVolume = 1f;
+    [SerializeField] private Vector2 sellPitchRange = new(0.92f, 1.08f);
     [Header("Completion")]
     [SerializeField] private Button completionButton;
     [SerializeField] [Min(1f)] private float completedTotalScaleMultiplier = 1.6f;
@@ -33,6 +38,7 @@ public class EndingSellZone : MonoBehaviour
     private bool hasCompletedSelling;
     private bool isCompletedScaleAnimating;
     private float completedScaleTime;
+    private AudioSource audioSource;
 
     private void Start()
     {
@@ -42,6 +48,8 @@ public class EndingSellZone : MonoBehaviour
 
     private void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
+        ConfigureAudioSource();
         CacheTotalTextBaseScale();
         SetCompletionButtonEnabled(false);
     }
@@ -99,7 +107,8 @@ public class EndingSellZone : MonoBehaviour
         UpdateTotalText();
         TriggerTotalTextPop(soldValue);
         SpawnValuePopup(itemWorldObject.ItemData, soldValue, hitPoint + popupOffset);
-        GameManager.Instance?.TriggerEndingSellFaceFromTotalValue(totalValue, 1f);
+        PlaySellSound();
+        GameManager.Instance?.TriggerEndingSellFaceFromTotalValue(totalValue, 20f);
 
         if (removeSoldItemFromStash)
         {
@@ -357,5 +366,43 @@ public class EndingSellZone : MonoBehaviour
         return Mathf.Approximately(value, Mathf.Round(value))
             ? Mathf.RoundToInt(value).ToString()
             : value.ToString("0.##");
+    }
+
+    private void ConfigureAudioSource()
+    {
+        if (audioSource == null)
+        {
+            return;
+        }
+
+        audioSource.playOnAwake = false;
+        audioSource.loop = false;
+        audioSource.spatialBlend = 0f;
+    }
+
+    private void PlaySellSound()
+    {
+        if (audioSource == null || sellClip == null)
+        {
+            return;
+        }
+
+        float originalPitch = audioSource.pitch;
+        audioSource.pitch = GetRandomSellPitch();
+        audioSource.PlayOneShot(sellClip, sellVolume);
+        audioSource.pitch = originalPitch;
+    }
+
+    private float GetRandomSellPitch()
+    {
+        float minPitch = Mathf.Min(sellPitchRange.x, sellPitchRange.y);
+        float maxPitch = Mathf.Max(sellPitchRange.x, sellPitchRange.y);
+
+        if (Mathf.Approximately(minPitch, maxPitch))
+        {
+            return minPitch;
+        }
+
+        return Random.Range(minPitch, maxPitch);
     }
 }
