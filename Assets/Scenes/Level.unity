@@ -1534,7 +1534,7 @@ GameObject:
   - component: {fileID: 1590329980}
   - component: {fileID: 1590329979}
   m_Layer: 0
-  m_Name: Stash_BG
+  m_Name: CollectBox_BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
