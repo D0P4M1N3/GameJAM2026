@@ -65,13 +65,13 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   damage:
-    startValue: 1
+    startValue: 3
     progressionCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 1
-        value: 1
+        value: 3
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -79,8 +79,8 @@ MonoBehaviour:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 10.034486
-        value: 27.079702
+        time: 12.009583
+        value: 35.2994
         inSlope: 1
         outSlope: 1
         tangentMode: 0
