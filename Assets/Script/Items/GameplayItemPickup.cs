@@ -211,7 +211,6 @@ public class GameplayItemPickup : MonoBehaviour
         }
 
         pickupCollider.isTrigger = true;
-        pickupCollider.radius = 0.5f;
     }
 
     private void RefreshVisuals()
