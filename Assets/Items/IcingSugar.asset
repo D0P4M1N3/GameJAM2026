@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: IcingSugar
   m_EditorClassIdentifier: GameJAM2026.Runtime::ItemData
   itemId: 15
-  displayName: IcingSugar
+  displayName: Sugar yes please
   description: What they coat the truth with.
   rarity: 0
   pickupBehavior: 0

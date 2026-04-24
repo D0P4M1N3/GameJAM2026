@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Lemon
   m_EditorClassIdentifier: GameJAM2026.Runtime::ItemData
   itemId: 9
-  displayName: Lemon
+  displayName: Le mon
   description: When life hands you lemons you gotta make some lemonade.
   rarity: 0
   pickupBehavior: 0
@@ -27,7 +27,7 @@ MonoBehaviour:
     <Health>k__BackingField: 0
     <Attack>k__BackingField: 0
     <Value>k__BackingField: 30
-  collisionClip: {fileID: 8300000, guid: da2d0bb30d6c9bc44a1d6e2d8b76288e, type: 3}
+  collisionClip: {fileID: 8300000, guid: ea56de8890315794bb420d6e3ed2d046, type: 3}
   collisionVolume: 1
   pickupClip: {fileID: 8300000, guid: 8102627573414084a812048286bff4fb, type: 3}
   pickupVolume: 1

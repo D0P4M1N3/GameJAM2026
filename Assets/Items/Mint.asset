@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Mint
   m_EditorClassIdentifier: GameJAM2026.Runtime::ItemData
   itemId: 26
-  displayName: Mint
+  displayName: Mint leaf
   description: The reason why Ice-creams taste like toothpaste.
   rarity: 0
   pickupBehavior: 0

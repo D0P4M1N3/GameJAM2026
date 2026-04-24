@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Icecream
   m_EditorClassIdentifier: GameJAM2026.Runtime::ItemData
   itemId: 7
-  displayName: Icecream
-  description: Ice with more water
+  displayName: Top Popsicle
+  description: Only ate the top part
   rarity: 0
   pickupBehavior: 0
   storagePercent: 0
